@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
 
 export type ThemeType =
   | "light"
@@ -64,6 +64,15 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
+function subscribe(callback: () => void) {
+  window.addEventListener("storage", callback);
+  window.addEventListener("theme-change", callback);
+  return () => {
+    window.removeEventListener("storage", callback);
+    window.removeEventListener("theme-change", callback);
+  };
+}
+
 export function MultiThemeProvider({
   children,
   defaultTheme = "light",
@@ -73,29 +82,34 @@ export function MultiThemeProvider({
   defaultTheme?: ThemeType;
   storageKey?: string;
 }) {
-  const [theme, setThemeState] = useState<ThemeType>(() => {
-    if (typeof window !== "undefined") {
-      const stored = localStorage.getItem(storageKey) as ThemeType | null;
-      if (stored && THEME_OPTIONS.some((t) => t.id === stored)) {
-        return stored;
+  const theme = useSyncExternalStore<ThemeType>(
+    subscribe,
+    () => {
+      try {
+        const stored = localStorage.getItem(storageKey) as ThemeType | null;
+        if (stored && THEME_OPTIONS.some((t) => t.id === stored)) {
+          return stored;
+        }
+      } catch {
+        // Fallback if localStorage is inaccessible
       }
-    }
-    return defaultTheme;
-  });
-
-  const setTheme = (newTheme: ThemeType) => {
-    setThemeState(newTheme);
-    if (typeof window !== "undefined") {
-      localStorage.setItem(storageKey, newTheme);
-      document.documentElement.setAttribute("data-theme", newTheme);
-    }
-  };
+      return defaultTheme;
+    },
+    () => defaultTheme // Server snapshot: always defaultTheme to guarantee identical initial SSR markup
+  );
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      document.documentElement.setAttribute("data-theme", theme);
-    }
+    document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
+
+  const setTheme = (newTheme: ThemeType) => {
+    try {
+      localStorage.setItem(storageKey, newTheme);
+      window.dispatchEvent(new Event("theme-change"));
+    } catch {
+      // Ignore localStorage write failures
+    }
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, themes: THEME_OPTIONS }}>
