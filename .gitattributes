@@ -1,0 +1,11 @@
+# Enforce CRLF on all text files across platforms
+* text eol=crlf
+
+# Binary files
+*.woff binary
+*.woff2 binary
+*.ico binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary

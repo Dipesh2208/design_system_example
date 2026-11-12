@@ -1,0 +1,229 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-payment: var(--payment);
+  --color-payment-foreground: var(--payment-foreground);
+  --color-payment-hover: var(--payment-hover);
+  --color-payment-border: var(--payment-border);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Container query break points matching exactly user spec */
+  --container-3xs: 16rem;
+  --container-2xs: 18rem;
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+}
+
+/* Base Theme Variables */
+:root,
+[data-theme="light"] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0f172a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1e293b;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --secondary-hover: #e2e8f0;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #dc2626;
+  --payment: #059669;
+  --payment-foreground: #ffffff;
+  --payment-hover: #047857;
+  --payment-border: #10b981;
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #6366f1;
+}
+
+[data-theme="dark"] {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #18181b;
+  --card-foreground: #fafafa;
+  --popover: #18181b;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #18181b;
+  --primary-hover: #e4e4e7;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --secondary-hover: #3f3f46;
+  --muted: #27272a;
+  --muted-foreground: #a1a1aa;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #dc2626;
+  --destructive-foreground: #fafafa;
+  --destructive-hover: #b91c1c;
+  --payment: #10b981;
+  --payment-foreground: #022c22;
+  --payment-hover: #059669;
+  --payment-border: #34d399;
+  --border: #27272a;
+  --input: #27272a;
+  --ring: #a855f7;
+}
+
+[data-theme="rose-red"] {
+  --background: #fff1f2;
+  --foreground: #4c0519;
+  --card: #ffffff;
+  --card-foreground: #4c0519;
+  --popover: #ffffff;
+  --popover-foreground: #4c0519;
+  --primary: #e11d48;
+  --primary-foreground: #ffffff;
+  --primary-hover: #be123c;
+  --secondary: #ffe4e6;
+  --secondary-foreground: #881337;
+  --secondary-hover: #fecdd3;
+  --muted: #ffe4e6;
+  --muted-foreground: #9f1239;
+  --accent: #fda4af;
+  --accent-foreground: #4c0519;
+  --destructive: #991b1b;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #7f1d1d;
+  --payment: #e11d48;
+  --payment-foreground: #ffffff;
+  --payment-hover: #be123c;
+  --payment-border: #fb7185;
+  --border: #fecdd3;
+  --input: #fecdd3;
+  --ring: #f43f5e;
+}
+
+[data-theme="azure-blue"] {
+  --background: #f0f9ff;
+  --foreground: #082f49;
+  --card: #ffffff;
+  --card-foreground: #082f49;
+  --popover: #ffffff;
+  --popover-foreground: #082f49;
+  --primary: #0284c7;
+  --primary-foreground: #ffffff;
+  --primary-hover: #0369a1;
+  --secondary: #e0f2fe;
+  --secondary-foreground: #0369a1;
+  --secondary-hover: #bae6fd;
+  --muted: #e0f2fe;
+  --muted-foreground: #0284c7;
+  --accent: #7dd3fc;
+  --accent-foreground: #082f49;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #b91c1c;
+  --payment: #0284c7;
+  --payment-foreground: #ffffff;
+  --payment-hover: #0369a1;
+  --payment-border: #38bdf8;
+  --border: #bae6fd;
+  --input: #bae6fd;
+  --ring: #0284c7;
+}
+
+[data-theme="magenta-violet"] {
+  --background: #faf5ff;
+  --foreground: #3b0764;
+  --card: #ffffff;
+  --card-foreground: #3b0764;
+  --popover: #ffffff;
+  --popover-foreground: #3b0764;
+  --primary: #9333ea;
+  --primary-foreground: #ffffff;
+  --primary-hover: #7e22ce;
+  --secondary: #f3e8ff;
+  --secondary-foreground: #6b21a8;
+  --secondary-hover: #e9d5ff;
+  --muted: #f3e8ff;
+  --muted-foreground: #7e22ce;
+  --accent: #d8b4fe;
+  --accent-foreground: #3b0764;
+  --destructive: #be123c;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #9f1239;
+  --payment: #c026d3;
+  --payment-foreground: #ffffff;
+  --payment-hover: #a21caf;
+  --payment-border: #e879f9;
+  --border: #e9d5ff;
+  --input: #e9d5ff;
+  --ring: #c026d3;
+}
+
+/* Cyan & Orange (WCAG AA calibrated) */
+[data-theme="cyan-orange"] {
+  --background: #ecfeff;
+  --foreground: #083344;
+  --card: #ffffff;
+  --card-foreground: #083344;
+  --popover: #ffffff;
+  --popover-foreground: #083344;
+  --primary: #0e7490; /* 4.6:1+ contrast on white */
+  --primary-foreground: #ffffff;
+  --primary-hover: #155e75;
+  --secondary: #cffafe;
+  --secondary-foreground: #155e75;
+  --secondary-hover: #a5f3fc;
+  --muted: #cffafe;
+  --muted-foreground: #0e7490;
+  --accent: #fed7aa;
+  --accent-foreground: #7c2d12;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #991b1b;
+  --payment: #c2410c; /* Deep warm orange with 4.5:1+ text contrast on white */
+  --payment-foreground: #ffffff;
+  --payment-hover: #9a3412;
+  --payment-border: #ea580c;
+  --border: #a5f3fc;
+  --input: #a5f3fc;
+  --ring: #0891b2;
+}
+
+body {
+  color: var(--foreground);
+  background-color: var(--background);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  min-height: 100vh;
+}
