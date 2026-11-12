@@ -23,7 +23,7 @@ export function LanguageSwitcher() {
   const handleLanguageChange = async (newLng: SupportedLng) => {
     if (newLng === currentLng) return;
 
-    // 1. Immediately switch client i18next language (triggers instant React re-render of useTranslation components)
+    // 1. Immediately switch client i18next language
     await i18n.changeLanguage(newLng);
 
     // 2. Update document language attribute immediately
@@ -42,13 +42,13 @@ export function LanguageSwitcher() {
   return (
     <nav
       aria-label={t("a11y.languageSelector", "Language selector")}
-      className="inline-flex items-center gap-1.5 p-1 bg-secondary rounded-xl border border-border text-xs font-medium"
+      className="flex sm:inline-flex w-full sm:w-auto items-center gap-1.5 p-1 bg-secondary rounded-xl border border-border text-[11px] sm:text-xs font-medium justify-between shrink-0"
       role="region"
     >
-      <span className="flex items-center gap-1 px-2 text-muted-foreground select-none" aria-hidden="true">
+      <span className="flex items-center gap-1 px-2 text-muted-foreground select-none shrink-0" aria-hidden="true">
         <Languages className="w-3.5 h-3.5" />
       </span>
-      <div className="flex items-center gap-1" role="group" aria-label={t("a11y.languageSelector", "Language selector")}>
+      <div className="flex items-center gap-1 w-full sm:w-auto" role="group" aria-label={t("a11y.languageSelector", "Language selector")}>
         {supportedLngs.map((lng: SupportedLng) => {
           const isSelected = currentLng === lng;
           return (
@@ -57,11 +57,10 @@ export function LanguageSwitcher() {
               type="button"
               onClick={() => handleLanguageChange(lng)}
               aria-pressed={isSelected}
-              className={`px-2.5 py-1.5 rounded-lg transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
-                isSelected
-                  ? "bg-card shadow-xs text-primary font-bold border border-border"
-                  : "text-muted-foreground hover:text-foreground hover:bg-card/50"
-              }`}
+              className={`flex-1 sm:flex-initial text-center px-2 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none flex items-center justify-center ${isSelected
+                ? "bg-card shadow-xs text-primary font-bold border border-border"
+                : "text-muted-foreground hover:text-foreground hover:bg-card/50"
+                }`}
             >
               {t(`languages.${lng}`)}
             </button>

@@ -40,7 +40,7 @@ export const AppBadge = React.forwardRef<HTMLSpanElement, AppBadgeProps>(
         {...props}
       >
         {icon && <span className="shrink-0">{icon}</span>}
-        <span className="truncate">{children}</span>
+        <span className="whitespace-normal sm:truncate">{children}</span>
       </span>
     );
   }

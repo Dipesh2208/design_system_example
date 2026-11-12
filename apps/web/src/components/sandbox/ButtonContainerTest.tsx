@@ -219,24 +219,24 @@ export function ButtonContainerTest() {
 
   const activeBreakpoint = matchedBreakpoint
     ? {
-        variant: matchedBreakpoint.variant,
-        rem: matchedBreakpoint.rem,
-        px: matchedBreakpoint.px,
-        label: t(matchedBreakpoint.labelKey, matchedBreakpoint.defaultLabel),
-        icon: matchedBreakpoint.icon,
-        description: t(matchedBreakpoint.descKey, matchedBreakpoint.defaultDesc),
-      }
+      variant: matchedBreakpoint.variant,
+      rem: matchedBreakpoint.rem,
+      px: matchedBreakpoint.px,
+      label: t(matchedBreakpoint.labelKey, matchedBreakpoint.defaultLabel),
+      icon: matchedBreakpoint.icon,
+      description: t(matchedBreakpoint.descKey, matchedBreakpoint.defaultDesc),
+    }
     : {
-        variant: "< @3xs",
-        rem: "<16rem",
-        px: containerWidth,
-        label: t("breakpoints.@3xs.label", "Sub-Container Mini (Touch Enforced)"),
-        icon: <Smartphone className="w-3.5 h-3.5" aria-hidden="true" />,
-        description: t(
-          "breakpoints.@3xs.description",
-          "Narrower than 256px: retains WCAG 44px touch target & truncation"
-        ),
-      };
+      variant: "< @3xs",
+      rem: "<16rem",
+      px: containerWidth,
+      label: t("breakpoints.@3xs.label", "Sub-Container Mini (Touch Enforced)"),
+      icon: <Smartphone className="w-3.5 h-3.5" aria-hidden="true" />,
+      description: t(
+        "breakpoints.@3xs.description",
+        "Narrower than 256px: retains WCAG 44px touch target & truncation"
+      ),
+    };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -270,7 +270,7 @@ export function ButtonContainerTest() {
     <div
       id="main-content"
       tabIndex={-1}
-      className="min-h-screen py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-10 outline-none"
+      className="min-h-screen py-6 sm:py-10 px-3 sm:px-6 lg:px-8 max-w-7xl mx-auto space-y-6 sm:space-y-10 outline-none"
     >
       {/* Live Region for Screen Readers */}
       <div aria-live="polite" aria-atomic="true" className="sr-only">
@@ -279,7 +279,7 @@ export function ButtonContainerTest() {
       </div>
 
       {/* Header Banner */}
-      <header className="border border-border/80 bg-card rounded-2xl p-6 sm:p-8 shadow-sm backdrop-blur-md">
+      <header className="border border-border/80 bg-card rounded-2xl p-4 sm:p-8 shadow-sm backdrop-blur-md">
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
           <div className="space-y-2 max-w-3xl">
             <div className="inline-flex items-center gap-2">
@@ -287,34 +287,33 @@ export function ButtonContainerTest() {
                 {t("banner.badge")}
               </AppBadge>
             </div>
-            <h1 className="text-3xl font-extrabold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
               {t("banner.title")}
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-xs sm:text-sm text-muted-foreground">
               {t("banner.description")}
             </p>
           </div>
 
           {/* Header Controls: Language Switcher & View Mode Switcher */}
-          <div className="flex flex-wrap items-center gap-3 w-full xl:w-auto xl:justify-end">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 w-full xl:w-auto xl:justify-end">
             {/* Accessible Language Switcher */}
             <LanguageSwitcher />
 
             {/* View Mode Switcher with ARIA role & pressed status */}
             <nav
               aria-label={t("a11y.viewModeSelector", "View mode selector")}
-              className="flex flex-wrap items-center p-1 bg-secondary rounded-xl border border-border text-xs font-medium max-w-full"
+              className="flex w-full sm:w-auto items-stretch p-1 bg-secondary rounded-xl border border-border text-[11px] sm:text-xs font-medium justify-between shrink-0"
               role="group"
             >
               <button
                 type="button"
                 onClick={() => setViewMode("interactive")}
                 aria-pressed={viewMode === "interactive"}
-                className={`px-3 py-1.5 rounded-lg transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none whitespace-nowrap ${
-                  viewMode === "interactive"
-                    ? "bg-card shadow-xs text-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${viewMode === "interactive"
+                  ? "bg-card shadow-xs text-foreground font-semibold"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 {t("viewModes.interactive")}
               </button>
@@ -322,11 +321,10 @@ export function ButtonContainerTest() {
                 type="button"
                 onClick={() => setViewMode("all-breakpoints")}
                 aria-pressed={viewMode === "all-breakpoints"}
-                className={`px-3 py-1.5 rounded-lg transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none whitespace-nowrap ${
-                  viewMode === "all-breakpoints"
-                    ? "bg-card shadow-xs text-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${viewMode === "all-breakpoints"
+                  ? "bg-card shadow-xs text-foreground font-semibold"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 {t("viewModes.allBreakpoints")}
               </button>
@@ -334,11 +332,10 @@ export function ButtonContainerTest() {
                 type="button"
                 onClick={() => setViewMode("matrix")}
                 aria-pressed={viewMode === "matrix"}
-                className={`px-3 py-1.5 rounded-lg transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none whitespace-nowrap ${
-                  viewMode === "matrix"
-                    ? "bg-card shadow-xs text-foreground font-semibold"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${viewMode === "matrix"
+                  ? "bg-card shadow-xs text-foreground font-semibold"
+                  : "text-muted-foreground hover:text-foreground"
+                  }`}
               >
                 {t("viewModes.matrix")}
               </button>
@@ -347,59 +344,60 @@ export function ButtonContainerTest() {
         </div>
 
         {/* 6-Theme Selector Bar */}
-        <div
-          className="mt-8 pt-6 border-t border-border flex flex-wrap items-center gap-2 sm:gap-3"
-          role="group"
-          aria-label={t("a11y.themeSelector", "Theme selector")}
-        >
-          <span className="text-xs font-bold uppercase tracking-wider text-muted-foreground mr-2">
+        <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-border space-y-3">
+          <span className="block text-xs font-bold uppercase tracking-wider text-muted-foreground">
             {t("theme.activeTheme")}
           </span>
-          {THEME_OPTIONS.map((item) => {
-            const isSelected = theme === item.id;
-            const themeKey = THEME_KEYS[item.id] || "light";
-            const localizedName = t(`theme.${themeKey}.name`, item.name);
-            return (
-              <button
-                key={item.id}
-                type="button"
-                onClick={() => setTheme(item.id)}
-                aria-pressed={isSelected}
-                className={`group flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-medium border transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
-                  isSelected
-                    ? "border-primary bg-primary/10 text-foreground ring-2 ring-primary/30 font-semibold"
+          <div
+            className="flex flex-wrap items-center gap-2 sm:gap-2.5"
+            role="group"
+            aria-label={t("a11y.themeSelector", "Theme selector")}
+          >
+            {THEME_OPTIONS.map((item) => {
+              const isSelected = theme === item.id;
+              const themeKey = THEME_KEYS[item.id] || "light";
+              const localizedName = t(`theme.${themeKey}.name`, item.name);
+              return (
+                <button
+                  key={item.id}
+                  type="button"
+                  onClick={() => setTheme(item.id)}
+                  aria-pressed={isSelected}
+                  className={`group flex items-center justify-start gap-2 px-3 py-2.5 sm:py-2 min-h-[44px] rounded-xl text-xs font-medium border transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none ${isSelected
+                    ? "border-primary bg-primary/10 text-foreground ring-2 ring-primary/30 font-semibold shadow-xs"
                     : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-border/80"
-                }`}
-              >
-                <span className="flex -space-x-1" aria-hidden="true">
-                  <span
-                    className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
-                    style={{ backgroundColor: item.badgeColors[0] }}
-                  />
-                  <span
-                    className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
-                    style={{ backgroundColor: item.badgeColors[1] }}
-                  />
-                </span>
-                <span>{localizedName}</span>
-              </button>
-            );
-          })}
+                    }`}
+                >
+                  <span className="flex -space-x-1 shrink-0" aria-hidden="true">
+                    <span
+                      className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
+                      style={{ backgroundColor: item.badgeColors[0] }}
+                    />
+                    <span
+                      className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
+                      style={{ backgroundColor: item.badgeColors[1] }}
+                    />
+                  </span>
+                  <span>{localizedName}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </header>
 
       {/* VIEW MODE 1: Interactive Resizer & Breakpoint Tester */}
       {viewMode === "interactive" && (
-        <section aria-labelledby="simulator-heading" className="space-y-8">
+        <section aria-labelledby="simulator-heading" className="space-y-6 sm:space-y-8">
           {/* Draggable Width Control Panel */}
-          <div className="bg-card border border-border rounded-2xl p-6 shadow-sm space-y-5">
+          <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-sm space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-secondary rounded-lg text-primary" aria-hidden="true">
+                <div className="p-2 bg-secondary rounded-lg text-primary shrink-0" aria-hidden="true">
                   <Sliders className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 id="simulator-heading" className="text-base font-semibold">
+                  <h2 id="simulator-heading" className="text-sm sm:text-base font-semibold">
                     {t("simulator.title")}
                   </h2>
                   <p className="text-xs text-muted-foreground">
@@ -409,11 +407,13 @@ export function ButtonContainerTest() {
               </div>
 
               {/* Molecule: ContainerBreakpointBadge */}
-              <ContainerBreakpointBadge
-                variantLabel={activeBreakpoint.variant}
-                widthPx={containerWidth}
-                icon={activeBreakpoint.icon}
-              />
+              <div className="self-start sm:self-auto">
+                <ContainerBreakpointBadge
+                  variantLabel={activeBreakpoint.variant}
+                  widthPx={containerWidth}
+                  icon={activeBreakpoint.icon}
+                />
+              </div>
             </div>
 
             {/* Slider with full accessible properties */}
@@ -447,7 +447,7 @@ export function ButtonContainerTest() {
               role="group"
               aria-label={t("simulator.jumpTo")}
             >
-              <span className="text-xs font-medium text-muted-foreground mr-1">
+              <span className="text-xs font-medium text-muted-foreground mr-1 w-full sm:w-auto">
                 {t("simulator.jumpTo")}
               </span>
               {BREAKPOINT_TABLE.map((b) => (
@@ -456,11 +456,10 @@ export function ButtonContainerTest() {
                   type="button"
                   onClick={() => setContainerWidth(b.px)}
                   aria-pressed={containerWidth === b.px}
-                  className={`px-2.5 py-1 text-xs rounded-md font-mono transition-all focus-visible:ring-2 focus-visible:ring-primary focus-visible:outline-none ${
-                    containerWidth === b.px
-                      ? "bg-primary text-primary-foreground font-bold shadow-xs"
-                      : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
-                  }`}
+                  className={`px-3 py-2 min-h-[44px] text-xs rounded-md font-mono transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none ${containerWidth === b.px
+                    ? "bg-primary text-primary-foreground font-bold shadow-xs"
+                    : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+                    }`}
                   title={`${b.variant} (${b.rem} / ${b.px}px)`}
                 >
                   {b.variant}
@@ -471,31 +470,31 @@ export function ButtonContainerTest() {
 
           {/* SIMULATED CONTAINER BOX */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between text-xs text-muted-foreground px-1">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-muted-foreground px-1 gap-1">
               <span>{t("simulator.parentViewport")}</span>
-              <span className="font-mono">
+              <span className="font-mono text-[11px] sm:text-xs">
                 {t("simulator.styleLabel")}: {containerWidth}px | {t("simulator.currentLabel")}{" "}
                 {activeBreakpoint.label}
               </span>
             </div>
 
-            <div className="p-4 sm:p-6 bg-secondary/30 border-2 border-dashed border-border rounded-2xl flex justify-center overflow-x-auto">
+            <div className="p-2 sm:p-6 bg-secondary/30 border-2 border-dashed border-border rounded-2xl flex justify-center overflow-x-auto">
               <div
                 style={{ width: `${containerWidth}px`, maxWidth: "100%" }}
-                className="@container transition-all duration-300 bg-card border border-border rounded-xl p-5 sm:p-6 shadow-md space-y-6"
+                className="@container transition-all duration-300 bg-card border border-border rounded-xl p-4 sm:p-6 shadow-md space-y-6"
               >
                 {/* Container Internal Header */}
                 <div className="flex items-center justify-between pb-3 border-b border-border text-xs">
                   <div className="flex items-center gap-2">
                     <span
-                      className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"
+                      className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shrink-0"
                       aria-hidden="true"
                     />
-                    <span className="font-semibold text-foreground">
+                    <span className="font-semibold text-foreground text-xs">
                       {t("simulator.parentContainer")} {containerWidth}px
                     </span>
                   </div>
-                  <span className="text-muted-foreground font-mono">
+                  <span className="text-muted-foreground font-mono text-[11px] sm:text-xs">
                     {t("simulator.breakpoint")} {activeBreakpoint.variant} ({activeBreakpoint.rem})
                   </span>
                 </div>
@@ -603,8 +602,8 @@ export function ButtonContainerTest() {
       {/* VIEW MODE 2: All 13 Breakpoints Rendered Side-by-Side */}
       {viewMode === "all-breakpoints" && (
         <section aria-labelledby="grid-heading" className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 id="grid-heading" className="text-lg font-bold">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <h2 id="grid-heading" className="text-base sm:text-lg font-bold">
               {t("grid.title")}
             </h2>
             <p className="text-xs text-muted-foreground">
@@ -612,15 +611,15 @@ export function ButtonContainerTest() {
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {BREAKPOINT_TABLE.map((bp) => (
               <div
                 key={bp.variant}
-                className="p-5 bg-card border border-border rounded-xl shadow-xs space-y-3"
+                className="p-4 sm:p-5 bg-card border border-border rounded-xl shadow-xs space-y-3"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border pb-2">
                   <div className="flex items-center gap-2">
-                    <span className="p-1.5 rounded-md bg-secondary text-primary font-mono text-xs font-bold">
+                    <span className="p-1.5 rounded-md bg-secondary text-primary font-mono text-xs font-bold shrink-0">
                       {bp.variant}
                     </span>
                     <span className="text-xs font-bold">
@@ -635,10 +634,10 @@ export function ButtonContainerTest() {
                   </span>
                 </div>
 
-                <div className="overflow-x-auto p-3 bg-secondary/30 rounded-lg">
+                <div className="overflow-x-auto p-2 sm:p-3 bg-secondary/30 rounded-lg">
                   <div
                     style={{ width: `${bp.px}px`, maxWidth: "100%" }}
-                    className="@container bg-card p-4 rounded-lg border border-border/80 shadow-xs space-y-3"
+                    className="@container bg-card p-3 sm:p-4 rounded-lg border border-border/80 shadow-xs space-y-3"
                   >
                     <ButtonGroup orientation="responsive" spacing="sm">
                       <AppButton variant="primary">
@@ -662,8 +661,8 @@ export function ButtonContainerTest() {
       {/* VIEW MODE 3: 6-Theme Comparative Matrix */}
       {viewMode === "matrix" && (
         <section aria-labelledby="matrix-heading" className="space-y-6">
-          <div className="flex items-center justify-between">
-            <h2 id="matrix-heading" className="text-lg font-bold">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+            <h2 id="matrix-heading" className="text-base sm:text-lg font-bold">
               {t("matrix.title")}
             </h2>
             <p className="text-xs text-muted-foreground">
@@ -671,18 +670,18 @@ export function ButtonContainerTest() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {THEME_OPTIONS.map((themeItem) => {
               const themeKey = THEME_KEYS[themeItem.id] || "light";
               return (
                 <div
                   key={themeItem.id}
                   data-theme={themeItem.id}
-                  className="bg-card text-foreground border border-border rounded-2xl p-6 shadow-sm space-y-4 transition-all"
+                  className="bg-card text-foreground border border-border rounded-2xl p-5 sm:p-6 shadow-sm space-y-4 transition-all"
                 >
                   <div className="flex items-center justify-between border-b border-border pb-3">
                     <div className="flex items-center gap-2">
-                      <span className="flex -space-x-1" aria-hidden="true">
+                      <span className="flex -space-x-1 shrink-0" aria-hidden="true">
                         <span
                           className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
                           style={{ backgroundColor: themeItem.badgeColors[0] }}
@@ -692,11 +691,11 @@ export function ButtonContainerTest() {
                           style={{ backgroundColor: themeItem.badgeColors[1] }}
                         />
                       </span>
-                      <h3 className="text-sm font-bold">
+                      <h3 className="text-sm font-bold truncate">
                         {t(`theme.${themeKey}.name`, themeItem.name)}
                       </h3>
                     </div>
-                    <AppBadge variant="secondary" className="text-[10px] uppercase font-mono">
+                    <AppBadge variant="secondary" className="text-[10px] uppercase font-mono shrink-0">
                       {themeItem.id}
                     </AppBadge>
                   </div>
