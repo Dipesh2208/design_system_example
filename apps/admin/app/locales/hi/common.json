@@ -1,0 +1,69 @@
+{
+  "auth": {
+    "title": "एडमिन पोर्टल",
+    "subtitle": "अपने एडमिन डैशबोर्ड तक पहुंचने के लिए अपने गूगल खाते से साइन इन करें",
+    "googleSignIn": "गूगल के साथ साइन इन करें",
+    "secureNotice": "एंटरप्राइज OAuth 2.0 सुरक्षा द्वारा सुरक्षित",
+    "chooseLanguage": "भाषा"
+  },
+  "dashboard": {
+    "title": "एडमिन डैशबोर्ड",
+    "welcome": "वापसी पर स्वागत है",
+    "role": "सुपर प्रशासक",
+    "logout": "साइन आउट करें",
+    "overview": "सिंहावलोकन एवं विश्लेषण",
+    "stats": {
+      "totalUsers": "कुल उपयोगकर्ता",
+      "activeSessions": "सक्रिय सत्र",
+      "systemHealth": "सिस्टम स्वास्थ्य",
+      "monthlyRevenue": "मासिक राजस्व"
+    },
+    "sharedComponents": "शेयर्ड डिज़ाइन सिस्टम घटक (@repo/ui)",
+    "containerQuerySection": "१३-ब्रेकपॉइंट कंटेनर क्वेरी संदर्भ (@container)",
+    "containerQueryDesc": "शेयर्ड घटक टेलविंड CSS v4 कंटेनर क्वेरी का उपयोग करके अपने पैरेंट कंटेनर की चौड़ाई के आधार पर गतिशील रूप से आकार अनुकूलित करते हैं।",
+    "quickActions": "त्वरित एडमिन क्रियाएं (ButtonGroup अणु)",
+    "formFieldAction": "इंटरैक्टिव फॉर्म डिस्पैच (FormFieldAction अणु)",
+    "formFieldLabel": "टेनेंट कार्यक्षेत्र या सीट प्रावधान",
+    "formFieldPlaceholder": "कार्यक्षेत्र हैंडल दर्ज करें (उदा. acme-corp)...",
+    "formSubmit": "टेनेंट प्रावधान करें",
+    "formSubmitting": "प्रावधान किया जा रहा है...",
+    "formDispatched": "टेनेंट कार्यक्षेत्र सफलतापूर्वक तैयार किया गया!",
+    "exportReport": "विश्लेषण रिपोर्ट निर्यात करें",
+    "manageRoles": "एक्सेस भूमिकाएं प्रबंधित करें",
+    "auditLogs": "सुरक्षा लॉग देखें",
+    "systemOnline": "सभी प्रणालियाँ पूरी तरह चालू हैं"
+  },
+  "theme": {
+    "activeTheme": "सक्रिय थीम पैलेट:",
+    "dark": {
+      "name": "डार्क ओब्सीडियन",
+      "description": "उच्च-विपरीत टेक्स्ट के साथ गहरा ओब्सीडियन बैकग्राउंड"
+    },
+    "light": {
+      "name": "लाइट क्लीन",
+      "description": "तटस्थ स्लेट और उज्ज्वल सतहें"
+    },
+    "roseRed": {
+      "name": "रोज़ और रेड",
+      "description": "क्रिमसन गर्माहट और कोमल ब्लश टोन"
+    },
+    "azureBlue": {
+      "name": "एज़्योर और ब्लू",
+      "description": "महासागरीय आकाश और कोबाल्ट विश्वास टोन"
+    },
+    "magentaViolet": {
+      "name": "मैजेंटा और वायलेट",
+      "description": "इलेक्ट्रिक वायलेट और ज्वलंत मैजेंटा लहजे"
+    },
+    "cyanOrange": {
+      "name": "सियान और ऑरेंज (WCAG AA)",
+      "description": "उच्च-विपरीत टील और गर्म एम्बर"
+    }
+  },
+  "common": {
+    "language": "भाषा",
+    "english": "English",
+    "gujarati": "ગુજરાતી (Gujarati)",
+    "hindi": "हिंदी (Hindi)"
+  }
+}

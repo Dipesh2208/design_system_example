@@ -5,8 +5,10 @@
   "exports": {
     "./atoms/*": "./src/atoms/*.tsx",
     "./molecules/*": "./src/molecules/*.tsx",
+    "./organisms/*": "./src/organisms/*.tsx",
     "./atoms": "./src/atoms/index.ts",
     "./molecules": "./src/molecules/index.ts",
+    "./organisms": "./src/organisms/index.ts",
     "./*": "./src/*.tsx"
   },
   "scripts": {
