@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@source "../../../packages/ui/src";
 
 @theme {
   --color-background: var(--background);
@@ -228,3 +229,4 @@ body {
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   min-height: 100vh;
 }
+

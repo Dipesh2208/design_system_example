@@ -1,0 +1,236 @@
+@import "tailwindcss";
+@source "../../../packages/ui/src";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-hover: var(--secondary-hover);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-destructive-hover: var(--destructive-hover);
+  --color-payment: var(--payment);
+  --color-payment-foreground: var(--payment-foreground);
+  --color-payment-hover: var(--payment-hover);
+  --color-payment-border: var(--payment-border);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* 13-Breakpoint Container Query scale */
+  --container-3xs: 16rem;
+  --container-2xs: 18rem;
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+}
+
+/* 1. Default: Dark Obsidian */
+:root,
+[data-theme="dark"] {
+  --background: #09090b;
+  --foreground: #fafafa;
+  --card: #18181b;
+  --card-foreground: #fafafa;
+  --popover: #18181b;
+  --popover-foreground: #fafafa;
+  --primary: #fafafa;
+  --primary-foreground: #09090b;
+  --primary-hover: #e4e4e7;
+  --secondary: #27272a;
+  --secondary-foreground: #fafafa;
+  --secondary-hover: #3f3f46;
+  --muted: #27272a;
+  --muted-foreground: #d4d4d8;
+  --accent: #27272a;
+  --accent-foreground: #fafafa;
+  --destructive: #ef4444;
+  --destructive-foreground: #09090b;
+  --destructive-hover: #dc2626;
+  --payment: #10b981;
+  --payment-foreground: #022c22;
+  --payment-hover: #059669;
+  --payment-border: #34d399;
+  --border: #3f3f46;
+  --input: #3f3f46;
+  --ring: #c084fc;
+}
+
+/* 2. Light Clean */
+[data-theme="light"] {
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #0f172a;
+  --primary-foreground: #ffffff;
+  --primary-hover: #1e293b;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #0f172a;
+  --secondary-hover: #cbd5e1;
+  --muted: #f1f5f9;
+  --muted-foreground: #334155;
+  --accent: #f1f5f9;
+  --accent-foreground: #0f172a;
+  --destructive: #b91c1c;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #991b1b;
+  --payment: #047857;
+  --payment-foreground: #ffffff;
+  --payment-hover: #065f46;
+  --payment-border: #059669;
+  --border: #cbd5e1;
+  --input: #cbd5e1;
+  --ring: #4338ca;
+}
+
+/* 3. Rose & Red */
+[data-theme="rose-red"] {
+  --background: #fff1f2;
+  --foreground: #4c0519;
+  --card: #ffffff;
+  --card-foreground: #4c0519;
+  --popover: #ffffff;
+  --popover-foreground: #4c0519;
+  --primary: #be123c;
+  --primary-foreground: #ffffff;
+  --primary-hover: #9f1239;
+  --secondary: #ffe4e6;
+  --secondary-foreground: #881337;
+  --secondary-hover: #fecdd3;
+  --muted: #ffe4e6;
+  --muted-foreground: #881337;
+  --accent: #fda4af;
+  --accent-foreground: #4c0519;
+  --destructive: #881337;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #701a2e;
+  --payment: #be123c;
+  --payment-foreground: #ffffff;
+  --payment-hover: #9f1239;
+  --payment-border: #e11d48;
+  --border: #fecdd3;
+  --input: #fecdd3;
+  --ring: #9f1239;
+}
+
+/* 4. Azure & Blue */
+[data-theme="azure-blue"] {
+  --background: #f0f9ff;
+  --foreground: #082f49;
+  --card: #ffffff;
+  --card-foreground: #082f49;
+  --popover: #ffffff;
+  --popover-foreground: #082f49;
+  --primary: #0369a1;
+  --primary-foreground: #ffffff;
+  --primary-hover: #075985;
+  --secondary: #e0f2fe;
+  --secondary-foreground: #075985;
+  --secondary-hover: #bae6fd;
+  --muted: #e0f2fe;
+  --muted-foreground: #075985;
+  --accent: #7dd3fc;
+  --accent-foreground: #082f49;
+  --destructive: #991b1b;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #7f1d1d;
+  --payment: #0369a1;
+  --payment-foreground: #ffffff;
+  --payment-hover: #075985;
+  --payment-border: #0284c7;
+  --border: #bae6fd;
+  --input: #bae6fd;
+  --ring: #075985;
+}
+
+/* 5. Magenta & Violet */
+[data-theme="magenta-violet"] {
+  --background: #faf5ff;
+  --foreground: #3b0764;
+  --card: #ffffff;
+  --card-foreground: #3b0764;
+  --popover: #ffffff;
+  --popover-foreground: #3b0764;
+  --primary: #7e22ce;
+  --primary-foreground: #ffffff;
+  --primary-hover: #6b21a8;
+  --secondary: #f3e8ff;
+  --secondary-foreground: #581c87;
+  --secondary-hover: #e9d5ff;
+  --muted: #f3e8ff;
+  --muted-foreground: #581c87;
+  --accent: #d8b4fe;
+  --accent-foreground: #3b0764;
+  --destructive: #881337;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #701a2e;
+  --payment: #a21caf;
+  --payment-foreground: #ffffff;
+  --payment-hover: #86198f;
+  --payment-border: #c026d3;
+  --border: #e9d5ff;
+  --input: #e9d5ff;
+  --ring: #6b21a8;
+}
+
+/* 6. Cyan & Orange */
+[data-theme="cyan-orange"] {
+  --background: #ecfeff;
+  --foreground: #083344;
+  --card: #ffffff;
+  --card-foreground: #083344;
+  --popover: #ffffff;
+  --popover-foreground: #083344;
+  --primary: #155e75;
+  --primary-foreground: #ffffff;
+  --primary-hover: #164e63;
+  --secondary: #cffafe;
+  --secondary-foreground: #164e63;
+  --secondary-hover: #a5f3fc;
+  --muted: #cffafe;
+  --muted-foreground: #155e75;
+  --accent: #fed7aa;
+  --accent-foreground: #7c2d12;
+  --destructive: #991b1b;
+  --destructive-foreground: #ffffff;
+  --destructive-hover: #7f1d1d;
+  --payment: #9a3412;
+  --payment-foreground: #ffffff;
+  --payment-hover: #7c2d12;
+  --payment-border: #c2410c;
+  --border: #a5f3fc;
+  --input: #a5f3fc;
+  --ring: #155e75;
+}
+
+body {
+  color: var(--foreground);
+  font-family: Inter, 'Noto Sans Gujarati', 'Noto Sans Devanagari', system-ui, sans-serif;
+  background-color: var(--background);
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+

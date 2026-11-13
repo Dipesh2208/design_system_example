@@ -1,0 +1,69 @@
+{
+  "auth": {
+    "title": "Admin Portal",
+    "subtitle": "Sign in with your Google account to access your admin dashboard",
+    "googleSignIn": "Sign in with Google",
+    "secureNotice": "Protected with Enterprise OAuth 2.0 Security",
+    "chooseLanguage": "Language"
+  },
+  "dashboard": {
+    "title": "Admin Dashboard",
+    "welcome": "Welcome back",
+    "role": "Super Administrator",
+    "logout": "Sign out",
+    "overview": "Overview & Analytics",
+    "stats": {
+      "totalUsers": "Total Users",
+      "activeSessions": "Active Sessions",
+      "systemHealth": "System Health",
+      "monthlyRevenue": "Monthly Revenue"
+    },
+    "sharedComponents": "Design System Shared Components (@repo/ui)",
+    "containerQuerySection": "13-Breakpoint Container Query Context (@container)",
+    "containerQueryDesc": "Shared components dynamically scale based on their parent container width using Tailwind CSS v4 container queries.",
+    "quickActions": "Quick Admin Actions (ButtonGroup Molecule)",
+    "formFieldAction": "Interactive Form Dispatch (FormFieldAction Molecule)",
+    "formFieldLabel": "Tenant Workspace or Seat Provisioning",
+    "formFieldPlaceholder": "Enter workspace handle (e.g. acme-corp)...",
+    "formSubmit": "Provision Tenant",
+    "formSubmitting": "Provisioning...",
+    "formDispatched": "Tenant workspace provisioned successfully!",
+    "exportReport": "Export Analytics Report",
+    "manageRoles": "Manage Access Roles",
+    "auditLogs": "View Security Logs",
+    "systemOnline": "All Systems Operational"
+  },
+  "theme": {
+    "activeTheme": "Active Theme Palette:",
+    "dark": {
+      "name": "Dark Obsidian",
+      "description": "Deep obsidian backdrop with high-contrast text"
+    },
+    "light": {
+      "name": "Light Clean",
+      "description": "Neutral slate and bright surfaces"
+    },
+    "roseRed": {
+      "name": "Rose & Red",
+      "description": "Crimson warmth and soft blush tones"
+    },
+    "azureBlue": {
+      "name": "Azure & Blue",
+      "description": "Oceanic sky and cobalt trust tones"
+    },
+    "magentaViolet": {
+      "name": "Magenta & Violet",
+      "description": "Electric violet with vivid magenta accents"
+    },
+    "cyanOrange": {
+      "name": "Cyan & Orange (WCAG AA)",
+      "description": "High-contrast teal and warm amber"
+    }
+  },
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "gujarati": "ગુજરાતી (Gujarati)",
+    "hindi": "हिंदी (Hindi)"
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "auth": {
+    "title": "એડમિન પોર્ટલ",
+    "subtitle": "તમારા એડમિન ડેશબોર્ડમાં પ્રવેશવા માટે તમારા ગૂગલ એકાઉન્ટ સાથે સાઇન ઇન કરો",
+    "googleSignIn": "ગૂગલ સાથે સાઇન ઇન કરો",
+    "secureNotice": "એન્ટરપ્રાઇઝ OAuth 2.0 સુરક્ષા સાથે સુરક્ષિત",
+    "chooseLanguage": "ભાષા"
+  },
+  "dashboard": {
+    "title": "એડમિન ડેશબોર્ડ",
+    "welcome": "ફરીથી સ્વાગત છે",
+    "role": "સુપર એડમિનિસ્ટ્રેટર",
+    "logout": "સાઇન આઉટ",
+    "overview": "વિહંગાવલોકન અને વિશ્લેષણ",
+    "stats": {
+      "totalUsers": "કુલ વપરાશકર્તાઓ",
+      "activeSessions": "સક્રિય સત્રો",
+      "systemHealth": "સિસ્ટમ સ્થિતિ",
+      "monthlyRevenue": "માસિક આવક"
+    },
+    "sharedComponents": "શેર્ડ ડિઝાઇન સિસ્ટમ ઘટકો (@repo/ui)",
+    "containerQuerySection": "૧૩-બ્રેકપોઇન્ટ કન્ટેનર ક્વેરી સંદર્ભ (@container)",
+    "containerQueryDesc": "શેર્ડ ઘટકો ટેઇલવિન્ડ CSS v4 કન્ટેનર ક્વેરીઝનો ઉપયોગ કરીને તેમના પેરેન્ટ કન્ટેનરની પહોળાઈના આધારે ગતિશીલ રીતે કદ બદલે છે.",
+    "quickActions": "ઝડપી એડમિન ક્રિયાઓ (ButtonGroup મોલેક્યુલ)",
+    "formFieldAction": "ઇન્ટરેક્ટિવ ફોર્મ ડિસ્પેચ (FormFieldAction મોલેક્યુલ)",
+    "formFieldLabel": "ટેનન્ટ વર્કસ્પેસ અથવા સીટ જોગવાઈ",
+    "formFieldPlaceholder": "વર્કસ્પેસ હેન્ડલ દાખલ કરો (દા.ત. acme-corp)...",
+    "formSubmit": "ટેનન્ટ બનાવો",
+    "formSubmitting": "બનાવી રહ્યું છે...",
+    "formDispatched": "ટેનન્ટ વર્કસ્પેસ સફળતાપૂર્વક બનાવવામાં આવ્યો!",
+    "exportReport": "વિશ્લેષણ રિપોર્ટ નિકાસ કરો",
+    "manageRoles": "ઍક્સેસ ભૂમિકાઓ મેનેજ કરો",
+    "auditLogs": "સુરક્ષા લૉગ્સ જુઓ",
+    "systemOnline": "બધી સિસ્ટમો સંપૂર્ણ કાર્યરત છે"
+  },
+  "theme": {
+    "activeTheme": "સક્રિય થીમ પૅલેટ:",
+    "dark": {
+      "name": "ડાર્ક ઓબ્સિડિયન",
+      "description": "ઉચ્ચ-વિરોધાભાસી ટેક્સ્ટ સાથે ઊંડી ઓબ્સિડિયન પૃષ્ઠભૂમિ"
+    },
+    "light": {
+      "name": "લાઇટ ક્લીન",
+      "description": "ન્યુટ્રલ સ્લેટ અને તેજસ્વી સપાટીઓ"
+    },
+    "roseRed": {
+      "name": "રોઝ અને રેડ",
+      "description": "ક્રિમસન હૂંફ અને સોફ્ટ બ્લશ ટોન"
+    },
+    "azureBlue": {
+      "name": "એઝ્યુર અને બ્લુ",
+      "description": "ઓસેનિક આકાશ અને કોબાલ્ટ વિશ્વાસપાત્ર ટોન"
+    },
+    "magentaViolet": {
+      "name": "મેજેન્ટા અને વાયોલેટ",
+      "description": "ઇલેક્ટ્રિક વાયોલેટ અને આબેહૂબ મેજેન્ટા ઉચ્ચારો"
+    },
+    "cyanOrange": {
+      "name": "સ્યાન અને ઓરેન્જ (WCAG AA)",
+      "description": "હાઇ-કોન્ટ્રાસ્ટ ટીલ અને ગરમ એમ્બર"
+    }
+  },
+  "common": {
+    "language": "ભાષા",
+    "english": "English",
+    "gujarati": "ગુજરાતી (Gujarati)",
+    "hindi": "हिंदी (Hindi)"
+  }
+}

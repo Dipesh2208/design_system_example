@@ -8,11 +8,11 @@ import { cn } from "../lib/utils";
  */
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1.5 rounded-md px-2 py-0.5 text-xs font-medium transition-colors select-none",
+  "inline-flex items-center justify-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium transition-colors select-none",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground shadow-2xs",
+        default: "bg-primary/10 text-primary border border-primary/25 shadow-2xs font-semibold",
         secondary: "bg-secondary text-secondary-foreground border border-border",
         outline: "border border-border text-foreground bg-transparent",
         success: "bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20",
@@ -39,7 +39,7 @@ export const AppBadge = React.forwardRef<HTMLSpanElement, AppBadgeProps>(
         className={cn(badgeVariants({ variant, className }))}
         {...props}
       >
-        {icon && <span className="shrink-0">{icon}</span>}
+        {icon && <span className="shrink-0 flex items-center justify-center">{icon}</span>}
         <span className="whitespace-normal sm:truncate">{children}</span>
       </span>
     );
