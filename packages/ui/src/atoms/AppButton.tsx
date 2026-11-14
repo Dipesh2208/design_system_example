@@ -7,7 +7,7 @@ import { AppSpinner } from "./AppSpinner";
 
 /**
  * AppButton (Stateless Atom)
- * 
+ *
  * Complies with:
  * - Pure Atomic Design: 100% Stateless (zero useState, useReducer, or useEffect).
  * - Full 13-Container Query Scale (@3xs: 16rem/256px to @7xl: 80rem/1280px).
@@ -92,11 +92,12 @@ export const buttonVariants = cva(
       containerResponsive: true,
       fullWidth: false,
     },
-  }
+  },
 );
 
 export interface AppButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   isLoading?: boolean;
@@ -125,7 +126,7 @@ export const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
       type = "button",
       ...props
     },
-    ref
+    ref,
   ) => {
     const isPaymentVariant = variant === "payment";
     const isDisabled = disabled || isLoading;
@@ -134,7 +135,14 @@ export const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
       return (
         <Slot
           className={cn(
-            buttonVariants({ variant, size, iconLayout, containerResponsive, fullWidth, className })
+            buttonVariants({
+              variant,
+              size,
+              iconLayout,
+              containerResponsive,
+              fullWidth,
+              className,
+            }),
           )}
           aria-disabled={isDisabled ? "true" : undefined}
           ref={ref}
@@ -152,7 +160,14 @@ export const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
         disabled={isDisabled}
         aria-busy={isLoading ? "true" : undefined}
         className={cn(
-          buttonVariants({ variant, size, iconLayout, containerResponsive, fullWidth, className })
+          buttonVariants({
+            variant,
+            size,
+            iconLayout,
+            containerResponsive,
+            fullWidth,
+            className,
+          }),
         )}
         {...props}
       >
@@ -164,16 +179,27 @@ export const AppButton = React.forwardRef<HTMLButtonElement, AppButtonProps>(
         ) : (
           <>
             {isPaymentVariant && !leftIcon && (
-              <ShieldCheck className="h-4 w-4 shrink-0 opacity-90" aria-hidden="true" />
+              <ShieldCheck
+                className="h-4 w-4 shrink-0 opacity-90"
+                aria-hidden="true"
+              />
             )}
-            {leftIcon && <span className="shrink-0 flex items-center justify-center">{leftIcon}</span>}
+            {leftIcon && (
+              <span className="shrink-0 flex items-center justify-center">
+                {leftIcon}
+              </span>
+            )}
             <span className="leading-tight text-center">{children}</span>
-            {rightIcon && <span className="shrink-0 flex items-center justify-center">{rightIcon}</span>}
+            {rightIcon && (
+              <span className="shrink-0 flex items-center justify-center">
+                {rightIcon}
+              </span>
+            )}
           </>
         )}
       </button>
     );
-  }
+  },
 );
 
 AppButton.displayName = "AppButton";

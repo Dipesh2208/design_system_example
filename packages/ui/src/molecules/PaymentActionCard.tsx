@@ -24,7 +24,10 @@ export interface PaymentActionCardProps {
   disabled?: boolean;
 }
 
-export const PaymentActionCard = React.forwardRef<HTMLDivElement, PaymentActionCardProps>(
+export const PaymentActionCard = React.forwardRef<
+  HTMLDivElement,
+  PaymentActionCardProps
+>(
   (
     {
       className,
@@ -39,23 +42,24 @@ export const PaymentActionCard = React.forwardRef<HTMLDivElement, PaymentActionC
       onPay,
       disabled = false,
     },
-    ref
+    ref,
   ) => {
     return (
       <div
         ref={ref}
-        className={cn("p-4 rounded-xl bg-secondary/50 border border-border space-y-3", className)}
+        className={cn(
+          "p-4 rounded-xl bg-secondary/50 border border-border space-y-3",
+          className,
+        )}
       >
         <div className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <CreditCard className="w-4 h-4 text-payment" />
-            <h3 className="text-xs font-bold uppercase tracking-wider">{title}</h3>
+            <h3 className="text-xs font-bold uppercase tracking-wider">
+              {title}
+            </h3>
           </div>
-          {badgeLabel && (
-            <AppBadge variant="success">
-              {badgeLabel}
-            </AppBadge>
-          )}
+          {badgeLabel && <AppBadge variant="success">{badgeLabel}</AppBadge>}
         </div>
 
         {description && (
@@ -81,7 +85,7 @@ export const PaymentActionCard = React.forwardRef<HTMLDivElement, PaymentActionC
         </div>
       </div>
     );
-  }
+  },
 );
 
 PaymentActionCard.displayName = "PaymentActionCard";

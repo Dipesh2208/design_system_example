@@ -7,7 +7,11 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
@@ -60,7 +64,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
   const { i18n, t } = useTranslation();
 
   // If client i18n has initialized, prioritize active client language for instant switching
-  const clientLocale = (i18n.language?.slice(0, 2) || data?.locale || "gu") as string;
+  const clientLocale = (i18n.language?.slice(0, 2) ||
+    data?.locale ||
+    "gu") as string;
 
   useChangeLanguage(data?.locale || "gu");
 
@@ -87,9 +93,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           {t("a11y.skipToContent", "Skip to main content")}
         </a>
-        <MultiThemeProvider defaultTheme="light">
-          {children}
-        </MultiThemeProvider>
+        <MultiThemeProvider defaultTheme="light">{children}</MultiThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

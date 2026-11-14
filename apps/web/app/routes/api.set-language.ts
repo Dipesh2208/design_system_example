@@ -17,6 +17,6 @@ export async function action({ request }: ActionFunctionArgs) {
       headers: {
         "Set-Cookie": await localeCookie.serialize(validLng),
       },
-    }
+    },
   );
 }

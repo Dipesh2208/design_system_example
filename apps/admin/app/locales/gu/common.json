@@ -33,6 +33,34 @@
     "auditLogs": "સુરક્ષા લૉગ્સ જુઓ",
     "systemOnline": "બધી સિસ્ટમો સંપૂર્ણ કાર્યરત છે"
   },
+  "nav": {
+    "dashboard": "ડેશબોર્ડ",
+    "customers": "ગ્રાહકો",
+    "settings": "સેટિંગ્સ"
+  },
+  "customers": {
+    "title": "ગ્રાહક ડિરેક્ટરી",
+    "subtitle": "રીઅલ-ટાઇમ શોધ અને ફિલ્ટર્સ સાથે ૧,૦૦૦+ એકાઉન્ટ્સને સપોર્ટ કરતી ઉચ્ચ-પ્રદર્શન વર્ચ્યુઅલાઇઝ્ડ ડિરેક્ટરી",
+    "searchPlaceholder": "નામ, ઇમેઇલ અથવા કંપની દ્વારા ગ્રાહક શોધો...",
+    "filterAll": "બધા ગ્રાહકો",
+    "filterActive": "સક્રિય",
+    "filterPending": "બાકી (Pending)",
+    "filterInactive": "નિષ્ક્રિય",
+    "table": {
+      "customer": "ગ્રાહક",
+      "company": "કંપની",
+      "status": "સ્થિતિ",
+      "totalSpent": "કુલ ખર્ચ",
+      "lastActive": "છેલ્લે સક્રિય",
+      "actions": "ક્રિયાઓ"
+    },
+    "kpi": {
+      "totalCustomers": "કુલ ગ્રાહકો",
+      "activeRate": "સક્રિય દર",
+      "avgRevenue": "સરેરાશ ગ્રાહક મૂલ્ય"
+    },
+    "empty": "તમારા માપદંડ સાથે મેળ ખાતા કોઈ ગ્રાહકો મળ્યા નથી."
+  },
   "theme": {
     "activeTheme": "સક્રિય થીમ પૅલેટ:",
     "dark": {

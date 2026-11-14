@@ -1,6 +1,11 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useSyncExternalStore,
+} from "react";
 
 export type ThemeType =
   | "light"
@@ -51,7 +56,8 @@ export const THEME_OPTIONS: ThemeOption[] = [
   {
     id: "cyan-orange",
     name: "Cyan & Orange (WCAG AA)",
-    description: "High-contrast teal and warm amber calibrated for 4.5:1+ contrast",
+    description:
+      "High-contrast teal and warm amber calibrated for 4.5:1+ contrast",
     badgeColors: ["#0e7490", "#c2410c"],
   },
 ];
@@ -95,7 +101,7 @@ export function MultiThemeProvider({
       }
       return defaultTheme;
     },
-    () => defaultTheme // Server snapshot: always defaultTheme to guarantee identical initial SSR markup
+    () => defaultTheme, // Server snapshot: always defaultTheme to guarantee identical initial SSR markup
   );
 
   useEffect(() => {

@@ -87,7 +87,8 @@ const BREAKPOINT_TABLE: BreakpointSpec[] = [
     defaultLabel: "Phablet / Modal Width",
     icon: <Tablet className="w-3.5 h-3.5" aria-hidden="true" />,
     descKey: "breakpoints.@md.description",
-    defaultDesc: "Transitions cleanly from stacked full-width to inline auto-width (@md:w-auto)",
+    defaultDesc:
+      "Transitions cleanly from stacked full-width to inline auto-width (@md:w-auto)",
   },
   {
     variant: "@lg",
@@ -167,7 +168,8 @@ const BREAKPOINT_TABLE: BreakpointSpec[] = [
     defaultLabel: "Ultrawide Container (1280px)",
     icon: <Monitor className="w-3.5 h-3.5" aria-hidden="true" />,
     descKey: "breakpoints.@7xl.description",
-    defaultDesc: "Generous proportional padding (@7xl:px-9) without awkward stretching",
+    defaultDesc:
+      "Generous proportional padding (@7xl:px-9) without awkward stretching",
   },
 ];
 
@@ -192,14 +194,16 @@ export function ButtonContainerTest() {
   // Organism-level State (Cleanly lifted from atoms & molecules)
   const [containerWidth, setContainerWidth] = useState<number>(448); // default @md
   const [clickCount, setClickCount] = useState<number>(0);
-  const [formInput, setFormInput] = useState<string>("Enterprise Workspace Seat #1");
+  const [formInput, setFormInput] = useState<string>(
+    "Enterprise Workspace Seat #1",
+  );
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [formSuccessMessage, setFormSuccessMessage] = useState<string>("");
   const [isPaying, setIsPaying] = useState<boolean>(false);
   const [paymentStatus, setPaymentStatus] = useState<string>("");
-  const [viewMode, setViewMode] = useState<"interactive" | "matrix" | "all-breakpoints">(
-    "interactive"
-  );
+  const [viewMode, setViewMode] = useState<
+    "interactive" | "matrix" | "all-breakpoints"
+  >("interactive");
 
   // Timer refs to prevent memory leaks on unmount
   const formTimerRef = useRef<NodeJS.Timeout | null>(null);
@@ -219,24 +223,30 @@ export function ButtonContainerTest() {
 
   const activeBreakpoint = matchedBreakpoint
     ? {
-      variant: matchedBreakpoint.variant,
-      rem: matchedBreakpoint.rem,
-      px: matchedBreakpoint.px,
-      label: t(matchedBreakpoint.labelKey, matchedBreakpoint.defaultLabel),
-      icon: matchedBreakpoint.icon,
-      description: t(matchedBreakpoint.descKey, matchedBreakpoint.defaultDesc),
-    }
+        variant: matchedBreakpoint.variant,
+        rem: matchedBreakpoint.rem,
+        px: matchedBreakpoint.px,
+        label: t(matchedBreakpoint.labelKey, matchedBreakpoint.defaultLabel),
+        icon: matchedBreakpoint.icon,
+        description: t(
+          matchedBreakpoint.descKey,
+          matchedBreakpoint.defaultDesc,
+        ),
+      }
     : {
-      variant: "< @3xs",
-      rem: "<16rem",
-      px: containerWidth,
-      label: t("breakpoints.@3xs.label", "Sub-Container Mini (Touch Enforced)"),
-      icon: <Smartphone className="w-3.5 h-3.5" aria-hidden="true" />,
-      description: t(
-        "breakpoints.@3xs.description",
-        "Narrower than 256px: retains WCAG 44px touch target & truncation"
-      ),
-    };
+        variant: "< @3xs",
+        rem: "<16rem",
+        px: containerWidth,
+        label: t(
+          "breakpoints.@3xs.label",
+          "Sub-Container Mini (Touch Enforced)",
+        ),
+        icon: <Smartphone className="w-3.5 h-3.5" aria-hidden="true" />,
+        description: t(
+          "breakpoints.@3xs.description",
+          "Narrower than 256px: retains WCAG 44px touch target & truncation",
+        ),
+      };
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -246,7 +256,7 @@ export function ButtonContainerTest() {
     formTimerRef.current = setTimeout(() => {
       setIsSubmitting(false);
       setFormSuccessMessage(
-        `${t("scenarios.formDispatched", "Form payload dispatched securely!")} ("${formInput}")`
+        `${t("scenarios.formDispatched", "Form payload dispatched securely!")} ("${formInput}")`,
       );
     }, 1500);
   };
@@ -260,8 +270,8 @@ export function ButtonContainerTest() {
       setPaymentStatus(
         t(
           "scenarios.paymentVerified",
-          "Payment verified & authenticated via 256-bit TLS gateway!"
-        )
+          "Payment verified & authenticated via 256-bit TLS gateway!",
+        ),
       );
     }, 1500);
   };
@@ -283,7 +293,10 @@ export function ButtonContainerTest() {
         <div className="flex flex-col xl:flex-row xl:items-center justify-between gap-6">
           <div className="space-y-2 max-w-3xl">
             <div className="inline-flex items-center gap-2">
-              <AppBadge variant="default" icon={<Sparkles className="w-3 h-3" aria-hidden="true" />}>
+              <AppBadge
+                variant="default"
+                icon={<Sparkles className="w-3 h-3" aria-hidden="true" />}
+              >
                 {t("banner.badge")}
               </AppBadge>
             </div>
@@ -310,10 +323,11 @@ export function ButtonContainerTest() {
                 type="button"
                 onClick={() => setViewMode("interactive")}
                 aria-pressed={viewMode === "interactive"}
-                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${viewMode === "interactive"
-                  ? "bg-card shadow-xs text-foreground font-semibold"
-                  : "text-muted-foreground hover:text-foreground"
-                  }`}
+                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${
+                  viewMode === "interactive"
+                    ? "bg-card shadow-xs text-foreground font-semibold"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {t("viewModes.interactive")}
               </button>
@@ -321,10 +335,11 @@ export function ButtonContainerTest() {
                 type="button"
                 onClick={() => setViewMode("all-breakpoints")}
                 aria-pressed={viewMode === "all-breakpoints"}
-                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${viewMode === "all-breakpoints"
-                  ? "bg-card shadow-xs text-foreground font-semibold"
-                  : "text-muted-foreground hover:text-foreground"
-                  }`}
+                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${
+                  viewMode === "all-breakpoints"
+                    ? "bg-card shadow-xs text-foreground font-semibold"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {t("viewModes.allBreakpoints")}
               </button>
@@ -332,10 +347,11 @@ export function ButtonContainerTest() {
                 type="button"
                 onClick={() => setViewMode("matrix")}
                 aria-pressed={viewMode === "matrix"}
-                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${viewMode === "matrix"
-                  ? "bg-card shadow-xs text-foreground font-semibold"
-                  : "text-muted-foreground hover:text-foreground"
-                  }`}
+                className={`flex-1 sm:flex-initial text-center px-1.5 sm:px-3 py-2 min-h-[44px] rounded-lg transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none leading-snug sm:leading-normal flex items-center justify-center ${
+                  viewMode === "matrix"
+                    ? "bg-card shadow-xs text-foreground font-semibold"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
               >
                 {t("viewModes.matrix")}
               </button>
@@ -363,10 +379,11 @@ export function ButtonContainerTest() {
                   type="button"
                   onClick={() => setTheme(item.id)}
                   aria-pressed={isSelected}
-                  className={`group flex items-center justify-start gap-2 px-3 py-2.5 sm:py-2 min-h-[44px] rounded-xl text-xs font-medium border transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none ${isSelected
-                    ? "border-primary bg-primary/10 text-foreground ring-2 ring-primary/30 font-semibold shadow-xs"
-                    : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-border/80"
-                    }`}
+                  className={`group flex items-center justify-start gap-2 px-3 py-2.5 sm:py-2 min-h-[44px] rounded-xl text-xs font-medium border transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none ${
+                    isSelected
+                      ? "border-primary bg-primary/10 text-foreground ring-2 ring-primary/30 font-semibold shadow-xs"
+                      : "border-border bg-card text-muted-foreground hover:text-foreground hover:border-border/80"
+                  }`}
                 >
                   <span className="flex -space-x-1 shrink-0" aria-hidden="true">
                     <span
@@ -388,16 +405,25 @@ export function ButtonContainerTest() {
 
       {/* VIEW MODE 1: Interactive Resizer & Breakpoint Tester */}
       {viewMode === "interactive" && (
-        <section aria-labelledby="simulator-heading" className="space-y-6 sm:space-y-8">
+        <section
+          aria-labelledby="simulator-heading"
+          className="space-y-6 sm:space-y-8"
+        >
           {/* Draggable Width Control Panel */}
           <div className="bg-card border border-border rounded-2xl p-4 sm:p-6 shadow-sm space-y-5">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-secondary rounded-lg text-primary shrink-0" aria-hidden="true">
+                <div
+                  className="p-2 bg-secondary rounded-lg text-primary shrink-0"
+                  aria-hidden="true"
+                >
                   <Sliders className="w-5 h-5" />
                 </div>
                 <div>
-                  <h2 id="simulator-heading" className="text-sm sm:text-base font-semibold">
+                  <h2
+                    id="simulator-heading"
+                    className="text-sm sm:text-base font-semibold"
+                  >
                     {t("simulator.title")}
                   </h2>
                   <p className="text-xs text-muted-foreground">
@@ -456,10 +482,11 @@ export function ButtonContainerTest() {
                   type="button"
                   onClick={() => setContainerWidth(b.px)}
                   aria-pressed={containerWidth === b.px}
-                  className={`px-3 py-2 min-h-[44px] text-xs rounded-md font-mono transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none ${containerWidth === b.px
-                    ? "bg-primary text-primary-foreground font-bold shadow-xs"
-                    : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
-                    }`}
+                  className={`px-3 py-2 min-h-[44px] text-xs rounded-md font-mono transition-all focus-visible:ring-3 focus-visible:ring-primary focus-visible:outline-none ${
+                    containerWidth === b.px
+                      ? "bg-primary text-primary-foreground font-bold shadow-xs"
+                      : "bg-secondary text-muted-foreground hover:text-foreground hover:bg-secondary/80"
+                  }`}
                   title={`${b.variant} (${b.rem} / ${b.px}px)`}
                 >
                   {b.variant}
@@ -473,8 +500,8 @@ export function ButtonContainerTest() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs text-muted-foreground px-1 gap-1">
               <span>{t("simulator.parentViewport")}</span>
               <span className="font-mono text-[11px] sm:text-xs">
-                {t("simulator.styleLabel")}: {containerWidth}px | {t("simulator.currentLabel")}{" "}
-                {activeBreakpoint.label}
+                {t("simulator.styleLabel")}: {containerWidth}px |{" "}
+                {t("simulator.currentLabel")} {activeBreakpoint.label}
               </span>
             </div>
 
@@ -495,7 +522,8 @@ export function ButtonContainerTest() {
                     </span>
                   </div>
                   <span className="text-muted-foreground font-mono text-[11px] sm:text-xs">
-                    {t("simulator.breakpoint")} {activeBreakpoint.variant} ({activeBreakpoint.rem})
+                    {t("simulator.breakpoint")} {activeBreakpoint.variant} (
+                    {activeBreakpoint.rem})
                   </span>
                 </div>
 
@@ -523,7 +551,9 @@ export function ButtonContainerTest() {
                     </AppButton>
                     <AppButton
                       variant="destructive"
-                      leftIcon={<Trash2 className="w-4 h-4" aria-hidden="true" />}
+                      leftIcon={
+                        <Trash2 className="w-4 h-4" aria-hidden="true" />
+                      }
                     >
                       {t("scenarios.destructive")}
                     </AppButton>
@@ -532,10 +562,13 @@ export function ButtonContainerTest() {
 
                 {/* Scenario 2: Stateless Molecule: PaymentActionCard */}
                 <PaymentActionCard
-                  title={t("scenarios.paymentMoleculeTitle", "High-Trust Payment Trigger")}
+                  title={t(
+                    "scenarios.paymentMoleculeTitle",
+                    "High-Trust Payment Trigger",
+                  )}
                   description={t(
                     "scenarios.paymentMoleculeDesc",
-                    "Protected against double clicking and verified via encrypted TLS gateway."
+                    "Protected against double clicking and verified via encrypted TLS gateway.",
                   )}
                   badgeLabel={t("scenarios.paymentBadge", "Encrypted TLS")}
                   buttonLabel={t("scenarios.payNow", "Pay Now")}
@@ -551,13 +584,18 @@ export function ButtonContainerTest() {
                   id="customer-payload"
                   label={t("scenarios.formFieldMolecule")}
                   inputValue={formInput}
-                  inputPlaceholder={t("scenarios.formPlaceholder", "Enter workspace or seat label...")}
+                  inputPlaceholder={t(
+                    "scenarios.formPlaceholder",
+                    "Enter workspace or seat label...",
+                  )}
                   onInputChange={(e) => setFormInput(e.target.value)}
                   onSubmit={handleFormSubmit}
                   isLoading={isSubmitting}
                   loadingText={t("scenarios.formSubmitting")}
                   submitButtonText={t("scenarios.formSubmit")}
-                  buttonIcon={<Send className="w-3.5 h-3.5" aria-hidden="true" />}
+                  buttonIcon={
+                    <Send className="w-3.5 h-3.5" aria-hidden="true" />
+                  }
                   successMessage={formSuccessMessage}
                 />
 
@@ -573,7 +611,9 @@ export function ButtonContainerTest() {
                     <AppButton
                       variant="ghost"
                       onClick={() => setClickCount(0)}
-                      leftIcon={<RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />}
+                      leftIcon={
+                        <RefreshCw className="w-3.5 h-3.5" aria-hidden="true" />
+                      }
                     >
                       {t("scenarios.reset")}
                     </AppButton>
@@ -582,7 +622,12 @@ export function ButtonContainerTest() {
                   <AppButton
                     asChild
                     variant="outline"
-                    rightIcon={<ExternalLink className="w-3.5 h-3.5" aria-hidden="true" />}
+                    rightIcon={
+                      <ExternalLink
+                        className="w-3.5 h-3.5"
+                        aria-hidden="true"
+                      />
+                    }
                   >
                     <a
                       href="https://tailwindcss.com/docs/container-queries"
@@ -681,7 +726,10 @@ export function ButtonContainerTest() {
                 >
                   <div className="flex items-center justify-between border-b border-border pb-3">
                     <div className="flex items-center gap-2">
-                      <span className="flex -space-x-1 shrink-0" aria-hidden="true">
+                      <span
+                        className="flex -space-x-1 shrink-0"
+                        aria-hidden="true"
+                      >
                         <span
                           className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
                           style={{ backgroundColor: themeItem.badgeColors[0] }}
@@ -695,7 +743,10 @@ export function ButtonContainerTest() {
                         {t(`theme.${themeKey}.name`, themeItem.name)}
                       </h3>
                     </div>
-                    <AppBadge variant="secondary" className="text-[10px] uppercase font-mono shrink-0">
+                    <AppBadge
+                      variant="secondary"
+                      className="text-[10px] uppercase font-mono shrink-0"
+                    >
                       {themeItem.id}
                     </AppBadge>
                   </div>
@@ -722,7 +773,9 @@ export function ButtonContainerTest() {
                     <AppButton
                       variant="destructive"
                       className="w-full"
-                      leftIcon={<Trash2 className="w-3.5 h-3.5" aria-hidden="true" />}
+                      leftIcon={
+                        <Trash2 className="w-3.5 h-3.5" aria-hidden="true" />
+                      }
                     >
                       {t("scenarios.destructive")}
                     </AppButton>

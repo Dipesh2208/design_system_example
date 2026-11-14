@@ -12,7 +12,7 @@ export interface ThemeDropdownOrganismProps {
 
 /**
  * ThemeDropdownOrganism (Interactive Organism)
- * 
+ *
  * Strict Atomic Design Principle:
  * - Organisms encapsulate stateful behavior, DOM event listeners, and lifecycle hooks.
  * - Manages useState(isOpen) and useEffect(click-outside, escape key).

@@ -34,7 +34,8 @@ const buttonGroupVariants = cva("flex", {
 });
 
 export interface ButtonGroupProps
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends
+    React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof buttonGroupVariants> {}
 
 export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
@@ -43,13 +44,15 @@ export const ButtonGroup = React.forwardRef<HTMLDivElement, ButtonGroupProps>(
       <div
         ref={ref}
         role="group"
-        className={cn(buttonGroupVariants({ orientation, spacing, attached, className }))}
+        className={cn(
+          buttonGroupVariants({ orientation, spacing, attached, className }),
+        )}
         {...props}
       >
         {children}
       </div>
     );
-  }
+  },
 );
 
 ButtonGroup.displayName = "ButtonGroup";

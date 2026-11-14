@@ -1,5 +1,8 @@
 import * as React from "react";
-import { LanguageDropdown, type LanguageItem } from "../molecules/LanguageDropdown";
+import {
+  LanguageDropdown,
+  type LanguageItem,
+} from "../molecules/LanguageDropdown";
 
 export interface LanguageDropdownOrganismProps {
   currentLanguage: string;
@@ -18,7 +21,7 @@ export const DEFAULT_LANGUAGES: LanguageItem[] = [
 
 /**
  * LanguageDropdownOrganism (Stateful Organism)
- * 
+ *
  * Strict Atomic Design Principle:
  * - Controls dropdown lifecycle state (`isOpen`).
  * - Manages side effects: outside-clicks, 'Escape' key navigation, auto-close.
@@ -79,7 +82,7 @@ export function LanguageDropdownOrganism({
       onLanguageSelect(lngId);
       setIsOpen(false);
     },
-    [onLanguageSelect]
+    [onLanguageSelect],
   );
 
   return (

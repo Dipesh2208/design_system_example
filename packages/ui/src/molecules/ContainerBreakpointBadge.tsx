@@ -22,12 +22,16 @@ export const ContainerBreakpointBadge = React.forwardRef<
       ref={ref}
       className={cn(
         "flex items-center gap-3 bg-secondary/80 px-4 py-2 rounded-xl border border-border",
-        className
+        className,
       )}
       {...props}
     >
       <span className="text-xs text-muted-foreground">Active Breakpoint:</span>
-      <AppBadge variant="default" icon={icon} className="font-mono text-xs font-bold py-1 px-2.5">
+      <AppBadge
+        variant="default"
+        icon={icon}
+        className="font-mono text-xs font-bold py-1 px-2.5"
+      >
         {variantLabel} ({widthPx}px)
       </AppBadge>
     </div>

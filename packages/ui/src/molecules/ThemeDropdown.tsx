@@ -22,12 +22,15 @@ export interface ThemeDropdownProps {
 
 /**
  * ThemeDropdown (Pure Stateless Molecule)
- * 
+ *
  * Strict Atomic Design:
  * - 100% Stateless Composite Renderer.
  * - Solid opaque popup styling prevents any content bleed-through across all 6 themes.
  */
-export const ThemeDropdown = React.forwardRef<HTMLDivElement, ThemeDropdownProps>(
+export const ThemeDropdown = React.forwardRef<
+  HTMLDivElement,
+  ThemeDropdownProps
+>(
   (
     {
       className,
@@ -40,9 +43,10 @@ export const ThemeDropdown = React.forwardRef<HTMLDivElement, ThemeDropdownProps
       align = "right",
       ...props
     },
-    ref
+    ref,
   ) => {
-    const activeThemeItem = themes.find((t) => t.id === currentTheme) || themes[0];
+    const activeThemeItem =
+      themes.find((t) => t.id === currentTheme) || themes[0];
 
     return (
       <div
@@ -81,7 +85,7 @@ export const ThemeDropdown = React.forwardRef<HTMLDivElement, ThemeDropdownProps
           <ChevronDown
             className={cn(
               "w-3.5 h-3.5 text-muted-foreground transition-transform duration-200 shrink-0",
-              isOpen && "rotate-180"
+              isOpen && "rotate-180",
             )}
             aria-hidden="true"
           />
@@ -103,7 +107,10 @@ export const ThemeDropdown = React.forwardRef<HTMLDivElement, ThemeDropdownProps
                   onClick={() => onSelect(item.id)}
                 >
                   <div className="flex items-center gap-2.5 min-w-0">
-                    <span className="flex -space-x-1 shrink-0" aria-hidden="true">
+                    <span
+                      className="flex -space-x-1 shrink-0"
+                      aria-hidden="true"
+                    >
                       <span
                         className="w-3.5 h-3.5 rounded-full border border-border shadow-xs"
                         style={{ backgroundColor: item.badgeColors[0] }}
@@ -117,7 +124,10 @@ export const ThemeDropdown = React.forwardRef<HTMLDivElement, ThemeDropdownProps
                   </div>
 
                   {isSelected && (
-                    <Check className="w-4 h-4 text-current shrink-0 ml-2" aria-hidden="true" />
+                    <Check
+                      className="w-4 h-4 text-current shrink-0 ml-2"
+                      aria-hidden="true"
+                    />
                   )}
                 </AppDropdownItem>
               );
@@ -126,7 +136,7 @@ export const ThemeDropdown = React.forwardRef<HTMLDivElement, ThemeDropdownProps
         </AppDropdownMenu>
       </div>
     );
-  }
+  },
 );
 
 ThemeDropdown.displayName = "ThemeDropdown";
