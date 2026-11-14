@@ -33,6 +33,34 @@
     "auditLogs": "View Security Logs",
     "systemOnline": "All Systems Operational"
   },
+  "nav": {
+    "dashboard": "Dashboard",
+    "customers": "Customers",
+    "settings": "Settings"
+  },
+  "customers": {
+    "title": "Customer Directory",
+    "subtitle": "High-performance virtualized directory supporting 1,000+ accounts with real-time search & filters",
+    "searchPlaceholder": "Search customer by name, email, or company...",
+    "filterAll": "All Customers",
+    "filterActive": "Active",
+    "filterPending": "Pending",
+    "filterInactive": "Inactive",
+    "table": {
+      "customer": "Customer",
+      "company": "Company",
+      "status": "Status",
+      "totalSpent": "Total Spent",
+      "lastActive": "Last Active",
+      "actions": "Actions"
+    },
+    "kpi": {
+      "totalCustomers": "Total Customers",
+      "activeRate": "Active Rate",
+      "avgRevenue": "Avg. Customer Value"
+    },
+    "empty": "No customers found matching your criteria."
+  },
   "theme": {
     "activeTheme": "Active Theme Palette:",
     "dark": {

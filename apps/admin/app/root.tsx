@@ -7,7 +7,11 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from "@remix-run/react";
-import type { LinksFunction, LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
+import type {
+  LinksFunction,
+  LoaderFunctionArgs,
+  MetaFunction,
+} from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
@@ -27,7 +31,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
     { title: titles[locale] || titles.gu },
     {
       name: "description",
-      content: "Admin portal application with responsive mobile-first design, shared UI components, and 6-theme system.",
+      content:
+        "Admin portal application with responsive mobile-first design, shared UI components, and 6-theme system.",
     },
   ];
 };
@@ -53,12 +58,20 @@ export async function loader({ request }: LoaderFunctionArgs) {
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>();
   const { i18n } = useTranslation();
-  const clientLocale = (i18n.language?.slice(0, 2) || data?.locale || "gu") as string;
+  const clientLocale = (i18n.language?.slice(0, 2) ||
+    data?.locale ||
+    "gu") as string;
 
   useChangeLanguage(data?.locale || "gu");
 
   return (
-    <html lang={clientLocale} dir={i18n.dir()} data-theme="dark" className="dark" suppressHydrationWarning>
+    <html
+      lang={clientLocale}
+      dir={i18n.dir()}
+      data-theme="dark"
+      className="dark"
+      suppressHydrationWarning
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -72,9 +85,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           Skip to main content
         </a>
-        <MultiThemeProvider defaultTheme="dark">
-          {children}
-        </MultiThemeProvider>
+        <MultiThemeProvider defaultTheme="dark">{children}</MultiThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>

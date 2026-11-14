@@ -28,7 +28,10 @@ export interface FormFieldActionProps {
   disabled?: boolean;
 }
 
-export const FormFieldAction = React.forwardRef<HTMLFormElement, FormFieldActionProps>(
+export const FormFieldAction = React.forwardRef<
+  HTMLFormElement,
+  FormFieldActionProps
+>(
   (
     {
       className,
@@ -48,16 +51,22 @@ export const FormFieldAction = React.forwardRef<HTMLFormElement, FormFieldAction
       buttonIcon,
       disabled = false,
     },
-    ref
+    ref,
   ) => {
     return (
       <form
         ref={ref}
         onSubmit={onSubmit}
-        className={cn("p-4 rounded-xl bg-secondary/50 border border-border space-y-3", className)}
+        className={cn(
+          "p-4 rounded-xl bg-secondary/50 border border-border space-y-3",
+          className,
+        )}
       >
         {label && (
-          <label htmlFor={id} className="block text-xs font-bold uppercase tracking-wider text-foreground">
+          <label
+            htmlFor={id}
+            className="block text-xs font-bold uppercase tracking-wider text-foreground"
+          >
             {label}
           </label>
         )}
@@ -96,7 +105,7 @@ export const FormFieldAction = React.forwardRef<HTMLFormElement, FormFieldAction
         )}
       </form>
     );
-  }
+  },
 );
 
 FormFieldAction.displayName = "FormFieldAction";

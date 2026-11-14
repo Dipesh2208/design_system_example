@@ -22,7 +22,8 @@ const spinnerVariants = cva("animate-spin shrink-0 text-current", {
 });
 
 export interface AppSpinnerProps
-  extends React.SVGAttributes<SVGSVGElement>,
+  extends
+    React.SVGAttributes<SVGSVGElement>,
     VariantProps<typeof spinnerVariants> {}
 
 export const AppSpinner = React.forwardRef<SVGSVGElement, AppSpinnerProps>(
@@ -35,7 +36,7 @@ export const AppSpinner = React.forwardRef<SVGSVGElement, AppSpinnerProps>(
         {...props}
       />
     );
-  }
+  },
 );
 
 AppSpinner.displayName = "AppSpinner";

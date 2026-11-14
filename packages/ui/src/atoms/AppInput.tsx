@@ -20,11 +20,12 @@ const inputVariants = cva(
     defaultVariants: {
       inputSize: "md",
     },
-  }
+  },
 );
 
 export interface AppInputProps
-  extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
+  extends
+    Omit<React.InputHTMLAttributes<HTMLInputElement>, "size">,
     VariantProps<typeof inputVariants> {}
 
 export const AppInput = React.forwardRef<HTMLInputElement, AppInputProps>(
@@ -37,7 +38,7 @@ export const AppInput = React.forwardRef<HTMLInputElement, AppInputProps>(
         {...props}
       />
     );
-  }
+  },
 );
 
 AppInput.displayName = "AppInput";

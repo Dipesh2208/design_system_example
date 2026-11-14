@@ -17,7 +17,7 @@ export default async function handleRequest(
   responseStatusCode: number,
   responseHeaders: Headers,
   remixContext: EntryContext,
-  _loadContext: AppLoadContext
+  _loadContext: AppLoadContext,
 ) {
   const instance = createInstance();
   const lng = await i18next.getLocale(request);
@@ -45,13 +45,14 @@ export default async function handleRequest(
         new Response(stream, {
           headers: responseHeaders,
           status: responseStatusCode,
-        })
+        }),
       );
 
       pipe(body);
     };
 
-    const isBotOrSpa = (userAgent && isbot(userAgent)) || remixContext.isSpaMode;
+    const isBotOrSpa =
+      (userAgent && isbot(userAgent)) || remixContext.isSpaMode;
 
     const { pipe, abort } = renderToPipeableStream(
       <I18nextProvider i18n={instance}>
@@ -81,7 +82,7 @@ export default async function handleRequest(
             console.error(error);
           }
         },
-      }
+      },
     );
 
     setTimeout(abort, ABORT_DELAY);

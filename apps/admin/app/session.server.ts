@@ -16,7 +16,9 @@ export const sessionCookie = createCookie("admin_session", {
   maxAge: 7 * 24 * 60 * 60, // 7 days
 });
 
-export async function getAdminUser(request: Request): Promise<AdminUser | null> {
+export async function getAdminUser(
+  request: Request,
+): Promise<AdminUser | null> {
   const cookieHeader = request.headers.get("Cookie");
   const session = await sessionCookie.parse(cookieHeader);
   if (!session || !session.user) {

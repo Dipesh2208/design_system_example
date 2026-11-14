@@ -1,14 +1,9 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useSyncExternalStore } from "react";
+import React, { createContext, useContext, useEffect } from "react";
+import { useAppStore, type ThemeType } from "@repo/ui/stores";
 
-export type ThemeType =
-  | "dark"
-  | "light"
-  | "rose-red"
-  | "azure-blue"
-  | "magenta-violet"
-  | "cyan-orange";
+export { type ThemeType };
 
 export interface ThemeOption {
   id: ThemeType;
@@ -51,7 +46,8 @@ export const THEME_OPTIONS: ThemeOption[] = [
   {
     id: "cyan-orange",
     name: "Cyan & Orange (WCAG AA)",
-    description: "High-contrast teal and warm amber calibrated for 4.5:1+ contrast",
+    description:
+      "High-contrast teal and warm amber calibrated for 4.5:1+ contrast",
     badgeColors: ["#0e7490", "#c2410c"],
   },
 ];
@@ -59,66 +55,30 @@ export const THEME_OPTIONS: ThemeOption[] = [
 interface ThemeContextType {
   theme: ThemeType;
   setTheme: (theme: ThemeType) => void;
-  themes: ThemeOption[];
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-const STORAGE_KEY = "admin-app-theme";
-
-function subscribe(callback: () => void) {
-  if (typeof window === "undefined") return () => {};
-  window.addEventListener("storage", callback);
-  window.addEventListener("theme-change", callback);
-  return () => {
-    window.removeEventListener("storage", callback);
-    window.removeEventListener("theme-change", callback);
-  };
-}
-
-export function MultiThemeProvider({
+export function ThemeProvider({
   children,
+  initialTheme = "dark",
   defaultTheme = "dark",
 }: {
   children: React.ReactNode;
-  defaultTheme?: ThemeType;
+  initialTheme?: ThemeType;
+  defaultTheme?: ThemeType | string;
 }) {
-  const theme = useSyncExternalStore<ThemeType>(
-    subscribe,
-    () => {
-      try {
-        const stored = localStorage.getItem(STORAGE_KEY) as ThemeType | null;
-        if (stored && THEME_OPTIONS.some((t) => t.id === stored)) {
-          return stored;
-        }
-      } catch {
-        // Fallback if localStorage is inaccessible
-      }
-      return defaultTheme;
-    },
-    () => defaultTheme
-  );
+  // Sync directly with the centralized Zustand store
+  const theme = useAppStore((state) => state.theme);
+  const setTheme = useAppStore((state) => state.setTheme);
 
+  // Apply theme to HTML attribute immediately
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
   }, [theme]);
 
-  const setTheme = (newTheme: ThemeType) => {
-    try {
-      localStorage.setItem(STORAGE_KEY, newTheme);
-      window.dispatchEvent(new Event("theme-change"));
-    } catch {
-      // Ignore localStorage errors
-    }
-  };
-
   return (
-    <ThemeContext.Provider value={{ theme, setTheme, themes: THEME_OPTIONS }}>
+    <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
     </ThemeContext.Provider>
   );
@@ -126,8 +86,11 @@ export function MultiThemeProvider({
 
 export function useTheme() {
   const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a MultiThemeProvider");
-  }
-  return context;
+  const storeTheme = useAppStore((state) => state.theme);
+  const storeSetTheme = useAppStore((state) => state.setTheme);
+
+  if (context) return context;
+  return { theme: storeTheme, setTheme: storeSetTheme };
 }
+
+export const MultiThemeProvider = ThemeProvider;
