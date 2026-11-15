@@ -59,7 +59,34 @@
       "activeRate": "Active Rate",
       "avgRevenue": "Avg. Customer Value"
     },
-    "empty": "No customers found matching your criteria."
+    "empty": "No customers found matching your criteria.",
+    "addCustomer": "Customer",
+    "addCustomerDrawer": {
+      "title": "Add New Customer",
+      "subtitle": "Enter the customer details below to create an account.",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "e.g. Amit",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "e.g. Patel",
+      "phone": "Mobile Number",
+      "phonePlaceholder": "e.g. 9876543210",
+      "mandatoryNotice": "* All three fields are mandatory",
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "phoneRequired": "Mobile number is required",
+        "phoneInvalid": "Please enter a valid 10-digit mobile number"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Add Customer",
+        "update": "Update Customer"
+      },
+      "successMessage": "Customer added successfully!",
+      "editTitle": "Update Customer",
+      "editSubtitle": "Modify the customer information below."
+    },
+    "editCustomer": "Edit Customer"
   },
   "theme": {
     "activeTheme": "Active Theme Palette:",

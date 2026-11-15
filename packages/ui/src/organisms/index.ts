@@ -7,3 +7,4 @@ export * from "./AppAdminLayout";
 export * from "./CustomerProfileSidebar";
 export * from "./UserAvatarDropdownOrganism";
 export * from "./AppSettingsModal";
+export * from "./AddCustomerDrawer";
