@@ -29,6 +29,7 @@ import {
   Clock,
   Ban,
   FileSpreadsheet,
+  Edit3,
 } from "lucide-react";
 
 import {
@@ -38,6 +39,8 @@ import {
   CustomerProfileSidebar,
   CustomerProfileTab,
   UserAvatarDropdownOrganism,
+  AddCustomerDrawer,
+  type NewCustomerFormData,
 } from "@repo/ui/organisms";
 
 import { requireAdminUser, sessionCookie } from "../session.server";
@@ -208,6 +211,11 @@ export default function CustomersPage() {
   // Settings Modal State
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
+  // Add Customer Drawer State
+  const [isAddCustomerOpen, setIsAddCustomerOpen] = useState(false);
+  const [editingCustomer, setEditingCustomer] = useState<Customer | null>(null);
+  const [customCustomers, setCustomCustomers] = useState<Customer[]>([]);
+
   // View Mode: Table vs. Card View
   const [viewMode, setViewMode] = useState<"table" | "card">("table");
 
@@ -372,6 +380,65 @@ export default function CustomersPage() {
     handleLoadMore,
   ]);
 
+  const handleOpenEdit = (customer: Customer, e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    setEditingCustomer(customer);
+    setIsAddCustomerOpen(true);
+  };
+
+  const handleOpenAdd = () => {
+    setEditingCustomer(null);
+    setIsAddCustomerOpen(true);
+  };
+
+  const handleSaveCustomer = (formData: NewCustomerFormData) => {
+    if (editingCustomer) {
+      // Update existing customer
+      const updatedCustomer: Customer = {
+        ...editingCustomer,
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        phone: formData.phone,
+        email: `${formData.firstName.toLowerCase()}.${formData.lastName.toLowerCase()}@example.com`,
+      };
+      setCustomCustomers((prev) => {
+        const exists = prev.some((c) => c.id === editingCustomer.id);
+        if (exists) {
+          return prev.map((c) => (c.id === editingCustomer.id ? updatedCustomer : c));
+        }
+        return [updatedCustomer, ...prev];
+      });
+      setEditingCustomer(null);
+    } else {
+      // Create new customer
+      const newId = 'cust-' + Date.now();
+      const colors = [
+        "bg-blue-600",
+        "bg-emerald-600",
+        "bg-purple-600",
+        "bg-amber-600",
+        "bg-rose-600",
+        "bg-indigo-600",
+        "bg-cyan-600",
+      ];
+      const newCustomer: Customer = {
+        id: newId,
+        name: formData.firstName + " " + formData.lastName,
+        email: formData.firstName.toLowerCase() + "." + formData.lastName.toLowerCase() + "@example.com",
+        phone: formData.phone,
+        company: "Direct Customer",
+        status: "active",
+        spent: 0,
+        lastActive: "Just now",
+        avatarBg: colors[Math.floor(Math.random() * colors.length)],
+        rating: 5,
+        isFavorite: false,
+      };
+      setCustomCustomers((prev) => [newCustomer, ...prev]);
+      setSelectedCustomerId(newId);
+      setIsMobileSidebarOpen(true);
+    }
+  };
+
   const selectCustomer = (id: string) => {
     setSelectedCustomerId(id);
     setActiveSidebarTab("details");
@@ -427,7 +494,6 @@ export default function CustomersPage() {
         width: "40%",
         sortable: true,
         render: (c: Customer) => {
-          const isExpanded = expandedCustomerIds.has(c.id);
           return (
             <div className="flex items-center justify-between gap-2.5 py-1.5 text-sm pr-2">
               <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-primary/10 border border-primary/20 text-foreground transition-all group-hover:border-primary/40 group-hover:bg-primary/15 shadow-xs">
@@ -437,18 +503,15 @@ export default function CustomersPage() {
                 </span>
               </div>
 
-              {/* Quick Accordion Label on Desktop */}
+              {/* Edit Icon moved to far right where Details was */}
               <button
                 type="button"
-                onClick={(e) => toggleAccordion(c.id, e)}
-                className="hidden sm:inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors font-medium px-2 py-1 rounded-lg hover:bg-muted/60"
+                onClick={(e) => handleOpenEdit(c, e)}
+                className="p-2 rounded-xl text-muted-foreground hover:text-primary hover:bg-muted/80 transition-colors border border-transparent hover:border-border"
+                title={t("customers.editCustomer", "Edit Customer")}
+                aria-label={t("customers.editCustomer", "Edit Customer")}
               >
-                <span>{isExpanded ? "Hide" : "Details"}</span>
-                {isExpanded ? (
-                  <ChevronUp className="w-3.5 h-3.5" />
-                ) : (
-                  <ChevronDown className="w-3.5 h-3.5" />
-                )}
+                <Edit3 className="w-4 h-4" />
               </button>
             </div>
           );
@@ -521,23 +584,34 @@ export default function CustomersPage() {
             </div>
           </div>
 
-          {/* Accordion Expand/Collapse Trigger */}
-          <button
-            type="button"
-            onClick={(e) => toggleAccordion(c.id, e)}
-            className={`p-2 rounded-xl border transition-all ${
-              isExpanded
-                ? "bg-primary text-primary-foreground border-primary"
-                : "bg-muted/50 border-border text-muted-foreground hover:text-foreground hover:bg-muted"
-            }`}
-            title={isExpanded ? "Collapse Card" : "Expand Card Accordion"}
-          >
-            {isExpanded ? (
-              <ChevronUp className="w-4 h-4" />
-            ) : (
-              <ChevronDown className="w-4 h-4" />
-            )}
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={(e) => handleOpenEdit(c, e)}
+              className="p-2 rounded-xl border border-border bg-muted/40 text-muted-foreground hover:text-primary hover:bg-muted transition-colors"
+              title={t("customers.editCustomer", "Edit Customer")}
+              aria-label={t("customers.editCustomer", "Edit Customer")}
+            >
+              <Edit3 className="w-4 h-4" />
+            </button>
+            {/* Accordion Expand/Collapse Trigger */}
+            <button
+              type="button"
+              onClick={(e) => toggleAccordion(c.id, e)}
+              className={`p-2 rounded-xl border transition-all ${
+                isExpanded
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-muted/50 border-border text-muted-foreground hover:text-foreground hover:bg-muted"
+              }`}
+              title={isExpanded ? "Collapse Card" : "Expand Card Accordion"}
+            >
+              {isExpanded ? (
+                <ChevronUp className="w-4 h-4" />
+              ) : (
+                <ChevronDown className="w-4 h-4" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Middle: Phone Number with Pill */}
@@ -652,6 +726,7 @@ export default function CustomersPage() {
             }}
             isMobileOpen={isMobileSidebarOpen}
             onMobileClose={() => setIsMobileSidebarOpen(false)}
+            onEdit={() => handleOpenEdit(selectedCustomer)}
           />
 
           {/* Customer Profile Main Content Area */}
@@ -888,11 +963,11 @@ export default function CustomersPage() {
                 {/* + Add Customer Action Button */}
                 <button
                   type="button"
-                  onClick={() => alert("Add customer form / modal")}
+                  onClick={handleOpenAdd}
                   className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-semibold hover:opacity-90 transition-opacity min-h-[44px] shadow-xs cursor-pointer shrink-0"
                 >
                   <Plus className="w-4 h-4" />
-                  <span>Customer</span>
+                  <span>{t("customers.addCustomer", "Customer")}</span>
                 </button>
               </div>
             )}
@@ -1156,6 +1231,46 @@ export default function CustomersPage() {
           </div>
         </div>
       )}
+      {/* Unified Add / Edit Customer Drawer */}
+      <AddCustomerDrawer
+        isOpen={isAddCustomerOpen}
+        onClose={() => {
+          setIsAddCustomerOpen(false);
+          setEditingCustomer(null);
+        }}
+        onSubmit={handleSaveCustomer}
+        mode={editingCustomer ? "edit" : "add"}
+        initialData={
+          editingCustomer
+            ? {
+                id: editingCustomer.id,
+                firstName: editingCustomer.name.split(" ")[0] || "",
+                lastName: editingCustomer.name.split(" ").slice(1).join(" ") || "",
+                phone: editingCustomer.phone,
+              }
+            : null
+        }
+        translations={{
+          title: t("customers.addCustomerDrawer.title", "Add New Customer"),
+          subtitle: t("customers.addCustomerDrawer.subtitle", "Enter the customer details below to create an account."),
+          editTitle: t("customers.addCustomerDrawer.editTitle", "Update Customer"),
+          editSubtitle: t("customers.addCustomerDrawer.editSubtitle", "Modify the customer information below."),
+          firstNameLabel: t("customers.addCustomerDrawer.firstName", "First Name"),
+          firstNamePlaceholder: t("customers.addCustomerDrawer.firstNamePlaceholder", "e.g. Amit"),
+          lastNameLabel: t("customers.addCustomerDrawer.lastName", "Last Name"),
+          lastNamePlaceholder: t("customers.addCustomerDrawer.lastNamePlaceholder", "e.g. Patel"),
+          phoneLabel: t("customers.addCustomerDrawer.phone", "Mobile Number"),
+          phonePlaceholder: t("customers.addCustomerDrawer.phonePlaceholder", "e.g. 9876543210"),
+          mandatoryNotice: t("customers.addCustomerDrawer.mandatoryNotice", "* All three fields are mandatory"),
+          errorFirstNameRequired: t("customers.addCustomerDrawer.errors.firstNameRequired", "First name is required"),
+          errorLastNameRequired: t("customers.addCustomerDrawer.errors.lastNameRequired", "Last name is required"),
+          errorPhoneRequired: t("customers.addCustomerDrawer.errors.phoneRequired", "Mobile number is required"),
+          errorPhoneInvalid: t("customers.addCustomerDrawer.errors.phoneInvalid", "Please enter a valid 10-digit mobile number"),
+          cancelButton: t("customers.addCustomerDrawer.buttons.cancel", "Cancel"),
+          submitButton: t("customers.addCustomerDrawer.buttons.save", "Add Customer"),
+          updateButton: t("customers.addCustomerDrawer.buttons.update", "Update Customer"),
+        }}
+      />
     </AppAdminLayout>
   );
 }

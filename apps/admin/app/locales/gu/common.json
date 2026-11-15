@@ -59,7 +59,34 @@
       "activeRate": "સક્રિય દર",
       "avgRevenue": "સરેરાશ ગ્રાહક મૂલ્ય"
     },
-    "empty": "તમારા માપદંડ સાથે મેળ ખાતા કોઈ ગ્રાહકો મળ્યા નથી."
+    "empty": "તમારા માપદંડ સાથે મેળ ખાતા કોઈ ગ્રાહકો મળ્યા નથી.",
+    "addCustomer": "ગ્રાહક ઉમેરો",
+    "addCustomerDrawer": {
+      "title": "નવો ગ્રાહક ઉમેરો",
+      "subtitle": "એકાઉન્ટ બનાવવા માટે નીચે ગ્રાહકની વિગતો દાખલ કરો.",
+      "firstName": "પ્રથમ નામ",
+      "firstNamePlaceholder": "દા.ત. અમિત",
+      "lastName": "અટક / છેલ્લું નામ",
+      "lastNamePlaceholder": "દા.ત. પટેલ",
+      "phone": "મોબાઇલ નંબર",
+      "phonePlaceholder": "દા.ત. ૯૮૭૬૫૪૩૨૧૦",
+      "mandatoryNotice": "* ત્રણેય ફીલ્ડ ફરજિયાત છે",
+      "errors": {
+        "firstNameRequired": "પ્રથમ નામ ફરજિયાત છે",
+        "lastNameRequired": "અટક / છેલ્લું નામ ફરજિયાત છે",
+        "phoneRequired": "મોબાઇલ નંબર ફરજિયાત છે",
+        "phoneInvalid": "કૃપા કરીને માન્ય ૧૦ અંકનો મોબાઇલ નંબર દાખલ કરો"
+      },
+      "buttons": {
+        "cancel": "રદ કરો",
+        "save": "ગ્રાહક ઉમેરો",
+        "update": "ગ્રાહક અપડેટ કરો"
+      },
+      "successMessage": "ગ્રાહક સફળતાપૂર્વક ઉમેરાયો!",
+      "editTitle": "ગ્રાહક અપડેટ કરો",
+      "editSubtitle": "નીચે આપેલ ગ્રાહકની માહિતીમાં ફેરફાર કરો."
+    },
+    "editCustomer": "ગ્રાહક સંપાદિત કરો"
   },
   "theme": {
     "activeTheme": "સક્રિય થીમ પૅલેટ:",

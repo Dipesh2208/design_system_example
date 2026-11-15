@@ -65,5 +65,34 @@
     "english": "English",
     "gujarati": "ગુજરાતી (Gujarati)",
     "hindi": "हिंदी (Hindi)"
+  },
+  "customers": {
+    "addCustomer": "ग्राहक जोड़ें",
+    "addCustomerDrawer": {
+      "title": "नया ग्राहक जोड़ें",
+      "subtitle": "खाता बनाने के लिए नीचे ग्राहक विवरण दर्ज करें।",
+      "firstName": "पहला नाम",
+      "firstNamePlaceholder": "उदा. अमित",
+      "lastName": "अंतिम नाम",
+      "lastNamePlaceholder": "उदा. पटेल",
+      "phone": "मोबाइल नंबर",
+      "phonePlaceholder": "उदा. ९८७६५४३२१०",
+      "mandatoryNotice": "* सभी तीनों फ़ील्ड अनिवार्य हैं",
+      "errors": {
+        "firstNameRequired": "पहला नाम अनिवार्य है",
+        "lastNameRequired": "अंतिम नाम अनिवार्य है",
+        "phoneRequired": "मोबाइल नंबर अनिवार्य है",
+        "phoneInvalid": "कृपया एक मान्य १० अंकों का मोबाइल नंबर दर्ज करें"
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "save": "ग्राहक जोड़ें",
+        "update": "ग्राहक अपडेट करें"
+      },
+      "successMessage": "ग्राहक सफलतापूर्वक जोड़ा गया!",
+      "editTitle": "ग्राहक अपडेट करें",
+      "editSubtitle": "नीचे दी गई ग्राहक जानकारी को संशोधित करें।"
+    },
+    "editCustomer": "ग्राहक संपादित करें"
   }
 }
