@@ -403,14 +403,16 @@ export default function CustomersPage() {
       setCustomCustomers((prev) => {
         const exists = prev.some((c) => c.id === editingCustomer.id);
         if (exists) {
-          return prev.map((c) => (c.id === editingCustomer.id ? updatedCustomer : c));
+          return prev.map((c) =>
+            c.id === editingCustomer.id ? updatedCustomer : c,
+          );
         }
         return [updatedCustomer, ...prev];
       });
       setEditingCustomer(null);
     } else {
       // Create new customer
-      const newId = 'cust-' + Date.now();
+      const newId = "cust-" + Date.now();
       const colors = [
         "bg-blue-600",
         "bg-emerald-600",
@@ -423,7 +425,11 @@ export default function CustomersPage() {
       const newCustomer: Customer = {
         id: newId,
         name: formData.firstName + " " + formData.lastName,
-        email: formData.firstName.toLowerCase() + "." + formData.lastName.toLowerCase() + "@example.com",
+        email:
+          formData.firstName.toLowerCase() +
+          "." +
+          formData.lastName.toLowerCase() +
+          "@example.com",
         phone: formData.phone,
         company: "Direct Customer",
         status: "active",
@@ -1245,30 +1251,76 @@ export default function CustomersPage() {
             ? {
                 id: editingCustomer.id,
                 firstName: editingCustomer.name.split(" ")[0] || "",
-                lastName: editingCustomer.name.split(" ").slice(1).join(" ") || "",
+                lastName:
+                  editingCustomer.name.split(" ").slice(1).join(" ") || "",
                 phone: editingCustomer.phone,
               }
             : null
         }
         translations={{
           title: t("customers.addCustomerDrawer.title", "Add New Customer"),
-          subtitle: t("customers.addCustomerDrawer.subtitle", "Enter the customer details below to create an account."),
-          editTitle: t("customers.addCustomerDrawer.editTitle", "Update Customer"),
-          editSubtitle: t("customers.addCustomerDrawer.editSubtitle", "Modify the customer information below."),
-          firstNameLabel: t("customers.addCustomerDrawer.firstName", "First Name"),
-          firstNamePlaceholder: t("customers.addCustomerDrawer.firstNamePlaceholder", "e.g. Amit"),
+          subtitle: t(
+            "customers.addCustomerDrawer.subtitle",
+            "Enter the customer details below to create an account.",
+          ),
+          editTitle: t(
+            "customers.addCustomerDrawer.editTitle",
+            "Update Customer",
+          ),
+          editSubtitle: t(
+            "customers.addCustomerDrawer.editSubtitle",
+            "Modify the customer information below.",
+          ),
+          firstNameLabel: t(
+            "customers.addCustomerDrawer.firstName",
+            "First Name",
+          ),
+          firstNamePlaceholder: t(
+            "customers.addCustomerDrawer.firstNamePlaceholder",
+            "e.g. Amit",
+          ),
           lastNameLabel: t("customers.addCustomerDrawer.lastName", "Last Name"),
-          lastNamePlaceholder: t("customers.addCustomerDrawer.lastNamePlaceholder", "e.g. Patel"),
+          lastNamePlaceholder: t(
+            "customers.addCustomerDrawer.lastNamePlaceholder",
+            "e.g. Patel",
+          ),
           phoneLabel: t("customers.addCustomerDrawer.phone", "Mobile Number"),
-          phonePlaceholder: t("customers.addCustomerDrawer.phonePlaceholder", "e.g. 9876543210"),
-          mandatoryNotice: t("customers.addCustomerDrawer.mandatoryNotice", "* All three fields are mandatory"),
-          errorFirstNameRequired: t("customers.addCustomerDrawer.errors.firstNameRequired", "First name is required"),
-          errorLastNameRequired: t("customers.addCustomerDrawer.errors.lastNameRequired", "Last name is required"),
-          errorPhoneRequired: t("customers.addCustomerDrawer.errors.phoneRequired", "Mobile number is required"),
-          errorPhoneInvalid: t("customers.addCustomerDrawer.errors.phoneInvalid", "Please enter a valid 10-digit mobile number"),
-          cancelButton: t("customers.addCustomerDrawer.buttons.cancel", "Cancel"),
-          submitButton: t("customers.addCustomerDrawer.buttons.save", "Add Customer"),
-          updateButton: t("customers.addCustomerDrawer.buttons.update", "Update Customer"),
+          phonePlaceholder: t(
+            "customers.addCustomerDrawer.phonePlaceholder",
+            "e.g. 9876543210",
+          ),
+          mandatoryNotice: t(
+            "customers.addCustomerDrawer.mandatoryNotice",
+            "* All three fields are mandatory",
+          ),
+          errorFirstNameRequired: t(
+            "customers.addCustomerDrawer.errors.firstNameRequired",
+            "First name is required",
+          ),
+          errorLastNameRequired: t(
+            "customers.addCustomerDrawer.errors.lastNameRequired",
+            "Last name is required",
+          ),
+          errorPhoneRequired: t(
+            "customers.addCustomerDrawer.errors.phoneRequired",
+            "Mobile number is required",
+          ),
+          errorPhoneInvalid: t(
+            "customers.addCustomerDrawer.errors.phoneInvalid",
+            "Please enter a valid 10-digit mobile number",
+          ),
+          cancelButton: t(
+            "customers.addCustomerDrawer.buttons.cancel",
+            "Cancel",
+          ),
+          submitButton: t(
+            "customers.addCustomerDrawer.buttons.save",
+            "Add Customer",
+          ),
+          updateButton: t(
+            "customers.addCustomerDrawer.buttons.update",
+            "Update Customer",
+          ),
         }}
       />
     </AppAdminLayout>

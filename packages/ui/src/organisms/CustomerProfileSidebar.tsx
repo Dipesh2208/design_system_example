@@ -134,10 +134,11 @@ export function CustomerProfileSidebar({
                 aria-label={`Rate ${starIndex} stars`}
               >
                 <Star
-                  className={`w-4 h-4 ${isFilled
+                  className={`w-4 h-4 ${
+                    isFilled
                       ? "text-amber-500 fill-amber-500 stroke-amber-500"
                       : "stroke-current fill-transparent"
-                    }`}
+                  }`}
                 />
               </button>
             );
@@ -165,10 +166,11 @@ export function CustomerProfileSidebar({
         <button
           type="button"
           onClick={() => onTabChange("details")}
-          className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-left ${activeTab === "details"
+          className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-left ${
+            activeTab === "details"
               ? "bg-primary text-primary-foreground font-semibold shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-            }`}
+          }`}
         >
           <FileSpreadsheet className="w-4 h-4 shrink-0" />
           <span className="truncate">Details</span>
@@ -178,10 +180,11 @@ export function CustomerProfileSidebar({
         <button
           type="button"
           onClick={() => onTabChange("invoice")}
-          className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-left ${activeTab === "invoice"
+          className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all text-left ${
+            activeTab === "invoice"
               ? "bg-primary text-primary-foreground font-semibold shadow-xs"
               : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-            }`}
+          }`}
         >
           <Receipt className="w-4 h-4 shrink-0" />
           <span className="truncate">Invoice</span>

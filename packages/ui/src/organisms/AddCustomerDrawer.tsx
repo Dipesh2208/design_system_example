@@ -71,10 +71,9 @@ export function AddCustomerDrawer({
       ? translations.editTitle || "Update Customer"
       : translations.title || "Add New Customer",
     subtitle: isEditMode
-      ? translations.editSubtitle ||
-      "Modify the customer information below."
+      ? translations.editSubtitle || "Modify the customer information below."
       : translations.subtitle ||
-      "Enter the customer details below to create an account.",
+        "Enter the customer details below to create an account.",
     firstNameLabel: translations.firstNameLabel || "First Name",
     firstNamePlaceholder: translations.firstNamePlaceholder || "e.g. Amit",
     lastNameLabel: translations.lastNameLabel || "Last Name",
@@ -248,8 +247,7 @@ export function AddCustomerDrawer({
               {/* First Name Field */}
               <div className="space-y-1.5">
                 <label className="block text-xs font-semibold text-foreground">
-                  {t.firstNameLabel}{" "}
-                  <span className="text-destructive">*</span>
+                  {t.firstNameLabel} <span className="text-destructive">*</span>
                 </label>
                 <div className="relative">
                   <AppInput
@@ -259,14 +257,18 @@ export function AddCustomerDrawer({
                     onChange={(e) => {
                       setFirstName(e.target.value);
                       if (errors.firstName) {
-                        setErrors((prev) => ({ ...prev, firstName: undefined }));
+                        setErrors((prev) => ({
+                          ...prev,
+                          firstName: undefined,
+                        }));
                       }
                     }}
                     placeholder={t.firstNamePlaceholder}
-                    className={`pl-9 ${errors.firstName
+                    className={`pl-9 ${
+                      errors.firstName
                         ? "border-destructive focus:ring-destructive"
                         : ""
-                      }`}
+                    }`}
                   />
                   <User className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
@@ -294,10 +296,11 @@ export function AddCustomerDrawer({
                       }
                     }}
                     placeholder={t.lastNamePlaceholder}
-                    className={`pl-9 ${errors.lastName
+                    className={`pl-9 ${
+                      errors.lastName
                         ? "border-destructive focus:ring-destructive"
                         : ""
-                      }`}
+                    }`}
                   />
                   <User className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
@@ -325,10 +328,11 @@ export function AddCustomerDrawer({
                       }
                     }}
                     placeholder={t.phonePlaceholder}
-                    className={`pl-9 ${errors.phone
+                    className={`pl-9 ${
+                      errors.phone
                         ? "border-destructive focus:ring-destructive"
                         : ""
-                      }`}
+                    }`}
                   />
                   <Phone className="w-4 h-4 text-muted-foreground absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
                 </div>
@@ -369,4 +373,3 @@ export function AddCustomerDrawer({
     </div>
   );
 }
-
