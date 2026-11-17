@@ -36,6 +36,7 @@
   "nav": {
     "dashboard": "ડેશબોર્ડ",
     "customers": "ગ્રાહકો",
+    "leads": "લીડ્સ",
     "settings": "સેટિંગ્સ"
   },
   "customers": {
@@ -87,6 +88,69 @@
       "editSubtitle": "નીચે આપેલ ગ્રાહકની માહિતીમાં ફેરફાર કરો."
     },
     "editCustomer": "ગ્રાહક સંપાદિત કરો"
+  },
+  "leads": {
+    "title": "લીડ ડિરેક્ટરી",
+    "subtitle": "રીઅલ-ટાઇમ શોધ અને ફિલ્ટર્સ સાથે ૧,૦૦૦+ લીડ્સને સપોર્ટ કરતી ઉચ્ચ-પ્રદર્શન વર્ચ્યુઅલાઇઝ્ડ ડિરેક્ટરી",
+    "searchPlaceholder": "નામ, ઇમેઇલ અથવા કંપની દ્વારા લીડ શોધો...",
+    "filterAll": "બધી લીડ્સ",
+    "filterActive": "સક્રિય",
+    "filterPending": "બાકી (Pending)",
+    "filterInactive": "નિષ્ક્રિય",
+    "colName": "લીડ નામ અને પ્રોફાઇલ",
+    "colPhone": "મોબાઇલ નંબર",
+    "table": {
+      "lead": "લીડ",
+      "company": "કંપની",
+      "status": "સ્થિતિ",
+      "estimatedBudget": "અંદાજિત મૂલ્ય",
+      "lastActive": "છેલ્લે સક્રિય",
+      "actions": "ક્રિયાઓ"
+    },
+    "kpi": {
+      "totalLeads": "કુલ લીડ્સ",
+      "conversionRate": "લાયકાત દર",
+      "avgValue": "સરેરાશ લીડ મૂલ્ય"
+    },
+    "empty": "તમારા માપદંડ સાથે મેળ ખાતી કોઈ લીડ્સ મળી નથી.",
+    "stage": {
+      "label": "તબક્કો (Stage)",
+      "all": "બધા તબક્કા (All Stages)",
+      "pending": "બાકી (Pending)",
+      "received": "પ્રાપ્ત (Received)",
+      "lost": "ગુમાવેલ (Lost)"
+    },
+    "addLead": "લીડ ઉમેરો",
+    "addLeadDrawer": {
+      "title": "નવી લીડ ઉમેરો",
+      "subtitle": "નવી ઇન્ક્વાયરી બનાવવા માટે નીચે વિગતો દાખલ કરો.",
+      "stage": "તબક્કો",
+      "stagePending": "બાકી (Pending)",
+      "stageReceived": "પ્રાપ્ત (Received)",
+      "stageLost": "ગુમાવેલ (Lost)",
+      "firstName": "પ્રથમ નામ",
+      "firstNamePlaceholder": "દા.ત. અમિત",
+      "lastName": "અટક / છેલ્લું નામ",
+      "lastNamePlaceholder": "દા.ત. પટેલ",
+      "phone": "મોબાઇલ નંબર",
+      "phonePlaceholder": "દા.ત. 9876543210",
+      "mandatoryNotice": "* ત્રણેય ફીલ્ડ્સ ફરજિયાત છે",
+      "errors": {
+        "firstNameRequired": "પ્રથમ નામ ફરજિયાત છે",
+        "lastNameRequired": "અટક / છેલ્લું નામ ફરજિયાત છે",
+        "phoneRequired": "મોબાઇલ નંબર ફરજિયાત છે",
+        "phoneInvalid": "કૃપા કરીને માન્ય ૧૦ અંકનો મોબાઇલ નંબર દાખલ કરો"
+      },
+      "buttons": {
+        "cancel": "રદ કરો",
+        "save": "લીડ ઉમેરો",
+        "update": "લીડ અપડેટ કરો"
+      },
+      "successMessage": "લીડ સફળતાપૂર્વક ઉમેરાઈ!",
+      "editTitle": "લીડ અપડેટ કરો",
+      "editSubtitle": "નીચે આપેલ લીડની માહિતીમાં ફેરફાર કરો."
+    },
+    "editLead": "લીડ સંપાદિત કરો"
   },
   "theme": {
     "activeTheme": "સક્રિય થીમ પૅલેટ:",

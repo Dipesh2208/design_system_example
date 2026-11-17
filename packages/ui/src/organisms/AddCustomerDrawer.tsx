@@ -8,6 +8,7 @@ export interface NewCustomerFormData {
   firstName: string;
   lastName: string;
   phone: string;
+  stage?: "pending" | "received" | "lost";
 }
 
 export interface AddCustomerDrawerTranslations {
@@ -21,6 +22,10 @@ export interface AddCustomerDrawerTranslations {
   lastNamePlaceholder?: string;
   phoneLabel?: string;
   phonePlaceholder?: string;
+  stageLabel?: string;
+  stagePending?: string;
+  stageReceived?: string;
+  stageLost?: string;
   mandatoryNotice?: string;
   errorFirstNameRequired?: string;
   errorLastNameRequired?: string;
@@ -37,6 +42,7 @@ export interface AddCustomerDrawerProps {
   onSubmit: (data: NewCustomerFormData) => void;
   initialData?: NewCustomerFormData | null;
   mode?: "add" | "edit";
+  showStage?: boolean;
   translations?: AddCustomerDrawerTranslations;
   className?: string;
 }
@@ -47,6 +53,7 @@ export function AddCustomerDrawer({
   onSubmit,
   initialData,
   mode = "add",
+  showStage = false,
   translations = {},
   className = "",
 }: AddCustomerDrawerProps) {
@@ -55,6 +62,9 @@ export function AddCustomerDrawer({
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
+  const [stage, setStage] = useState<"pending" | "received" | "lost">(
+    "pending",
+  );
 
   const [errors, setErrors] = useState<{
     firstName?: string;
@@ -80,6 +90,10 @@ export function AddCustomerDrawer({
     lastNamePlaceholder: translations.lastNamePlaceholder || "e.g. Patel",
     phoneLabel: translations.phoneLabel || "Mobile Number",
     phonePlaceholder: translations.phonePlaceholder || "e.g. 9876543210",
+    stageLabel: translations.stageLabel || "Stage",
+    stagePending: translations.stagePending || "Pending",
+    stageReceived: translations.stageReceived || "Received",
+    stageLost: translations.stageLost || "Lost",
     mandatoryNotice:
       translations.mandatoryNotice || "* All three fields are mandatory",
     errorFirstNameRequired:
@@ -104,10 +118,12 @@ export function AddCustomerDrawer({
         setFirstName(initialData.firstName || "");
         setLastName(initialData.lastName || "");
         setPhone(initialData.phone || "");
+        setStage(initialData.stage || "pending");
       } else {
         setFirstName("");
         setLastName("");
         setPhone("");
+        setStage("pending");
       }
       setErrors({});
       setIsSubmitting(false);
@@ -175,6 +191,7 @@ export function AddCustomerDrawer({
       firstName: firstName.trim(),
       lastName: lastName.trim(),
       phone: phone.trim(),
+      stage,
     });
     setIsSubmitting(false);
     onClose();
@@ -343,6 +360,28 @@ export function AddCustomerDrawer({
                   </p>
                 )}
               </div>
+
+              {/* Optional Stage Dropdown Field */}
+              {showStage && (
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-semibold text-foreground">
+                    {t.stageLabel}
+                  </label>
+                  <select
+                    value={stage}
+                    onChange={(e) =>
+                      setStage(
+                        e.target.value as "pending" | "received" | "lost",
+                      )
+                    }
+                    className="w-full px-3 py-2 rounded-xl bg-background border border-border text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary min-h-[44px]"
+                  >
+                    <option value="pending">{t.stagePending}</option>
+                    <option value="received">{t.stageReceived}</option>
+                    <option value="lost">{t.stageLost}</option>
+                  </select>
+                </div>
+              )}
             </div>
 
             {/* Footer Actions */}

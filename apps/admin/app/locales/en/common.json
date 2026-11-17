@@ -36,6 +36,7 @@
   "nav": {
     "dashboard": "Dashboard",
     "customers": "Customers",
+    "leads": "Leads",
     "settings": "Settings"
   },
   "customers": {
@@ -87,6 +88,69 @@
       "editSubtitle": "Modify the customer information below."
     },
     "editCustomer": "Edit Customer"
+  },
+  "leads": {
+    "title": "Lead Directory",
+    "subtitle": "High-performance virtualized directory supporting 1,000+ leads with real-time search & filters",
+    "searchPlaceholder": "Search lead by name, email, or company...",
+    "filterAll": "All Leads",
+    "filterActive": "Active",
+    "filterPending": "Pending",
+    "filterInactive": "Inactive",
+    "colName": "Lead Name & Profile",
+    "colPhone": "Mobile Number",
+    "table": {
+      "lead": "Lead",
+      "company": "Company",
+      "status": "Status",
+      "estimatedBudget": "Estimated Value",
+      "lastActive": "Last Active",
+      "actions": "Actions"
+    },
+    "kpi": {
+      "totalLeads": "Total Leads",
+      "conversionRate": "Qualification Rate",
+      "avgValue": "Avg. Lead Value"
+    },
+    "empty": "No leads found matching your criteria.",
+    "stage": {
+      "label": "Stage",
+      "all": "All Stages",
+      "pending": "Pending",
+      "received": "Received",
+      "lost": "Lost"
+    },
+    "addLead": "Lead",
+    "addLeadDrawer": {
+      "title": "Add New Lead",
+      "subtitle": "Enter the lead details below to create an inquiry.",
+      "stage": "Stage",
+      "stagePending": "Pending",
+      "stageReceived": "Received",
+      "stageLost": "Lost",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "e.g. Amit",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "e.g. Patel",
+      "phone": "Mobile Number",
+      "phonePlaceholder": "e.g. 9876543210",
+      "mandatoryNotice": "* All three fields are mandatory",
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "phoneRequired": "Mobile number is required",
+        "phoneInvalid": "Please enter a valid 10-digit mobile number"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Add Lead",
+        "update": "Update Lead"
+      },
+      "successMessage": "Lead added successfully!",
+      "editTitle": "Update Lead",
+      "editSubtitle": "Modify the lead information below."
+    },
+    "editLead": "Edit Lead"
   },
   "theme": {
     "activeTheme": "Active Theme Palette:",
