@@ -7,7 +7,7 @@ export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
   const lng = formData.get("lng")?.toString();
 
-  if (lng && supportedLngs.includes(lng as any)) {
+  if (lng && (supportedLngs as readonly string[]).includes(lng)) {
     return json(
       { success: true, lng },
       {

@@ -1,19 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { useFetcher } from "@remix-run/react";
-import {
-  AppSettingsModal,
-  type ThemeOptionItem,
-  type LanguageOptionItem,
-} from "@repo/ui/organisms";
+import type {
+  ThemeOptionItem,
+  LanguageOptionItem,
+} from "@repo/ui/organisms/AppSettingsModal";
 import {
   useAppStore,
   type ThemeType,
   type LanguageType,
 } from "@repo/ui/stores";
 import { THEME_OPTIONS } from "./ThemeProvider";
+import { ClientOnly } from "./ClientOnly";
+
+// Lazy-load the settings modal on demand with dynamic subpath
+const AppSettingsModal = React.lazy(() =>
+  import("@repo/ui/organisms/AppSettingsModal").then((m) => ({
+    default: m.AppSettingsModal,
+  })),
+);
 
 const SETTINGS_LANGUAGES: LanguageOptionItem[] = [
   {
@@ -63,16 +70,24 @@ export function AppSettingsManager({
     );
   };
 
+  if (!isOpen) return null;
+
   return (
-    <AppSettingsModal
-      isOpen={isOpen}
-      onClose={onClose}
-      currentTheme={currentTheme}
-      onThemeSelect={(t) => setTheme(t)}
-      currentLanguage={currentLanguage}
-      onLanguageSelect={handleLanguageChange}
-      themes={THEME_OPTIONS as ThemeOptionItem[]}
-      languages={SETTINGS_LANGUAGES}
-    />
+    <ClientOnly fallback={null}>
+      {() => (
+        <Suspense fallback={null}>
+          <AppSettingsModal
+            isOpen={isOpen}
+            onClose={onClose}
+            currentTheme={currentTheme}
+            onThemeSelect={(t) => setTheme(t)}
+            currentLanguage={currentLanguage}
+            onLanguageSelect={handleLanguageChange}
+            themes={THEME_OPTIONS as ThemeOptionItem[]}
+            languages={SETTINGS_LANGUAGES}
+          />
+        </Suspense>
+      )}
+    </ClientOnly>
   );
 }

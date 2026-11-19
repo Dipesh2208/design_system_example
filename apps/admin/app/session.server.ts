@@ -8,11 +8,16 @@ export interface AdminUser {
   role: string;
 }
 
+const sessionSecret =
+  process.env.SESSION_SECRET ||
+  "admin-portal-session-secret-key-change-in-production";
+
 export const sessionCookie = createCookie("admin_session", {
   path: "/",
   sameSite: "lax",
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
+  secrets: [sessionSecret],
   maxAge: 7 * 24 * 60 * 60, // 7 days
 });
 

@@ -2,8 +2,8 @@
 
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import { useLoaderData, useSubmit } from "@remix-run/react";
+import { defer, json, redirect } from "@remix-run/node";
+import { useLoaderData, useSubmit, Await } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import {
@@ -34,17 +34,34 @@ import {
 
 import {
   AppAdminLayout,
-  AppVirtualTable,
+  type AppVirtualTableProps,
   type ColumnDef,
-  CustomerProfileSidebar,
   CustomerProfileTab,
   UserAvatarDropdownOrganism,
-  AddCustomerDrawer,
   type NewCustomerFormData,
 } from "@repo/ui/organisms";
+import { AppSpinner } from "@repo/ui/atoms";
+
+// Lazy-loaded organisms and drawers
+const AddCustomerDrawer = React.lazy(() =>
+  import("@repo/ui/organisms/AddCustomerDrawer").then((m) => ({
+    default: m.AddCustomerDrawer,
+  })),
+);
+const CustomerProfileSidebar = React.lazy(() =>
+  import("@repo/ui/organisms/CustomerProfileSidebar").then((m) => ({
+    default: m.CustomerProfileSidebar,
+  })),
+);
+const AppVirtualTable = React.lazy(() =>
+  import("@repo/ui/organisms/AppVirtualTable").then((m) => ({
+    default: m.AppVirtualTable,
+  })),
+) as <T>(props: AppVirtualTableProps<T>) => React.ReactElement;
 
 import { requireAdminUser, sessionCookie } from "../session.server";
 import { AppSettingsManager } from "../components/AppSettingsManager";
+import { ClientOnly } from "../components/ClientOnly";
 import { useAppStore } from "@repo/ui/stores";
 
 export interface Customer {
@@ -185,7 +202,10 @@ const STATIC_CUSTOMERS = generateMockCustomers(1200);
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireAdminUser(request);
-  return json({ user });
+  const customersPromise = new Promise<Customer[]>((resolve) => {
+    setTimeout(() => resolve(STATIC_CUSTOMERS), 50);
+  });
+  return defer({ user, customersPromise });
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -204,7 +224,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function CustomersPage() {
-  const { user } = useLoaderData<typeof loader>();
+  const { user, customersPromise } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
   const submit = useSubmit();
 
@@ -710,30 +730,48 @@ export default function CustomersPage() {
       {selectedCustomer ? (
         <div className="flex flex-col lg:flex-row items-start gap-6 w-full h-full overflow-y-auto">
           {/* Customer Profile Sidebar (Theme-Aligned: Details & Invoice) */}
-          <CustomerProfileSidebar
-            customer={selectedCustomer}
-            activeTab={activeSidebarTab}
-            onTabChange={setActiveSidebarTab}
-            onBack={() => {
-              setSelectedCustomerId(null);
-              setIsMobileSidebarOpen(false);
-            }}
-            onToggleFavorite={(fav) => {
-              setCustomerFavorites((prev) => ({
-                ...prev,
-                [selectedCustomer.id]: fav,
-              }));
-            }}
-            onRatingChange={(stars) => {
-              setCustomerRatings((prev) => ({
-                ...prev,
-                [selectedCustomer.id]: stars,
-              }));
-            }}
-            isMobileOpen={isMobileSidebarOpen}
-            onMobileClose={() => setIsMobileSidebarOpen(false)}
-            onEdit={() => handleOpenEdit(selectedCustomer)}
-          />
+          <ClientOnly
+            fallback={
+              <div className="w-80 h-full bg-card rounded-2xl border border-border animate-pulse p-4 flex items-center justify-center">
+                <AppSpinner size="md" />
+              </div>
+            }
+          >
+            {() => (
+              <React.Suspense
+                fallback={
+                  <div className="w-80 h-full bg-card rounded-2xl border border-border animate-pulse p-4 flex items-center justify-center">
+                    <AppSpinner size="md" />
+                  </div>
+                }
+              >
+                <CustomerProfileSidebar
+                  customer={selectedCustomer}
+                  activeTab={activeSidebarTab}
+                  onTabChange={setActiveSidebarTab}
+                  onBack={() => {
+                    setSelectedCustomerId(null);
+                    setIsMobileSidebarOpen(false);
+                  }}
+                  onToggleFavorite={(fav) => {
+                    setCustomerFavorites((prev) => ({
+                      ...prev,
+                      [selectedCustomer.id]: fav,
+                    }));
+                  }}
+                  onRatingChange={(stars) => {
+                    setCustomerRatings((prev) => ({
+                      ...prev,
+                      [selectedCustomer.id]: stars,
+                    }));
+                  }}
+                  isMobileOpen={isMobileSidebarOpen}
+                  onMobileClose={() => setIsMobileSidebarOpen(false)}
+                  onEdit={() => handleOpenEdit(selectedCustomer)}
+                />
+              </React.Suspense>
+            )}
+          </ClientOnly>
 
           {/* Customer Profile Main Content Area */}
           <div className="flex-1 w-full space-y-6">
@@ -1095,13 +1133,13 @@ export default function CustomersPage() {
                 columns={tableColumns}
                 rowHeight={68}
                 maxHeight="100%"
-                onRowClick={(c) => toggleAccordion(c.id)}
-                getRowId={(c) => c.id}
+                onRowClick={(c: Customer) => toggleAccordion(c.id)}
+                getRowId={(c: Customer) => c.id}
                 onEndReached={handleLoadMore}
                 isLoadingMore={isLoadingMore}
                 hasMore={hasMore}
-                isRowExpanded={(c) => expandedCustomerIds.has(c.id)}
-                renderExpandedRow={(c) => (
+                isRowExpanded={(c: Customer) => expandedCustomerIds.has(c.id)}
+                renderExpandedRow={(c: Customer) => (
                   <div className="p-4 sm:p-5 bg-card/80 border-y border-border/70 flex flex-col gap-4 text-xs">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                       <div className="p-3 rounded-xl bg-muted/40 border border-border/60">
@@ -1237,92 +1275,110 @@ export default function CustomersPage() {
           </div>
         </div>
       )}
-      {/* Unified Add / Edit Customer Drawer */}
-      <AddCustomerDrawer
-        isOpen={isAddCustomerOpen}
-        onClose={() => {
-          setIsAddCustomerOpen(false);
-          setEditingCustomer(null);
-        }}
-        onSubmit={handleSaveCustomer}
-        mode={editingCustomer ? "edit" : "add"}
-        initialData={
-          editingCustomer
-            ? {
-                id: editingCustomer.id,
-                firstName: editingCustomer.name.split(" ")[0] || "",
-                lastName:
-                  editingCustomer.name.split(" ").slice(1).join(" ") || "",
-                phone: editingCustomer.phone,
-              }
-            : null
-        }
-        translations={{
-          title: t("customers.addCustomerDrawer.title", "Add New Customer"),
-          subtitle: t(
-            "customers.addCustomerDrawer.subtitle",
-            "Enter the customer details below to create an account.",
-          ),
-          editTitle: t(
-            "customers.addCustomerDrawer.editTitle",
-            "Update Customer",
-          ),
-          editSubtitle: t(
-            "customers.addCustomerDrawer.editSubtitle",
-            "Modify the customer information below.",
-          ),
-          firstNameLabel: t(
-            "customers.addCustomerDrawer.firstName",
-            "First Name",
-          ),
-          firstNamePlaceholder: t(
-            "customers.addCustomerDrawer.firstNamePlaceholder",
-            "e.g. Amit",
-          ),
-          lastNameLabel: t("customers.addCustomerDrawer.lastName", "Last Name"),
-          lastNamePlaceholder: t(
-            "customers.addCustomerDrawer.lastNamePlaceholder",
-            "e.g. Patel",
-          ),
-          phoneLabel: t("customers.addCustomerDrawer.phone", "Mobile Number"),
-          phonePlaceholder: t(
-            "customers.addCustomerDrawer.phonePlaceholder",
-            "e.g. 9876543210",
-          ),
-          mandatoryNotice: t(
-            "customers.addCustomerDrawer.mandatoryNotice",
-            "* All three fields are mandatory",
-          ),
-          errorFirstNameRequired: t(
-            "customers.addCustomerDrawer.errors.firstNameRequired",
-            "First name is required",
-          ),
-          errorLastNameRequired: t(
-            "customers.addCustomerDrawer.errors.lastNameRequired",
-            "Last name is required",
-          ),
-          errorPhoneRequired: t(
-            "customers.addCustomerDrawer.errors.phoneRequired",
-            "Mobile number is required",
-          ),
-          errorPhoneInvalid: t(
-            "customers.addCustomerDrawer.errors.phoneInvalid",
-            "Please enter a valid 10-digit mobile number",
-          ),
-          cancelButton: t(
-            "customers.addCustomerDrawer.buttons.cancel",
-            "Cancel",
-          ),
-          submitButton: t(
-            "customers.addCustomerDrawer.buttons.save",
-            "Add Customer",
-          ),
-          updateButton: t(
-            "customers.addCustomerDrawer.buttons.update",
-            "Update Customer",
-          ),
-        }}
-      />
+      {/* Unified Add / Edit Customer Drawer (Lazy Loaded) */}
+      {isAddCustomerOpen && (
+        <ClientOnly fallback={null}>
+          {() => (
+            <React.Suspense fallback={null}>
+              <AddCustomerDrawer
+                isOpen={isAddCustomerOpen}
+                onClose={() => {
+                  setIsAddCustomerOpen(false);
+                  setEditingCustomer(null);
+                }}
+                onSubmit={handleSaveCustomer}
+                mode={editingCustomer ? "edit" : "add"}
+                initialData={
+                  editingCustomer
+                    ? {
+                        id: editingCustomer.id,
+                        firstName: editingCustomer.name.split(" ")[0] || "",
+                        lastName:
+                          editingCustomer.name.split(" ").slice(1).join(" ") ||
+                          "",
+                        phone: editingCustomer.phone,
+                      }
+                    : null
+                }
+                translations={{
+                  title: t(
+                    "customers.addCustomerDrawer.title",
+                    "Add New Customer",
+                  ),
+                  subtitle: t(
+                    "customers.addCustomerDrawer.subtitle",
+                    "Enter the customer details below to create an account.",
+                  ),
+                  editTitle: t(
+                    "customers.addCustomerDrawer.editTitle",
+                    "Update Customer",
+                  ),
+                  editSubtitle: t(
+                    "customers.addCustomerDrawer.editSubtitle",
+                    "Modify the customer information below.",
+                  ),
+                  firstNameLabel: t(
+                    "customers.addCustomerDrawer.firstName",
+                    "First Name",
+                  ),
+                  firstNamePlaceholder: t(
+                    "customers.addCustomerDrawer.firstNamePlaceholder",
+                    "e.g. Amit",
+                  ),
+                  lastNameLabel: t(
+                    "customers.addCustomerDrawer.lastName",
+                    "Last Name",
+                  ),
+                  lastNamePlaceholder: t(
+                    "customers.addCustomerDrawer.lastNamePlaceholder",
+                    "e.g. Patel",
+                  ),
+                  phoneLabel: t(
+                    "customers.addCustomerDrawer.phone",
+                    "Mobile Number",
+                  ),
+                  phonePlaceholder: t(
+                    "customers.addCustomerDrawer.phonePlaceholder",
+                    "e.g. 9876543210",
+                  ),
+                  mandatoryNotice: t(
+                    "customers.addCustomerDrawer.mandatoryNotice",
+                    "* All three fields are mandatory",
+                  ),
+                  errorFirstNameRequired: t(
+                    "customers.addCustomerDrawer.errors.firstNameRequired",
+                    "First name is required",
+                  ),
+                  errorLastNameRequired: t(
+                    "customers.addCustomerDrawer.errors.lastNameRequired",
+                    "Last name is required",
+                  ),
+                  errorPhoneRequired: t(
+                    "customers.addCustomerDrawer.errors.phoneRequired",
+                    "Mobile number is required",
+                  ),
+                  errorPhoneInvalid: t(
+                    "customers.addCustomerDrawer.errors.phoneInvalid",
+                    "Please enter a valid 10-digit mobile number",
+                  ),
+                  cancelButton: t(
+                    "customers.addCustomerDrawer.buttons.cancel",
+                    "Cancel",
+                  ),
+                  submitButton: t(
+                    "customers.addCustomerDrawer.buttons.save",
+                    "Add Customer",
+                  ),
+                  updateButton: t(
+                    "customers.addCustomerDrawer.buttons.update",
+                    "Update Customer",
+                  ),
+                }}
+              />
+            </React.Suspense>
+          )}
+        </ClientOnly>
+      )}
     </AppAdminLayout>
   );
 }

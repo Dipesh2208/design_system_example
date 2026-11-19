@@ -197,7 +197,12 @@ export function AppVirtualTable<T>({
                       >
                         {col.render
                           ? col.render(row, virtualRow.index)
-                          : ((row as Record<string, any>)[col.key] ?? "—")}
+                          : ((
+                              row as Record<
+                                string,
+                                string | number | boolean | React.ReactNode
+                              >
+                            )[col.key] ?? "—")}
                       </div>
                     ))}
                   </div>
