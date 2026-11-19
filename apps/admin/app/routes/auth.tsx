@@ -3,10 +3,14 @@ import { json, redirect } from "@remix-run/node";
 import { Form, useNavigation } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { AppButton, AppBadge } from "@repo/ui/atoms";
-import { ThemeDropdownOrganism } from "@repo/ui/organisms";
+import { ThemeDropdownOrganism } from "@repo/ui/organisms/ThemeDropdownOrganism";
 import { getAdminUser, sessionCookie } from "../session.server";
 import { LanguageSelector } from "../components/LanguageSelector";
-import { useTheme, THEME_OPTIONS } from "../components/ThemeProvider";
+import {
+  useTheme,
+  THEME_OPTIONS,
+  type ThemeType,
+} from "../components/ThemeProvider";
 import { ShieldCheck, Lock } from "lucide-react";
 
 export async function loader({ request }: LoaderFunctionArgs) {
@@ -64,7 +68,7 @@ export default function AuthPage() {
           <LanguageSelector />
           <ThemeDropdownOrganism
             currentTheme={theme}
-            onThemeSelect={(tId) => setTheme(tId as any)}
+            onThemeSelect={(tId) => setTheme(tId as ThemeType)}
             themes={THEME_OPTIONS}
           />
         </div>

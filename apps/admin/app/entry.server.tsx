@@ -40,6 +40,23 @@ export default async function handleRequest(
       const stream = createReadableStreamFromReadable(body);
 
       responseHeaders.set("Content-Type", "text/html");
+      responseHeaders.set("X-Content-Type-Options", "nosniff");
+      responseHeaders.set("X-Frame-Options", "DENY");
+      responseHeaders.set("Referrer-Policy", "strict-origin-when-cross-origin");
+      responseHeaders.set(
+        "Permissions-Policy",
+        "camera=(), microphone=(), geolocation=()",
+      );
+      responseHeaders.set(
+        "Content-Security-Policy",
+        "default-src 'self'; script-src 'self' 'unsafe-inline' https://fonts.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self';",
+      );
+      if (process.env.NODE_ENV === "production") {
+        responseHeaders.set(
+          "Strict-Transport-Security",
+          "max-age=31536000; includeSubDomains; preload",
+        );
+      }
 
       resolve(
         new Response(stream, {
@@ -73,10 +90,10 @@ export default async function handleRequest(
             handleRender();
           }
         },
-        onShellError(error: unknown) {
+        onShellError(error) {
           reject(error);
         },
-        onError(error: unknown) {
+        onError(error) {
           responseStatusCode = 500;
           if (shellRendered) {
             console.error(error);

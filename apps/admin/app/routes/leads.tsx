@@ -1,9 +1,15 @@
 "use client";
 
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node";
-import { useLoaderData, useSubmit } from "@remix-run/react";
+import { defer, json, redirect } from "@remix-run/node";
+import { useLoaderData, useSubmit, Await } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import {
@@ -35,17 +41,34 @@ import {
 
 import {
   AppAdminLayout,
-  AppVirtualTable,
+  type AppVirtualTableProps,
   type ColumnDef,
-  CustomerProfileSidebar,
   CustomerProfileTab,
   UserAvatarDropdownOrganism,
-  AddCustomerDrawer,
   type NewCustomerFormData,
 } from "@repo/ui/organisms";
+import { AppSpinner } from "@repo/ui/atoms";
+
+// Lazy-loaded organisms and drawers
+const AddCustomerDrawer = React.lazy(() =>
+  import("@repo/ui/organisms/AddCustomerDrawer").then((m) => ({
+    default: m.AddCustomerDrawer,
+  })),
+);
+const CustomerProfileSidebar = React.lazy(() =>
+  import("@repo/ui/organisms/CustomerProfileSidebar").then((m) => ({
+    default: m.CustomerProfileSidebar,
+  })),
+);
+const AppVirtualTable = React.lazy(() =>
+  import("@repo/ui/organisms/AppVirtualTable").then((m) => ({
+    default: m.AppVirtualTable,
+  })),
+) as <T>(props: AppVirtualTableProps<T>) => React.ReactElement;
 
 import { requireAdminUser, sessionCookie } from "../session.server";
 import { AppSettingsManager } from "../components/AppSettingsManager";
+import { ClientOnly } from "../components/ClientOnly";
 import { useAppStore } from "@repo/ui/stores";
 
 export type LeadStage = "pending" | "received" | "lost";
@@ -192,7 +215,10 @@ const STATIC_LEADS = generateMockLeads(1200);
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireAdminUser(request);
-  return json({ user });
+  const leadsPromise = new Promise<Lead[]>((resolve) => {
+    setTimeout(() => resolve(STATIC_LEADS), 50);
+  });
+  return defer({ user, leadsPromise });
 }
 
 export async function action({ request }: ActionFunctionArgs) {
@@ -211,7 +237,7 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function LeadsPage() {
-  const { user } = useLoaderData<typeof loader>();
+  const { user, leadsPromise } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
   const submit = useSubmit();
 
@@ -461,6 +487,36 @@ export default function LeadsPage() {
     setIsMobileSidebarOpen(true);
   };
 
+  // Stage Badges for Card & Table Views
+  const renderStageBadge = useCallback(
+    (stage: LeadStage) => {
+      switch (stage) {
+        case "received":
+          return (
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+              <CheckCircle className="w-3 h-3" />
+              {t("leads.stage.received", "Received")}
+            </span>
+          );
+        case "pending":
+          return (
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
+              <Clock className="w-3 h-3" />
+              {t("leads.stage.pending", "Pending")}
+            </span>
+          );
+        case "lost":
+          return (
+            <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+              <Ban className="w-3 h-3" />
+              {t("leads.stage.lost", "Lost")}
+            </span>
+          );
+      }
+    },
+    [t],
+  );
+
   // Strictly 2 Columns for Virtual Table with Accordion Trigger
   const tableColumns = useMemo<ColumnDef<Lead>[]>(
     () => [
@@ -537,7 +593,7 @@ export default function LeadsPage() {
         },
       },
     ],
-    [t, expandedLeadIds],
+    [t, expandedLeadIds, renderStageBadge],
   );
 
   const handleLogout = () => {
@@ -568,33 +624,6 @@ export default function LeadsPage() {
           <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium bg-muted text-muted-foreground border border-border">
             <Ban className="w-3 h-3" />
             {t("leads.filterInactive", "Inactive")}
-          </span>
-        );
-    }
-  };
-
-  // Stage Badges for Card & Table Views
-  const renderStageBadge = (stage: LeadStage) => {
-    switch (stage) {
-      case "received":
-        return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
-            <CheckCircle className="w-3 h-3" />
-            {t("leads.stage.received", "Received")}
-          </span>
-        );
-      case "pending":
-        return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800">
-            <Clock className="w-3 h-3" />
-            {t("leads.stage.pending", "Pending")}
-          </span>
-        );
-      case "lost":
-        return (
-          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
-            <Ban className="w-3 h-3" />
-            {t("leads.stage.lost", "Lost")}
           </span>
         );
     }
@@ -759,30 +788,48 @@ export default function LeadsPage() {
       {selectedLead ? (
         <div className="flex flex-col lg:flex-row items-start gap-6 w-full h-full overflow-y-auto">
           {/* Lead Profile Sidebar (Theme-Aligned: Details & Invoice) */}
-          <CustomerProfileSidebar
-            customer={selectedLead}
-            activeTab={activeSidebarTab}
-            onTabChange={setActiveSidebarTab}
-            onBack={() => {
-              setSelectedLeadId(null);
-              setIsMobileSidebarOpen(false);
-            }}
-            onToggleFavorite={(fav) => {
-              setLeadFavorites((prev) => ({
-                ...prev,
-                [selectedLead.id]: fav,
-              }));
-            }}
-            onRatingChange={(stars) => {
-              setLeadRatings((prev) => ({
-                ...prev,
-                [selectedLead.id]: stars,
-              }));
-            }}
-            isMobileOpen={isMobileSidebarOpen}
-            onMobileClose={() => setIsMobileSidebarOpen(false)}
-            onEdit={() => handleOpenEdit(selectedLead)}
-          />
+          <ClientOnly
+            fallback={
+              <div className="w-80 h-full bg-card rounded-2xl border border-border animate-pulse p-4 flex items-center justify-center">
+                <AppSpinner size="md" />
+              </div>
+            }
+          >
+            {() => (
+              <React.Suspense
+                fallback={
+                  <div className="w-80 h-full bg-card rounded-2xl border border-border animate-pulse p-4 flex items-center justify-center">
+                    <AppSpinner size="md" />
+                  </div>
+                }
+              >
+                <CustomerProfileSidebar
+                  customer={selectedLead}
+                  activeTab={activeSidebarTab}
+                  onTabChange={setActiveSidebarTab}
+                  onBack={() => {
+                    setSelectedLeadId(null);
+                    setIsMobileSidebarOpen(false);
+                  }}
+                  onToggleFavorite={(fav) => {
+                    setLeadFavorites((prev) => ({
+                      ...prev,
+                      [selectedLead.id]: fav,
+                    }));
+                  }}
+                  onRatingChange={(stars) => {
+                    setLeadRatings((prev) => ({
+                      ...prev,
+                      [selectedLead.id]: stars,
+                    }));
+                  }}
+                  isMobileOpen={isMobileSidebarOpen}
+                  onMobileClose={() => setIsMobileSidebarOpen(false)}
+                  onEdit={() => handleOpenEdit(selectedLead)}
+                />
+              </React.Suspense>
+            )}
+          </ClientOnly>
 
           {/* Lead Profile Main Content Area */}
           <div className="flex-1 w-full space-y-6">
@@ -1177,13 +1224,13 @@ export default function LeadsPage() {
                 columns={tableColumns}
                 rowHeight={68}
                 maxHeight="100%"
-                onRowClick={(c) => toggleAccordion(c.id)}
-                getRowId={(c) => c.id}
+                onRowClick={(c: Lead) => toggleAccordion(c.id)}
+                getRowId={(c: Lead) => c.id}
                 onEndReached={handleLoadMore}
                 isLoadingMore={isLoadingMore}
                 hasMore={hasMore}
-                isRowExpanded={(c) => expandedLeadIds.has(c.id)}
-                renderExpandedRow={(c) => (
+                isRowExpanded={(c: Lead) => expandedLeadIds.has(c.id)}
+                renderExpandedRow={(c: Lead) => (
                   <div className="p-4 sm:p-5 bg-card/80 border-y border-border/70 flex flex-col gap-4 text-xs">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
                       <div className="p-3 rounded-xl bg-muted/40 border border-border/60">
@@ -1319,82 +1366,103 @@ export default function LeadsPage() {
           </div>
         </div>
       )}
-      {/* Unified Add / Edit Lead Drawer */}
-      <AddCustomerDrawer
-        isOpen={isAddLeadOpen}
-        onClose={() => {
-          setIsAddLeadOpen(false);
-          setEditingLead(null);
-        }}
-        onSubmit={handleSaveLead}
-        mode={editingLead ? "edit" : "add"}
-        showStage={true}
-        initialData={
-          editingLead
-            ? {
-                id: editingLead.id,
-                firstName: editingLead.name.split(" ")[0] || "",
-                lastName: editingLead.name.split(" ").slice(1).join(" ") || "",
-                phone: editingLead.phone,
-                stage: editingLead.stage,
-              }
-            : null
-        }
-        translations={{
-          title: t("leads.addLeadDrawer.title", "Add New Lead"),
-          subtitle: t(
-            "leads.addLeadDrawer.subtitle",
-            "Enter the lead details below to create an inquiry.",
-          ),
-          editTitle: t("leads.addLeadDrawer.editTitle", "Update Lead"),
-          editSubtitle: t(
-            "leads.addLeadDrawer.editSubtitle",
-            "Modify the lead information below.",
-          ),
-          stageLabel: t("leads.stage.label", "Stage"),
-          stagePending: t("leads.stage.pending", "Pending"),
-          stageReceived: t("leads.stage.received", "Received"),
-          stageLost: t("leads.stage.lost", "Lost"),
-          firstNameLabel: t("leads.addLeadDrawer.firstName", "First Name"),
-          firstNamePlaceholder: t(
-            "leads.addLeadDrawer.firstNamePlaceholder",
-            "e.g. Amit",
-          ),
-          lastNameLabel: t("leads.addLeadDrawer.lastName", "Last Name"),
-          lastNamePlaceholder: t(
-            "leads.addLeadDrawer.lastNamePlaceholder",
-            "e.g. Patel",
-          ),
-          phoneLabel: t("leads.addLeadDrawer.phone", "Mobile Number"),
-          phonePlaceholder: t(
-            "leads.addLeadDrawer.phonePlaceholder",
-            "e.g. 9876543210",
-          ),
-          mandatoryNotice: t(
-            "leads.addLeadDrawer.mandatoryNotice",
-            "* All three fields are mandatory",
-          ),
-          errorFirstNameRequired: t(
-            "leads.addLeadDrawer.errors.firstNameRequired",
-            "First name is required",
-          ),
-          errorLastNameRequired: t(
-            "leads.addLeadDrawer.errors.lastNameRequired",
-            "Last name is required",
-          ),
-          errorPhoneRequired: t(
-            "leads.addLeadDrawer.errors.phoneRequired",
-            "Mobile number is required",
-          ),
-          errorPhoneInvalid: t(
-            "leads.addLeadDrawer.errors.phoneInvalid",
-            "Please enter a valid 10-digit mobile number",
-          ),
-          cancelButton: t("leads.addLeadDrawer.buttons.cancel", "Cancel"),
-          submitButton: t("leads.addLeadDrawer.buttons.save", "Add Lead"),
-          updateButton: t("leads.addLeadDrawer.buttons.update", "Update Lead"),
-        }}
-      />
+      {/* Unified Add / Edit Lead Drawer (Lazy Loaded) */}
+      {isAddLeadOpen && (
+        <ClientOnly fallback={null}>
+          {() => (
+            <React.Suspense fallback={null}>
+              <AddCustomerDrawer
+                isOpen={isAddLeadOpen}
+                onClose={() => {
+                  setIsAddLeadOpen(false);
+                  setEditingLead(null);
+                }}
+                onSubmit={handleSaveLead}
+                mode={editingLead ? "edit" : "add"}
+                showStage={true}
+                initialData={
+                  editingLead
+                    ? {
+                        id: editingLead.id,
+                        firstName: editingLead.name.split(" ")[0] || "",
+                        lastName:
+                          editingLead.name.split(" ").slice(1).join(" ") || "",
+                        phone: editingLead.phone,
+                        stage: editingLead.stage,
+                      }
+                    : null
+                }
+                translations={{
+                  title: t("leads.addLeadDrawer.title", "Add New Lead"),
+                  subtitle: t(
+                    "leads.addLeadDrawer.subtitle",
+                    "Enter the lead details below to create an inquiry.",
+                  ),
+                  editTitle: t("leads.addLeadDrawer.editTitle", "Update Lead"),
+                  editSubtitle: t(
+                    "leads.addLeadDrawer.editSubtitle",
+                    "Modify the lead information below.",
+                  ),
+                  stageLabel: t("leads.stage.label", "Stage"),
+                  stagePending: t("leads.stage.pending", "Pending"),
+                  stageReceived: t("leads.stage.received", "Received"),
+                  stageLost: t("leads.stage.lost", "Lost"),
+                  firstNameLabel: t(
+                    "leads.addLeadDrawer.firstName",
+                    "First Name",
+                  ),
+                  firstNamePlaceholder: t(
+                    "leads.addLeadDrawer.firstNamePlaceholder",
+                    "e.g. Amit",
+                  ),
+                  lastNameLabel: t("leads.addLeadDrawer.lastName", "Last Name"),
+                  lastNamePlaceholder: t(
+                    "leads.addLeadDrawer.lastNamePlaceholder",
+                    "e.g. Patel",
+                  ),
+                  phoneLabel: t("leads.addLeadDrawer.phone", "Mobile Number"),
+                  phonePlaceholder: t(
+                    "leads.addLeadDrawer.phonePlaceholder",
+                    "e.g. 9876543210",
+                  ),
+                  mandatoryNotice: t(
+                    "leads.addLeadDrawer.mandatoryNotice",
+                    "* All three fields are mandatory",
+                  ),
+                  errorFirstNameRequired: t(
+                    "leads.addLeadDrawer.errors.firstNameRequired",
+                    "First name is required",
+                  ),
+                  errorLastNameRequired: t(
+                    "leads.addLeadDrawer.errors.lastNameRequired",
+                    "Last name is required",
+                  ),
+                  errorPhoneRequired: t(
+                    "leads.addLeadDrawer.errors.phoneRequired",
+                    "Mobile number is required",
+                  ),
+                  errorPhoneInvalid: t(
+                    "leads.addLeadDrawer.errors.phoneInvalid",
+                    "Please enter a valid 10-digit mobile number",
+                  ),
+                  cancelButton: t(
+                    "leads.addLeadDrawer.buttons.cancel",
+                    "Cancel",
+                  ),
+                  submitButton: t(
+                    "leads.addLeadDrawer.buttons.save",
+                    "Add Lead",
+                  ),
+                  updateButton: t(
+                    "leads.addLeadDrawer.buttons.update",
+                    "Update Lead",
+                  ),
+                }}
+              />
+            </React.Suspense>
+          )}
+        </ClientOnly>
+      )}
     </AppAdminLayout>
   );
 }

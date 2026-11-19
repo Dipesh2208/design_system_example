@@ -23,7 +23,7 @@ export const i18next = new RemixI18Next({
       const match = cookieHeader.match(/(?:^|;\s*)i18n=([^;]+)/);
       if (match) {
         const val = decodeURIComponent(match[1]).replace(/^"|"$/g, "");
-        if (i18nConfig.supportedLngs.includes(val as any)) {
+        if ((i18nConfig.supportedLngs as readonly string[]).includes(val)) {
           return val;
         }
       }

@@ -111,29 +111,15 @@ export function AddCustomerDrawer({
       : translations.submitButton || "Add Customer",
   };
 
-  // Reset or pre-populate form when drawer opens / initialData changes
+  // Autofocus first name input when drawer opens
   useEffect(() => {
     if (isOpen) {
-      if (initialData) {
-        setFirstName(initialData.firstName || "");
-        setLastName(initialData.lastName || "");
-        setPhone(initialData.phone || "");
-        setStage(initialData.stage || "pending");
-      } else {
-        setFirstName("");
-        setLastName("");
-        setPhone("");
-        setStage("pending");
-      }
-      setErrors({});
-      setIsSubmitting(false);
-      // Autofocus first name input
       const timer = setTimeout(() => {
         firstNameInputRef.current?.focus();
       }, 150);
       return () => clearTimeout(timer);
     }
-  }, [isOpen, initialData]);
+  }, [isOpen]);
 
   // Handle escape key to close drawer
   useEffect(() => {
