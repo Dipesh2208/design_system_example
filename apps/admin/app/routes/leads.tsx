@@ -14,7 +14,9 @@ import { useTranslation } from "react-i18next";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import {
   UserCheck,
+  Briefcase,
   Users,
+  LayoutDashboard,
   Search,
   Plus,
   ExternalLink,
@@ -761,6 +763,32 @@ export default function LeadsPage() {
 
   return (
     <AppAdminLayout
+      navItems={[
+        {
+          id: "dashboard",
+          label: t("nav.dashboard", "Dashboard"),
+          href: "/dashboard",
+          icon: <LayoutDashboard className="w-5 h-5" />,
+        },
+        {
+          id: "customers",
+          label: t("nav.customers", "Customers"),
+          href: "/customers",
+          icon: <Users className="w-5 h-5" />,
+        },
+        {
+          id: "leads",
+          label: t("nav.leads", "Leads"),
+          href: "/leads",
+          icon: <UserCheck className="w-5 h-5" />,
+        },
+        {
+          id: "employees",
+          label: t("nav.employees", "Employees"),
+          href: "/employees",
+          icon: <Briefcase className="w-5 h-5" />,
+        },
+      ]}
       currentPath="/leads"
       user={user}
       contentScrollable={false}
