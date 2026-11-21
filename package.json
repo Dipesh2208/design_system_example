@@ -9,9 +9,18 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "turbo run check-types",
     "check-strict-types": "node scripts/check-no-any-unknown.js",
-    "prepare": "node scripts/install-git-hooks.js"
+    "test": "turbo run test",
+    "test:e2e": "playwright test && node scripts/clean-test-artifacts.js",
+    "test:e2e:headed": "playwright test --headed && node scripts/clean-test-artifacts.js",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:debug": "playwright test --debug",
+    "test:e2e:report": "playwright show-report",
+    "prepare": "node scripts/install-git-hooks.js",
+    "test:clean": "node scripts/clean-test-artifacts.js"
   },
   "devDependencies": {
+    "@playwright/test": "^1.65.1",
+    "@types/node": "26.4.1",
     "prettier": "3.9.6",
     "turbo": "^2.11.10",
     "typescript": "7.0.2"
