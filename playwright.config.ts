@@ -24,11 +24,17 @@ export default defineConfig({
   projects: [
     {
       name: "Desktop Chrome",
-      use: { ...devices["Desktop Chrome"], viewport: { width: 1280, height: 720 } },
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1280, height: 720 },
+      },
     },
     {
       name: "Tablet",
-      use: { ...devices["iPad (gen 7)"], viewport: { width: 768, height: 1024 } },
+      use: {
+        ...devices["iPad (gen 7)"],
+        viewport: { width: 768, height: 1024 },
+      },
     },
     {
       name: "Mobile iPhone",

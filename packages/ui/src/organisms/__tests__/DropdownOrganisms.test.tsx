@@ -8,8 +8,16 @@ import { UserAvatarDropdownOrganism } from "../UserAvatarDropdownOrganism";
 describe("Dropdown Organisms Suite", () => {
   describe("ThemeDropdownOrganism", () => {
     const sampleThemes = [
-      { id: "dark", name: "Dark Theme", badgeColors: ["#000", "#111"] as [string, string] },
-      { id: "light", name: "Light Theme", badgeColors: ["#fff", "#eee"] as [string, string] },
+      {
+        id: "dark",
+        name: "Dark Theme",
+        badgeColors: ["#000", "#111"] as [string, string],
+      },
+      {
+        id: "light",
+        name: "Light Theme",
+        badgeColors: ["#fff", "#eee"] as [string, string],
+      },
     ];
 
     it("opens on click, selects a theme, and closes", () => {
@@ -19,7 +27,7 @@ describe("Dropdown Organisms Suite", () => {
           currentTheme="dark"
           onThemeSelect={handleSelect}
           themes={sampleThemes}
-        />
+        />,
       );
 
       const trigger = screen.getByRole("button", { name: /dark theme/i });
@@ -38,7 +46,7 @@ describe("Dropdown Organisms Suite", () => {
           currentTheme="dark"
           onThemeSelect={() => {}}
           themes={sampleThemes}
-        />
+        />,
       );
 
       fireEvent.click(screen.getByRole("button"));
@@ -56,7 +64,7 @@ describe("Dropdown Organisms Suite", () => {
         <LanguageDropdownOrganism
           currentLanguage="en"
           onLanguageSelect={handleSelect}
-        />
+        />,
       );
 
       const trigger = screen.getByRole("button");
@@ -86,14 +94,18 @@ describe("Dropdown Organisms Suite", () => {
           user={mockUser}
           onSettingsClick={handleSettings}
           onLogoutClick={handleLogout}
-        />
+        />,
       );
 
-      const trigger = screen.getByRole("button", { name: /user account menu/i });
+      const trigger = screen.getByRole("button", {
+        name: /user account menu/i,
+      });
       fireEvent.click(trigger);
 
       expect(screen.getAllByText("Alice Developer").length).toBeGreaterThan(0);
-      expect(screen.getAllByText("alice@example.com").length).toBeGreaterThan(0);
+      expect(screen.getAllByText("alice@example.com").length).toBeGreaterThan(
+        0,
+      );
 
       const settingsBtn = screen.getByRole("menuitem", { name: /settings/i });
       fireEvent.click(settingsBtn);

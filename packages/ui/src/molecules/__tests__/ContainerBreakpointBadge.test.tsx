@@ -5,12 +5,7 @@ import { ContainerBreakpointBadge } from "../ContainerBreakpointBadge";
 
 describe("ContainerBreakpointBadge (Molecule)", () => {
   it("renders breakpoint label and pixel width", () => {
-    render(
-      <ContainerBreakpointBadge
-        variantLabel="@lg"
-        widthPx={1024}
-      />
-    );
+    render(<ContainerBreakpointBadge variantLabel="@lg" widthPx={1024} />);
     expect(screen.getByText("Active Breakpoint:")).toBeInTheDocument();
     expect(screen.getByText(/@lg \(1024px\)/)).toBeInTheDocument();
   });
@@ -21,7 +16,7 @@ describe("ContainerBreakpointBadge (Molecule)", () => {
         variantLabel="@sm"
         widthPx={640}
         icon={<span data-testid="screen-icon">📱</span>}
-      />
+      />,
     );
     expect(screen.getByTestId("screen-icon")).toBeInTheDocument();
   });

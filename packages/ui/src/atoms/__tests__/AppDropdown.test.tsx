@@ -9,7 +9,7 @@ describe("AppDropdown (Atom)", () => {
       const { container } = render(
         <AppDropdownMenu isOpen={false}>
           <div>Dropdown Content</div>
-        </AppDropdownMenu>
+        </AppDropdownMenu>,
       );
       expect(container.firstChild).toBeNull();
     });
@@ -18,7 +18,7 @@ describe("AppDropdown (Atom)", () => {
       render(
         <AppDropdownMenu isOpen={true} align="left">
           <AppDropdownItem>Item 1</AppDropdownItem>
-        </AppDropdownMenu>
+        </AppDropdownMenu>,
       );
       const menu = screen.getByRole("menu");
       expect(menu).toBeInTheDocument();

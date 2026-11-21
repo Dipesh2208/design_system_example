@@ -14,7 +14,9 @@ test.describe("Lead QA: Explicit Non-Responsive Layout Regression Test", () => {
     await expect(page).toHaveURL(/.*customers/);
 
     // 3. Wait for customer records list or Table view button to render
-    const tableButton = page.getByRole("button", { name: /table view|table/i }).first();
+    const tableButton = page
+      .getByRole("button", { name: /table view|table/i })
+      .first();
     await expect(tableButton).toBeVisible({ timeout: 15000 });
 
     // 4. Force Table mode via toggle button

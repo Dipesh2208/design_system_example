@@ -58,11 +58,17 @@ exit 0
 
 try {
   if (fs.existsSync(hooksDir)) {
-    fs.writeFileSync(path.join(hooksDir, "pre-commit"), preCommitHook, { mode: 0o755 });
-    fs.writeFileSync(path.join(hooksDir, "pre-push"), prePushHook, { mode: 0o755 });
+    fs.writeFileSync(path.join(hooksDir, "pre-commit"), preCommitHook, {
+      mode: 0o755,
+    });
+    fs.writeFileSync(path.join(hooksDir, "pre-push"), prePushHook, {
+      mode: 0o755,
+    });
     console.log("✅ Git pre-commit and pre-push hooks installed successfully.");
   } else {
-    console.log("ℹ️ .git/hooks directory not found, skipping local git hook installation.");
+    console.log(
+      "ℹ️ .git/hooks directory not found, skipping local git hook installation.",
+    );
   }
 } catch (err) {
   console.warn("⚠️ Could not write git hooks:", err.message);

@@ -28,7 +28,9 @@ for (const dir of DIRS_TO_CLEAN) {
 }
 
 if (cleanedCount > 0) {
-  console.log("✨ All extra test files cleaned up successfully (0 bugs found).");
+  console.log(
+    "✨ All extra test files cleaned up successfully (0 bugs found).",
+  );
 } else {
   console.log("✨ Workspace is already clean. No extra test files found.");
 }

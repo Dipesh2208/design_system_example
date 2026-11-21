@@ -1,5 +1,5 @@
-# Enforce CRLF on all text files across platforms
-* text eol=crlf
+# Enforce LF on all text files across platforms
+* text eol=lf
 
 # Binary files
 *.woff binary

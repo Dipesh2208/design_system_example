@@ -18,7 +18,7 @@ describe("LanguageDropdown (Molecule)", () => {
         onSelect={() => {}}
         currentLanguage="gu"
         languages={sampleLanguages}
-      />
+      />,
     );
     expect(screen.getByRole("button")).toHaveTextContent("ગુજરાતી");
   });
@@ -32,7 +32,7 @@ describe("LanguageDropdown (Molecule)", () => {
         onSelect={() => {}}
         currentLanguage="en"
         languages={sampleLanguages}
-      />
+      />,
     );
     fireEvent.click(screen.getByRole("button"));
     expect(handleToggle).toHaveBeenCalledTimes(1);
@@ -47,7 +47,7 @@ describe("LanguageDropdown (Molecule)", () => {
         onSelect={handleSelect}
         currentLanguage="en"
         languages={sampleLanguages}
-      />
+      />,
     );
 
     expect(screen.getByRole("menu")).toBeInTheDocument();

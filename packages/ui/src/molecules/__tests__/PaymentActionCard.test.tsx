@@ -5,15 +5,12 @@ import { PaymentActionCard } from "../PaymentActionCard";
 
 describe("PaymentActionCard (Molecule)", () => {
   it("renders title, description, amount, and badge", () => {
-    render(
-      <PaymentActionCard
-        amountLabel="$499.00 USD"
-        onPay={() => {}}
-      />
-    );
+    render(<PaymentActionCard amountLabel="$499.00 USD" onPay={() => {}} />);
 
     expect(screen.getByText("High-Trust Payment Trigger")).toBeInTheDocument();
-    expect(screen.getByText(/Authorize Payment \(\$499\.00 USD\)/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Authorize Payment \(\$499\.00 USD\)/),
+    ).toBeInTheDocument();
     expect(screen.getByText("Encrypted TLS")).toBeInTheDocument();
   });
 
@@ -24,7 +21,7 @@ describe("PaymentActionCard (Molecule)", () => {
         amountLabel="$99.00"
         buttonLabel="Authorize Card"
         onPay={handlePay}
-      />
+      />,
     );
 
     const button = screen.getByRole("button", { name: /authorize card/i });
@@ -39,7 +36,7 @@ describe("PaymentActionCard (Molecule)", () => {
         isLoading={true}
         loadingText="Processing..."
         onPay={() => {}}
-      />
+      />,
     );
 
     const button = screen.getByRole("button");
@@ -53,7 +50,7 @@ describe("PaymentActionCard (Molecule)", () => {
         amountLabel="$99.00"
         statusMessage="Payment Successful"
         onPay={() => {}}
-      />
+      />,
     );
     expect(screen.getByText("Payment Successful")).toBeInTheDocument();
   });

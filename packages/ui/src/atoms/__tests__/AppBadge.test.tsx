@@ -10,7 +10,9 @@ describe("AppBadge (Atom)", () => {
   });
 
   it("renders with custom variants", () => {
-    const { container, rerender } = render(<AppBadge variant="success">Online</AppBadge>);
+    const { container, rerender } = render(
+      <AppBadge variant="success">Online</AppBadge>,
+    );
     expect(container.firstChild).toHaveClass("text-emerald-600");
 
     rerender(<AppBadge variant="warning">Pending</AppBadge>);
@@ -21,7 +23,7 @@ describe("AppBadge (Atom)", () => {
     render(
       <AppBadge icon={<span data-testid="badge-icon">●</span>}>
         Verified
-      </AppBadge>
+      </AppBadge>,
     );
     expect(screen.getByTestId("badge-icon")).toBeInTheDocument();
     expect(screen.getByText("Verified")).toBeInTheDocument();

@@ -33,7 +33,7 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
           data={sampleData}
           columns={columns}
           renderCard={(item) => <div data-testid="card-item">{item.name}</div>}
-        />
+        />,
       );
 
       // Verify Table header renders
@@ -51,7 +51,7 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
           columns={columns}
           breakpoint={1024}
           renderCard={(item) => <div data-testid="card-item">{item.name}</div>}
-        />
+        />,
       );
 
       // Card mode button or elements
@@ -75,7 +75,7 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
           breakpoint={0} // Disables automatic mobile card switching
           allowViewSwitch={false} // Locks view
           renderCard={(item) => <div data-testid="card-item">{item.name}</div>}
-        />
+        />,
       );
 
       // Verify table headers are STILL rendered even on narrow 375px screens
@@ -93,7 +93,7 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
           breakpoint={1024}
           allowViewSwitch={true}
           renderCard={(item) => <div data-testid="card-item">{item.name}</div>}
-        />
+        />,
       );
 
       // Click Table mode override toggle
@@ -113,7 +113,7 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
           data={sampleData}
           columns={columns}
           onSort={handleSort}
-        />
+        />,
       );
 
       const nameHeader = screen.getByText("Name");
@@ -127,9 +127,11 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
           data={[]}
           columns={columns}
           emptyState={<div>No customers found in ledger.</div>}
-        />
+        />,
       );
-      expect(screen.getByText("No customers found in ledger.")).toBeInTheDocument();
+      expect(
+        screen.getByText("No customers found in ledger."),
+      ).toBeInTheDocument();
     });
   });
 
@@ -140,7 +142,7 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
           data={[]}
           renderCard={() => null}
           emptyState={<div>Zero cards available</div>}
-        />
+        />,
       );
       expect(screen.getByText("Zero cards available")).toBeInTheDocument();
     });

@@ -10,7 +10,7 @@ describe("ButtonGroup (Molecule)", () => {
       <ButtonGroup>
         <AppButton>Btn 1</AppButton>
         <AppButton>Btn 2</AppButton>
-      </ButtonGroup>
+      </ButtonGroup>,
     );
     const group = screen.getByRole("group");
     expect(group).toBeInTheDocument();
@@ -22,7 +22,7 @@ describe("ButtonGroup (Molecule)", () => {
     const { container } = render(
       <ButtonGroup orientation="vertical">
         <AppButton>First</AppButton>
-      </ButtonGroup>
+      </ButtonGroup>,
     );
     expect(container.firstChild).toHaveClass("flex-col");
   });
@@ -32,8 +32,10 @@ describe("ButtonGroup (Molecule)", () => {
       <ButtonGroup attached>
         <AppButton>Left</AppButton>
         <AppButton>Right</AppButton>
-      </ButtonGroup>
+      </ButtonGroup>,
     );
-    expect(container.firstChild).toHaveClass("[&>*:not(:first-child)]:rounded-l-none");
+    expect(container.firstChild).toHaveClass(
+      "[&>*:not(:first-child)]:rounded-l-none",
+    );
   });
 });

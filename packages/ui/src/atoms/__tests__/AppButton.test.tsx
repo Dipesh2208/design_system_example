@@ -20,7 +20,11 @@ describe("AppButton (Atom)", () => {
 
   it("renders disabled state and prevents click execution", () => {
     const handleClick = vi.fn();
-    render(<AppButton disabled onClick={handleClick}>Disabled</AppButton>);
+    render(
+      <AppButton disabled onClick={handleClick}>
+        Disabled
+      </AppButton>,
+    );
     const button = screen.getByRole("button", { name: /disabled/i });
     expect(button).toBeDisabled();
     fireEvent.click(button);
@@ -42,25 +46,35 @@ describe("AppButton (Atom)", () => {
         rightIcon={<span data-testid="right-icon">R</span>}
       >
         Icon Button
-      </AppButton>
+      </AppButton>,
     );
     expect(screen.getByTestId("left-icon")).toBeInTheDocument();
     expect(screen.getByTestId("right-icon")).toBeInTheDocument();
   });
 
   it("renders payment shield icon automatically for payment variant", () => {
-    const { container } = render(<AppButton variant="payment">Secure Pay</AppButton>);
+    const { container } = render(
+      <AppButton variant="payment">Secure Pay</AppButton>,
+    );
     const svg = container.querySelector("svg");
     expect(svg).toBeInTheDocument();
     expect(container.firstChild).toHaveClass("bg-payment");
   });
 
   it("applies variant and size classes appropriately", () => {
-    const { rerender } = render(<AppButton variant="destructive" size="lg">Delete</AppButton>);
+    const { rerender } = render(
+      <AppButton variant="destructive" size="lg">
+        Delete
+      </AppButton>,
+    );
     let button = screen.getByRole("button");
     expect(button.className).toContain("bg-destructive");
 
-    rerender(<AppButton variant="secondary" size="sm">Cancel</AppButton>);
+    rerender(
+      <AppButton variant="secondary" size="sm">
+        Cancel
+      </AppButton>,
+    );
     button = screen.getByRole("button");
     expect(button.className).toContain("bg-secondary");
   });
@@ -69,7 +83,7 @@ describe("AppButton (Atom)", () => {
     render(
       <AppButton asChild>
         <a href="/login">Login Link</a>
-      </AppButton>
+      </AppButton>,
     );
     const link = screen.getByRole("link", { name: /login link/i });
     expect(link).toBeInTheDocument();

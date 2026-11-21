@@ -16,12 +16,14 @@ describe("FormFieldAction (Molecule)", () => {
         onInputChange={handleInputChange}
         onSubmit={handleSubmit}
         submitButtonText="Send Invite"
-      />
+      />,
     );
 
     expect(screen.getByText("Email Address")).toBeInTheDocument();
     expect(screen.getByPlaceholderText("user@example.com")).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: "Send Invite" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Send Invite" }),
+    ).toBeInTheDocument();
   });
 
   it("handles form submission and input changes", () => {
@@ -34,7 +36,7 @@ describe("FormFieldAction (Molecule)", () => {
         onInputChange={handleInputChange}
         onSubmit={handleSubmit}
         submitButtonText="Submit"
-      />
+      />,
     );
 
     const input = screen.getByDisplayValue("admin");
@@ -53,7 +55,7 @@ describe("FormFieldAction (Molecule)", () => {
         onInputChange={() => {}}
         onSubmit={() => {}}
         errorMessage="Invalid email address"
-      />
+      />,
     );
     expect(screen.getByText("Invalid email address")).toBeInTheDocument();
   });
@@ -65,7 +67,7 @@ describe("FormFieldAction (Molecule)", () => {
         onInputChange={() => {}}
         onSubmit={() => {}}
         successMessage="Saved successfully"
-      />
+      />,
     );
     expect(screen.getByText("Saved successfully")).toBeInTheDocument();
   });

@@ -1,0 +1,12 @@
+# Ignore version control and dependency directories
+node_modules
+.git
+.turbo
+dist
+build
+.next
+coverage
+playwright-report
+test-results
+.gemini
+pnpm-lock.yaml

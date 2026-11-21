@@ -21,10 +21,14 @@ test.describe("Enterprise Responsive Breakpoint Suite", () => {
       await expect(sidebarNav).toBeVisible();
 
       // Check brand link is displayed
-      await expect(page.locator("a", { hasText: "SaaS Matrix" }).first()).toBeVisible();
+      await expect(
+        page.locator("a", { hasText: "SaaS Matrix" }).first(),
+      ).toBeVisible();
     } else {
       // Mobile hamburger trigger should be available
-      const mobileMenuBtn = page.getByRole("button", { name: /open navigation menu/i });
+      const mobileMenuBtn = page.getByRole("button", {
+        name: /open navigation menu/i,
+      });
       await expect(mobileMenuBtn).toBeVisible();
 
       // Open mobile drawer

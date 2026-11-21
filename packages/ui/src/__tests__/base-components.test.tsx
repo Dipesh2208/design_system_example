@@ -24,7 +24,7 @@ describe("Legacy Base Components", () => {
       render(
         <Card title="Turborepo" href="https://turbo.build">
           Fast build system
-        </Card>
+        </Card>,
       );
 
       const link = screen.getByRole("link");

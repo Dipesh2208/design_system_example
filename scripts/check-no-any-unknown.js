@@ -21,12 +21,14 @@ const FORBIDDEN_RULES = [
   {
     name: "Explicit 'any' type annotation or cast",
     // Matches: : any, : any[], as any, <any>, Array<any>, Promise<any>, Record<..., any>
-    pattern: /(:\s*any\b|\bas\s+any\b|<any>|Array<any>|Promise<any>|Record<[^,>]+,\s*any>)/,
+    pattern:
+      /(:\s*any\b|\bas\s+any\b|<any>|Array<any>|Promise<any>|Record<[^,>]+,\s*any>)/,
   },
   {
     name: "Explicit 'unknown' type annotation or cast",
     // Matches: : unknown, : unknown[], as unknown, <unknown>, Array<unknown>, Promise<unknown>, Record<..., unknown>
-    pattern: /(:\s*unknown\b|\bas\s+unknown\b|<unknown>|Array<unknown>|Promise<unknown>|Record<[^,>]+,\s*unknown>)/,
+    pattern:
+      /(:\s*unknown\b|\bas\s+unknown\b|<unknown>|Array<unknown>|Promise<unknown>|Record<[^,>]+,\s*unknown>)/,
   },
 ];
 
@@ -53,7 +55,10 @@ function getSourceFiles(dir, fileList = []) {
 }
 
 function runCheck() {
-  console.log("\x1b[36m%s\x1b[0m", "🔍 Checking TypeScript files for forbidden 'any' or 'unknown' types...");
+  console.log(
+    "\x1b[36m%s\x1b[0m",
+    "🔍 Checking TypeScript files for forbidden 'any' or 'unknown' types...",
+  );
 
   const files = [];
   for (const scanDir of SCAN_DIRS) {
@@ -70,7 +75,11 @@ function runCheck() {
     lines.forEach((line, index) => {
       const trimmed = line.trim();
       // Skip comments
-      if (trimmed.startsWith("//") || trimmed.startsWith("/*") || trimmed.startsWith("*")) {
+      if (
+        trimmed.startsWith("//") ||
+        trimmed.startsWith("/*") ||
+        trimmed.startsWith("*")
+      ) {
         return;
       }
 
@@ -88,27 +97,30 @@ function runCheck() {
   }
 
   if (violations.length > 0) {
-    console.error("\n\x1b[41m\x1b[37m%s\x1b[0m", " ❌ STRICT TYPE POLICY VIOLATION ");
+    console.error(
+      "\n\x1b[41m\x1b[37m%s\x1b[0m",
+      " ❌ STRICT TYPE POLICY VIOLATION ",
+    );
     console.error(
       "\x1b[31m%s\x1b[0m",
-      `Found ${violations.length} occurrence(s) of forbidden 'any' or 'unknown' types:\n`
+      `Found ${violations.length} occurrence(s) of forbidden 'any' or 'unknown' types:\n`,
     );
 
     violations.forEach((v) => {
       console.error(
         ` \x1b[33m${v.file}:${v.lineNum}\x1b[0m\n` +
-        `   \x1b[31m[Violation]\x1b[0m ${v.rule}\n` +
-        `   \x1b[90m${v.lineText}\x1b[0m\n`
+          `   \x1b[31m[Violation]\x1b[0m ${v.rule}\n` +
+          `   \x1b[90m${v.lineText}\x1b[0m\n`,
       );
     });
 
     console.error(
       "\x1b[31m%s\x1b[0m",
-      "Commit, push, or merge request blocked per repository strict typing policy."
+      "Commit, push, or merge request blocked per repository strict typing policy.",
     );
     console.error(
       "\x1b[90m%s\x1b[0m",
-      "Hint: Replace 'any' or 'unknown' with strongly typed interfaces, unions, or safe type guards.\n"
+      "Hint: Replace 'any' or 'unknown' with strongly typed interfaces, unions, or safe type guards.\n",
     );
 
     process.exit(1);
@@ -116,7 +128,7 @@ function runCheck() {
 
   console.log(
     "\x1b[32m%s\x1b[0m",
-    `✅ Passed: ${files.length} TypeScript files verified. Zero 'any' or 'unknown' types found!`
+    `✅ Passed: ${files.length} TypeScript files verified. Zero 'any' or 'unknown' types found!`,
   );
   process.exit(0);
 }

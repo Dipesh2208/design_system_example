@@ -18,7 +18,7 @@ describe("ThemeDropdown (Molecule)", () => {
         onSelect={() => {}}
         currentTheme="rose-red"
         themes={sampleThemes}
-      />
+      />,
     );
     expect(screen.getByRole("button")).toHaveTextContent("Rose Crimson");
   });
@@ -32,7 +32,7 @@ describe("ThemeDropdown (Molecule)", () => {
         onSelect={() => {}}
         currentTheme="dark"
         themes={sampleThemes}
-      />
+      />,
     );
     fireEvent.click(screen.getByRole("button"));
     expect(handleToggle).toHaveBeenCalledTimes(1);
@@ -47,7 +47,7 @@ describe("ThemeDropdown (Molecule)", () => {
         onSelect={handleSelect}
         currentTheme="dark"
         themes={sampleThemes}
-      />
+      />,
     );
 
     expect(screen.getByRole("menu")).toBeInTheDocument();

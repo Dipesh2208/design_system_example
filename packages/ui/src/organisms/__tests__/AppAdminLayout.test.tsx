@@ -13,12 +13,9 @@ describe("AppAdminLayout (Organism)", () => {
 
   it("renders layout with brand name, navigation items, and main children", () => {
     render(
-      <AppAdminLayout
-        brandName="Enterprise Cloud"
-        currentPath="/dashboard"
-      >
+      <AppAdminLayout brandName="Enterprise Cloud" currentPath="/dashboard">
         <div data-testid="main-content">Dashboard Content</div>
-      </AppAdminLayout>
+      </AppAdminLayout>,
     );
 
     expect(screen.getByText("Enterprise Cloud")).toBeInTheDocument();
@@ -31,14 +28,16 @@ describe("AppAdminLayout (Organism)", () => {
     render(
       <AppAdminLayout brandName="Enterprise Cloud">
         <div>Content</div>
-      </AppAdminLayout>
+      </AppAdminLayout>,
     );
 
     // Initial state: expanded (false)
     expect(useAppStore.getState().isSidebarCollapsed).toBe(false);
 
     // Find collapse button
-    const collapseBtn = screen.getByRole("button", { name: /collapse sidebar/i });
+    const collapseBtn = screen.getByRole("button", {
+      name: /collapse sidebar/i,
+    });
     fireEvent.click(collapseBtn);
     expect(useAppStore.getState().isSidebarCollapsed).toBe(true);
 
@@ -51,14 +50,18 @@ describe("AppAdminLayout (Organism)", () => {
     render(
       <AppAdminLayout brandName="Enterprise Cloud">
         <div>Content</div>
-      </AppAdminLayout>
+      </AppAdminLayout>,
     );
 
-    const mobileMenuBtn = screen.getByRole("button", { name: /open navigation menu/i });
+    const mobileMenuBtn = screen.getByRole("button", {
+      name: /open navigation menu/i,
+    });
     fireEvent.click(mobileMenuBtn);
 
     // Mobile drawer navigation backdrop and items render
-    const closeDrawerBtn = screen.getByRole("button", { name: /close navigation/i });
+    const closeDrawerBtn = screen.getByRole("button", {
+      name: /close navigation/i,
+    });
     expect(closeDrawerBtn).toBeInTheDocument();
   });
 });

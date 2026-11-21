@@ -8,12 +8,32 @@ import { CustomerProfileSidebar } from "../CustomerProfileSidebar";
 describe("Modals & Drawers Suite", () => {
   describe("AppSettingsModal", () => {
     const themes = [
-      { id: "dark" as const, name: "Dark Theme", description: "Default", badgeColors: ["#000", "#111"] as [string, string] },
-      { id: "light" as const, name: "Light Theme", description: "Bright", badgeColors: ["#fff", "#eee"] as [string, string] },
+      {
+        id: "dark" as const,
+        name: "Dark Theme",
+        description: "Default",
+        badgeColors: ["#000", "#111"] as [string, string],
+      },
+      {
+        id: "light" as const,
+        name: "Light Theme",
+        description: "Bright",
+        badgeColors: ["#fff", "#eee"] as [string, string],
+      },
     ];
     const languages = [
-      { id: "en", code: "en" as const, label: "English", nativeLabel: "English" },
-      { id: "gu", code: "gu" as const, label: "Gujarati", nativeLabel: "ગુજરાતી" },
+      {
+        id: "en",
+        code: "en" as const,
+        label: "English",
+        nativeLabel: "English",
+      },
+      {
+        id: "gu",
+        code: "gu" as const,
+        label: "Gujarati",
+        nativeLabel: "ગુજરાતી",
+      },
     ];
 
     it("does not render when isOpen is false", () => {
@@ -27,7 +47,7 @@ describe("Modals & Drawers Suite", () => {
           onLanguageSelect={() => {}}
           themes={themes}
           languages={languages}
-        />
+        />,
       );
       expect(container.firstChild).toBeNull();
     });
@@ -44,7 +64,7 @@ describe("Modals & Drawers Suite", () => {
           onLanguageSelect={() => {}}
           themes={themes}
           languages={languages}
-        />
+        />,
       );
 
       expect(screen.getByRole("dialog")).toBeInTheDocument();
@@ -61,7 +81,7 @@ describe("Modals & Drawers Suite", () => {
           isOpen={true}
           onClose={() => {}}
           onSubmit={handleSubmit}
-        />
+        />,
       );
 
       const submitBtn = screen.getByRole("button", { name: /add customer/i });
@@ -78,7 +98,7 @@ describe("Modals & Drawers Suite", () => {
           isOpen={true}
           onClose={() => {}}
           onSubmit={handleSubmit}
-        />
+        />,
       );
 
       const firstInput = screen.getByPlaceholderText(/e\.g\. amit/i);
@@ -97,7 +117,7 @@ describe("Modals & Drawers Suite", () => {
           firstName: "John",
           lastName: "Doe",
           phone: "9876543210",
-        })
+        }),
       );
     });
   });
@@ -120,7 +140,7 @@ describe("Modals & Drawers Suite", () => {
           activeTab="details"
           onTabChange={handleTabChange}
           onBack={handleBack}
-        />
+        />,
       );
 
       expect(screen.getByText("Acme Corp")).toBeInTheDocument();

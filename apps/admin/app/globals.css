@@ -228,13 +228,14 @@
 
 body {
   color: var(--foreground);
-  font-family: Inter, 'Noto Sans Gujarati', 'Noto Sans Devanagari', system-ui, sans-serif;
+  font-family:
+    Inter, "Noto Sans Gujarati", "Noto Sans Devanagari", system-ui, sans-serif;
   background-color: var(--background);
   min-height: 100vh;
-  transition: background-color 0.2s ease, color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
-
-
 
 /* Futuristic 2027+ Floating Minimalist Scrollbar */
 ::-webkit-scrollbar {
@@ -258,5 +259,6 @@ body {
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: color-mix(in srgb, var(--foreground) 18%, transparent) transparent;
+  scrollbar-color: color-mix(in srgb, var(--foreground) 18%, transparent)
+    transparent;
 }
