@@ -37,7 +37,8 @@
     "dashboard": "डैशबोर्ड",
     "customers": "ग्राहक",
     "leads": "लीड्स",
-    "settings": "सेटिंग्स"
+    "settings": "सेटिंग्स",
+    "employees": "कर्मचारी"
   },
   "theme": {
     "activeTheme": "सक्रिय थीम पैलेट:",
@@ -163,5 +164,114 @@
       "editSubtitle": "नीचे दी गई लीड जानकारी को संशोधित करें।"
     },
     "editLead": "लीड संपादित करें"
+  },
+  "employees": {
+    "title": "कर्मचारी निर्देशिका",
+    "subtitle": "संपर्क और मानक भारतीय पते के साथ 1,000+ कर्मचारी रिकॉर्ड का प्रबंधन",
+    "searchPlaceholder": "नाम, मोबाइल, विभाग या राज्य द्वारा कर्मचारी खोजें...",
+    "filterAll": "सभी कर्मचारी",
+    "filterActive": "सक्रिय",
+    "filterOnLeave": "छुट्टी पर",
+    "filterTerminated": "निष्क्रिय",
+    "table": {
+      "employee": "कर्मचारी",
+      "primaryContact": "प्राथमिक संपर्क",
+      "otherContact": "अन्य संपर्क",
+      "location": "राज्य / स्थान",
+      "department": "विभाग",
+      "status": "स्थिति",
+      "actions": "कार्रवाई"
+    },
+    "kpi": {
+      "totalEmployees": "कुल कर्मचारी",
+      "activeStaff": "सक्रिय कर्मचारी",
+      "departments": "विभाग"
+    },
+    "empty": "कोई कर्मचारी नहीं मिला।",
+    "addEmployee": "कर्मचारी जोड़ें",
+    "addEmployeeDrawer": {
+      "title": "नया कर्मचारी जोड़ें",
+      "subtitle": "कर्मचारी रिकॉर्ड बनाने के लिए नीचे विवरण दर्ज करें।",
+      "editTitle": "कर्मचारी अपडेट करें",
+      "editSubtitle": "कर्मचारी जानकारी संशोधित करें।",
+      "firstName": "पहला नाम",
+      "firstNamePlaceholder": "उदा. राहुल",
+      "lastName": "अंतिम नाम",
+      "lastNamePlaceholder": "उदा. शर्मा",
+      "primaryContact": "प्राथमिक संपर्क (मोबाइल)",
+      "primaryContactPlaceholder": "उदा. 9876543210",
+      "otherContact": "अन्य संपर्क (फोन या ईमेल)",
+      "otherContactPlaceholder": "उदा. 022-24300000 या rahul@company.com",
+      "department": "विभाग",
+      "designation": "पद",
+      "status": "स्थिति",
+      "addressSectionTitle": "मानक भारतीय पता",
+      "addressSectionSubtitle": "भारतीय डाक मानकों के अनुसार संरचित (वैकल्पिक)",
+      "addressLine1": "मकान / फ्लैट / भवन नं.",
+      "addressLine1Placeholder": "उदा. फ्लैट 402, ब्लॉक बी",
+      "addressLine2": "सड़क / लेन / इलाका",
+      "addressLine2Placeholder": "उदा. एम.जी. रोड",
+      "landmark": "सीमाचिह्न",
+      "landmarkPlaceholder": "उदा. सिटी अस्पताल के पास",
+      "city": "शहर / गाँव",
+      "cityPlaceholder": "उदा. अहमदाबाद",
+      "district": "जिला",
+      "districtPlaceholder": "उदा. अहमदाबाद",
+      "state": "राज्य / केंद्र शासित प्रदेश",
+      "statePlaceholder": "राज्य चुनें",
+      "pincode": "पिन कोड",
+      "pincodePlaceholder": "उदा. 380015",
+      "mandatoryNotice": "* केवल पहला नाम, अंतिम नाम और प्राथमिक संपर्क अनिवार्य हैं",
+      "errors": {
+        "firstNameRequired": "पहला नाम आवश्यक है",
+        "lastNameRequired": "अंतिम नाम आवश्यक है",
+        "primaryContactRequired": "प्राथमिक संपर्क आवश्यक है",
+        "primaryContactInvalid": "कृपया एक वैध 10-अंकीय मोबाइल नंबर दर्ज करें",
+        "pincodeInvalid": "कृपया एक वैध 6-अंकीय पिन कोड दर्ज करें"
+      },
+      "buttons": {
+        "cancel": "रद्द करें",
+        "save": "कर्मचारी जोड़ें",
+        "update": "अपडेट करें"
+      },
+      "successMessage": "कर्मचारी सफलतापूर्वक जोड़ा गया!",
+      "optionalNotice": "अन्य सभी संपर्क और पते के विवरण वैकल्पिक हैं"
+    },
+    "editEmployee": "कर्मचारी संपादित करें",
+    "profileSidebar": {
+      "title": "कर्मचारी प्रोफ़ाइल",
+      "contactInfo": "संपर्क जानकारी",
+      "primaryContact": "प्राथमिक मोबाइल नंबर (अनिवार्य)",
+      "primaryBadge": "प्राथमिक",
+      "otherContact": "अन्य संपर्क / ईमेल",
+      "optionalBadge": "वैकल्पिक",
+      "notProvided": "उपलब्ध नहीं है",
+      "addressSection": "मानक डाक पता (भारत)",
+      "indiaStandardBadge": "भारत मानक",
+      "landmark": "लैंडमार्क / पहचान चिह्न",
+      "district": "ज़िला",
+      "country": "भारत (INDIA)",
+      "noAddress": "कोई पता दर्ज नहीं है",
+      "employmentParticulars": "रोज़गार विवरण",
+      "department": "विभाग",
+      "designation": "पदनाम",
+      "close": "बंद करें",
+      "editDetails": "विवरण संपादित करें",
+      "activeStatus": "सक्रिय",
+      "onLeaveStatus": "छुट्टी पर",
+      "inactiveStatus": "निष्क्रिय"
+    }
+  },
+  "offline": {
+    "title": "इंटरनेट कनेक्शन नहीं है",
+    "subtitle": "नेटवर्क से कनेक्ट नहीं हो सका। कृपया अपना इंटरनेट कनेक्शन जांचें।",
+    "checkTipsTitle": "समस्या निवारण चरण:",
+    "tipWifi": "सुनिश्चित करें कि आपका वाई-फ़ाई चालू है और कनेक्टेड है।",
+    "tipLan": "जांचें कि आपका LAN / ईथरनेट केबल सही से जुड़ा हुआ है।",
+    "tipRouter": "अपने राउटर या मॉडेम में इंटरनेट कनेक्शन की पुष्टि करें।",
+    "retryButton": "कनेक्शन पुनः जांचें",
+    "checkingButton": "जांच हो रही है...",
+    "onlineRestored": "इंटरनेट कनेक्शन फिर से जुड़ गया!",
+    "stillOffline": "इंटरनेट अभी भी बंद है। कृपया अपना नेटवर्क जांचें और पुनः प्रयास करें।"
   }
 }

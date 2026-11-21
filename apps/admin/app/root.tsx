@@ -15,6 +15,8 @@ import type {
 import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
+import { OfflineStatusModal } from "@repo/ui/organisms";
+import { ClientOnly } from "./components/ClientOnly";
 import { i18next } from "./i18next.server";
 import { MultiThemeProvider } from "./components/ThemeProvider";
 import "./globals.css";
@@ -57,7 +59,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
 
 export function Layout({ children }: { children: React.ReactNode }) {
   const data = useLoaderData<typeof loader>();
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const clientLocale = (i18n.language?.slice(0, 2) ||
     data?.locale ||
     "gu") as string;
@@ -85,7 +87,51 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           Skip to main content
         </a>
-        <MultiThemeProvider defaultTheme="dark">{children}</MultiThemeProvider>
+        <MultiThemeProvider defaultTheme="dark">
+          {children}
+          <ClientOnly>
+            {() => (
+              <OfflineStatusModal
+                translations={{
+                  title: t("offline.title", "No Internet Connection"),
+                  subtitle: t(
+                    "offline.subtitle",
+                    "We can't reach the server right now. Please check your network connection.",
+                  ),
+                  checkTipsTitle: t(
+                    "offline.checkTipsTitle",
+                    "Troubleshooting steps:",
+                  ),
+                  tipWifi: t(
+                    "offline.tipWifi",
+                    "Check Wi-Fi or router connection",
+                  ),
+                  tipLan: t(
+                    "offline.tipLan",
+                    "Ensure LAN / Ethernet cable is firmly plugged in",
+                  ),
+                  tipRouter: t(
+                    "offline.tipRouter",
+                    "Verify your modem / ISP is providing active data",
+                  ),
+                  retryButton: t("offline.retryButton", "Check Connection"),
+                  checkingButton: t(
+                    "offline.checkingButton",
+                    "Checking connection...",
+                  ),
+                  onlineRestoredMessage: t(
+                    "offline.onlineRestored",
+                    "Internet connection restored. Syncing data...",
+                  ),
+                  stillOfflineMessage: t(
+                    "offline.stillOffline",
+                    "Internet is still disconnected. Please check your connection and try again.",
+                  ),
+                }}
+              />
+            )}
+          </ClientOnly>
+        </MultiThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
