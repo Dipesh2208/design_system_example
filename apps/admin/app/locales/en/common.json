@@ -1,0 +1,298 @@
+{
+  "auth": {
+    "title": "Admin Portal",
+    "subtitle": "Sign in with your Google account to access your admin dashboard",
+    "googleSignIn": "Sign in with Google",
+    "secureNotice": "Protected with Enterprise OAuth 2.0 Security",
+    "chooseLanguage": "Language"
+  },
+  "dashboard": {
+    "title": "Admin Dashboard",
+    "welcome": "Welcome back",
+    "role": "Super Administrator",
+    "logout": "Sign out",
+    "overview": "Overview & Analytics",
+    "stats": {
+      "totalUsers": "Total Users",
+      "activeSessions": "Active Sessions",
+      "systemHealth": "System Health",
+      "monthlyRevenue": "Monthly Revenue"
+    },
+    "sharedComponents": "Design System Shared Components (@repo/ui)",
+    "containerQuerySection": "13-Breakpoint Container Query Context (@container)",
+    "containerQueryDesc": "Shared components dynamically scale based on their parent container width using Tailwind CSS v4 container queries.",
+    "quickActions": "Quick Admin Actions (ButtonGroup Molecule)",
+    "formFieldAction": "Interactive Form Dispatch (FormFieldAction Molecule)",
+    "formFieldLabel": "Tenant Workspace or Seat Provisioning",
+    "formFieldPlaceholder": "Enter workspace handle (e.g. acme-corp)...",
+    "formSubmit": "Provision Tenant",
+    "formSubmitting": "Provisioning...",
+    "formDispatched": "Tenant workspace provisioned successfully!",
+    "exportReport": "Export Analytics Report",
+    "manageRoles": "Manage Access Roles",
+    "auditLogs": "View Security Logs",
+    "systemOnline": "All Systems Operational"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "customers": "Customers",
+    "leads": "Leads",
+    "settings": "Settings",
+    "employees": "Employees"
+  },
+  "customers": {
+    "title": "Customer Directory",
+    "subtitle": "High-performance virtualized directory supporting 1,000+ accounts with real-time search & filters",
+    "searchPlaceholder": "Search customer by name, email, or company...",
+    "filterAll": "All Customers",
+    "filterActive": "Active",
+    "filterPending": "Pending",
+    "filterInactive": "Inactive",
+    "table": {
+      "customer": "Customer",
+      "company": "Company",
+      "status": "Status",
+      "totalSpent": "Total Spent",
+      "lastActive": "Last Active",
+      "actions": "Actions"
+    },
+    "kpi": {
+      "totalCustomers": "Total Customers",
+      "activeRate": "Active Rate",
+      "avgRevenue": "Avg. Customer Value"
+    },
+    "empty": "No customers found matching your criteria.",
+    "addCustomer": "Customer",
+    "addCustomerDrawer": {
+      "title": "Add New Customer",
+      "subtitle": "Enter the customer details below to create an account.",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "e.g. Amit",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "e.g. Patel",
+      "phone": "Mobile Number",
+      "phonePlaceholder": "e.g. 9876543210",
+      "mandatoryNotice": "* All three fields are mandatory",
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "phoneRequired": "Mobile number is required",
+        "phoneInvalid": "Please enter a valid 10-digit mobile number"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Add Customer",
+        "update": "Update Customer"
+      },
+      "successMessage": "Customer added successfully!",
+      "editTitle": "Update Customer",
+      "editSubtitle": "Modify the customer information below."
+    },
+    "editCustomer": "Edit Customer"
+  },
+  "leads": {
+    "title": "Lead Directory",
+    "subtitle": "High-performance virtualized directory supporting 1,000+ leads with real-time search & filters",
+    "searchPlaceholder": "Search lead by name, email, or company...",
+    "filterAll": "All Leads",
+    "filterActive": "Active",
+    "filterPending": "Pending",
+    "filterInactive": "Inactive",
+    "colName": "Lead Name & Profile",
+    "colPhone": "Mobile Number",
+    "table": {
+      "lead": "Lead",
+      "company": "Company",
+      "status": "Status",
+      "estimatedBudget": "Estimated Value",
+      "lastActive": "Last Active",
+      "actions": "Actions"
+    },
+    "kpi": {
+      "totalLeads": "Total Leads",
+      "conversionRate": "Qualification Rate",
+      "avgValue": "Avg. Lead Value"
+    },
+    "empty": "No leads found matching your criteria.",
+    "stage": {
+      "label": "Stage",
+      "all": "All Stages",
+      "pending": "Pending",
+      "received": "Received",
+      "lost": "Lost"
+    },
+    "addLead": "Lead",
+    "addLeadDrawer": {
+      "title": "Add New Lead",
+      "subtitle": "Enter the lead details below to create an inquiry.",
+      "stage": "Stage",
+      "stagePending": "Pending",
+      "stageReceived": "Received",
+      "stageLost": "Lost",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "e.g. Amit",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "e.g. Patel",
+      "phone": "Mobile Number",
+      "phonePlaceholder": "e.g. 9876543210",
+      "mandatoryNotice": "* All three fields are mandatory",
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "phoneRequired": "Mobile number is required",
+        "phoneInvalid": "Please enter a valid 10-digit mobile number"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Add Lead",
+        "update": "Update Lead"
+      },
+      "successMessage": "Lead added successfully!",
+      "editTitle": "Update Lead",
+      "editSubtitle": "Modify the lead information below."
+    },
+    "editLead": "Edit Lead"
+  },
+  "theme": {
+    "activeTheme": "Active Theme Palette:",
+    "dark": {
+      "name": "Dark Obsidian",
+      "description": "Deep obsidian backdrop with high-contrast text"
+    },
+    "light": {
+      "name": "Light Clean",
+      "description": "Neutral slate and bright surfaces"
+    },
+    "roseRed": {
+      "name": "Rose & Red",
+      "description": "Crimson warmth and soft blush tones"
+    },
+    "azureBlue": {
+      "name": "Azure & Blue",
+      "description": "Oceanic sky and cobalt trust tones"
+    },
+    "magentaViolet": {
+      "name": "Magenta & Violet",
+      "description": "Electric violet with vivid magenta accents"
+    },
+    "cyanOrange": {
+      "name": "Cyan & Orange (WCAG AA)",
+      "description": "High-contrast teal and warm amber"
+    }
+  },
+  "common": {
+    "language": "Language",
+    "english": "English",
+    "gujarati": "ગુજરાતી (Gujarati)",
+    "hindi": "हिंदी (Hindi)"
+  },
+  "employees": {
+    "title": "Employee Directory",
+    "subtitle": "Comprehensive staff directory supporting 1,000+ employee records with contact and standard Indian address management",
+    "searchPlaceholder": "Search employee by name, mobile, department, or state...",
+    "filterAll": "All Employees",
+    "filterActive": "Active",
+    "filterOnLeave": "On Leave",
+    "filterTerminated": "Terminated",
+    "table": {
+      "employee": "Employee",
+      "primaryContact": "Primary Contact",
+      "otherContact": "Other Contact",
+      "location": "State / Location",
+      "department": "Department",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "kpi": {
+      "totalEmployees": "Total Employees",
+      "activeStaff": "Active Staff",
+      "departments": "Departments"
+    },
+    "empty": "No employees found matching your criteria.",
+    "addEmployee": "Employee",
+    "addEmployeeDrawer": {
+      "title": "Add New Employee",
+      "subtitle": "Enter the employee details below to create a staff record.",
+      "editTitle": "Update Employee",
+      "editSubtitle": "Modify the employee information below.",
+      "firstName": "First Name",
+      "firstNamePlaceholder": "e.g. Rahul",
+      "lastName": "Last Name",
+      "lastNamePlaceholder": "e.g. Sharma",
+      "primaryContact": "Primary Contact (Mobile)",
+      "primaryContactPlaceholder": "e.g. 9876543210",
+      "otherContact": "Other Contact (Phone or Email)",
+      "otherContactPlaceholder": "e.g. 022-24300000 or rahul@company.com",
+      "department": "Department",
+      "designation": "Designation",
+      "status": "Status",
+      "addressSectionTitle": "Standard Indian Address",
+      "addressSectionSubtitle": "Structured according to Indian postal standards (optional)",
+      "addressLine1": "Flat / House / Door / Building No.",
+      "addressLine1Placeholder": "e.g. Flat 402, Block B, Krishna Tower",
+      "addressLine2": "Street / Road / Lane / Locality",
+      "addressLine2Placeholder": "e.g. M.G. Road, Near Ring Road",
+      "landmark": "Landmark",
+      "landmarkPlaceholder": "e.g. Opposite City Hospital",
+      "city": "City / Town / Village",
+      "cityPlaceholder": "e.g. Ahmedabad",
+      "district": "District",
+      "districtPlaceholder": "e.g. Ahmedabad",
+      "state": "State / Union Territory",
+      "statePlaceholder": "Select State / UT",
+      "pincode": "PIN Code",
+      "pincodePlaceholder": "e.g. 380015",
+      "mandatoryNotice": "* Only First Name, Last Name, and Primary Contact are mandatory",
+      "errors": {
+        "firstNameRequired": "First name is required",
+        "lastNameRequired": "Last name is required",
+        "primaryContactRequired": "Primary contact is required",
+        "primaryContactInvalid": "Please enter a valid 10-digit mobile number",
+        "pincodeInvalid": "Please enter a valid 6-digit PIN code"
+      },
+      "buttons": {
+        "cancel": "Cancel",
+        "save": "Add Employee",
+        "update": "Update Employee"
+      },
+      "successMessage": "Employee added successfully!",
+      "optionalNotice": "All other contact and address fields are optional"
+    },
+    "editEmployee": "Edit Employee",
+    "profileSidebar": {
+      "title": "Employee Profile",
+      "contactInfo": "Contact Information",
+      "primaryContact": "Primary Contact (Mandatory)",
+      "primaryBadge": "Primary",
+      "otherContact": "Other Contact",
+      "optionalBadge": "Optional",
+      "notProvided": "Not provided",
+      "addressSection": "Standard Postal Address (India)",
+      "indiaStandardBadge": "India Standard",
+      "landmark": "Landmark",
+      "district": "District",
+      "country": "INDIA",
+      "noAddress": "No address provided",
+      "employmentParticulars": "Employment Particulars",
+      "department": "Department",
+      "designation": "Designation",
+      "close": "Close",
+      "editDetails": "Edit Details",
+      "activeStatus": "Active",
+      "onLeaveStatus": "On Leave",
+      "inactiveStatus": "Inactive"
+    }
+  },
+  "offline": {
+    "title": "No Internet Connection",
+    "subtitle": "We couldn't connect to the network. Please check your internet connection.",
+    "checkTipsTitle": "Troubleshooting steps:",
+    "tipWifi": "Ensure your Wi-Fi is turned on and connected.",
+    "tipLan": "Check that your LAN / Ethernet network cable is firmly plugged in.",
+    "tipRouter": "Verify that your router or modem has an active internet connection.",
+    "retryButton": "Check Connection",
+    "checkingButton": "Checking...",
+    "onlineRestored": "Internet connection restored!",
+    "stillOffline": "Internet is still disconnected. Please check your network and try again."
+  }
+}

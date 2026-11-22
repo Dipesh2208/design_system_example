@@ -1,0 +1,298 @@
+{
+  "auth": {
+    "title": "એડમિન પોર્ટલ",
+    "subtitle": "તમારા એડમિન ડેશબોર્ડમાં પ્રવેશવા માટે તમારા ગૂગલ એકાઉન્ટ સાથે સાઇન ઇન કરો",
+    "googleSignIn": "ગૂગલ સાથે સાઇન ઇન કરો",
+    "secureNotice": "એન્ટરપ્રાઇઝ OAuth 2.0 સુરક્ષા સાથે સુરક્ષિત",
+    "chooseLanguage": "ભાષા"
+  },
+  "dashboard": {
+    "title": "એડમિન ડેશબોર્ડ",
+    "welcome": "ફરીથી સ્વાગત છે",
+    "role": "સુપર એડમિનિસ્ટ્રેટર",
+    "logout": "સાઇન આઉટ",
+    "overview": "વિહંગાવલોકન અને વિશ્લેષણ",
+    "stats": {
+      "totalUsers": "કુલ વપરાશકર્તાઓ",
+      "activeSessions": "સક્રિય સત્રો",
+      "systemHealth": "સિસ્ટમ સ્થિતિ",
+      "monthlyRevenue": "માસિક આવક"
+    },
+    "sharedComponents": "શેર્ડ ડિઝાઇન સિસ્ટમ ઘટકો (@repo/ui)",
+    "containerQuerySection": "૧૩-બ્રેકપોઇન્ટ કન્ટેનર ક્વેરી સંદર્ભ (@container)",
+    "containerQueryDesc": "શેર્ડ ઘટકો ટેઇલવિન્ડ CSS v4 કન્ટેનર ક્વેરીઝનો ઉપયોગ કરીને તેમના પેરેન્ટ કન્ટેનરની પહોળાઈના આધારે ગતિશીલ રીતે કદ બદલે છે.",
+    "quickActions": "ઝડપી એડમિન ક્રિયાઓ (ButtonGroup મોલેક્યુલ)",
+    "formFieldAction": "ઇન્ટરેક્ટિવ ફોર્મ ડિસ્પેચ (FormFieldAction મોલેક્યુલ)",
+    "formFieldLabel": "ટેનન્ટ વર્કસ્પેસ અથવા સીટ જોગવાઈ",
+    "formFieldPlaceholder": "વર્કસ્પેસ હેન્ડલ દાખલ કરો (દા.ત. acme-corp)...",
+    "formSubmit": "ટેનન્ટ બનાવો",
+    "formSubmitting": "બનાવી રહ્યું છે...",
+    "formDispatched": "ટેનન્ટ વર્કસ્પેસ સફળતાપૂર્વક બનાવવામાં આવ્યો!",
+    "exportReport": "વિશ્લેષણ રિપોર્ટ નિકાસ કરો",
+    "manageRoles": "ઍક્સેસ ભૂમિકાઓ મેનેજ કરો",
+    "auditLogs": "સુરક્ષા લૉગ્સ જુઓ",
+    "systemOnline": "બધી સિસ્ટમો સંપૂર્ણ કાર્યરત છે"
+  },
+  "nav": {
+    "dashboard": "ડેશબોર્ડ",
+    "customers": "ગ્રાહકો",
+    "leads": "લીડ્સ",
+    "settings": "સેટિંગ્સ",
+    "employees": "કર્મચારીઓ"
+  },
+  "customers": {
+    "title": "ગ્રાહક ડિરેક્ટરી",
+    "subtitle": "રીઅલ-ટાઇમ શોધ અને ફિલ્ટર્સ સાથે ૧,૦૦૦+ એકાઉન્ટ્સને સપોર્ટ કરતી ઉચ્ચ-પ્રદર્શન વર્ચ્યુઅલાઇઝ્ડ ડિરેક્ટરી",
+    "searchPlaceholder": "નામ, ઇમેઇલ અથવા કંપની દ્વારા ગ્રાહક શોધો...",
+    "filterAll": "બધા ગ્રાહકો",
+    "filterActive": "સક્રિય",
+    "filterPending": "બાકી (Pending)",
+    "filterInactive": "નિષ્ક્રિય",
+    "table": {
+      "customer": "ગ્રાહક",
+      "company": "કંપની",
+      "status": "સ્થિતિ",
+      "totalSpent": "કુલ ખર્ચ",
+      "lastActive": "છેલ્લે સક્રિય",
+      "actions": "ક્રિયાઓ"
+    },
+    "kpi": {
+      "totalCustomers": "કુલ ગ્રાહકો",
+      "activeRate": "સક્રિય દર",
+      "avgRevenue": "સરેરાશ ગ્રાહક મૂલ્ય"
+    },
+    "empty": "તમારા માપદંડ સાથે મેળ ખાતા કોઈ ગ્રાહકો મળ્યા નથી.",
+    "addCustomer": "ગ્રાહક ઉમેરો",
+    "addCustomerDrawer": {
+      "title": "નવો ગ્રાહક ઉમેરો",
+      "subtitle": "એકાઉન્ટ બનાવવા માટે નીચે ગ્રાહકની વિગતો દાખલ કરો.",
+      "firstName": "પ્રથમ નામ",
+      "firstNamePlaceholder": "દા.ત. અમિત",
+      "lastName": "અટક / છેલ્લું નામ",
+      "lastNamePlaceholder": "દા.ત. પટેલ",
+      "phone": "મોબાઇલ નંબર",
+      "phonePlaceholder": "દા.ત. ૯૮૭૬૫૪૩૨૧૦",
+      "mandatoryNotice": "* ત્રણેય ફીલ્ડ ફરજિયાત છે",
+      "errors": {
+        "firstNameRequired": "પ્રથમ નામ ફરજિયાત છે",
+        "lastNameRequired": "અટક / છેલ્લું નામ ફરજિયાત છે",
+        "phoneRequired": "મોબાઇલ નંબર ફરજિયાત છે",
+        "phoneInvalid": "કૃપા કરીને માન્ય ૧૦ અંકનો મોબાઇલ નંબર દાખલ કરો"
+      },
+      "buttons": {
+        "cancel": "રદ કરો",
+        "save": "ગ્રાહક ઉમેરો",
+        "update": "ગ્રાહક અપડેટ કરો"
+      },
+      "successMessage": "ગ્રાહક સફળતાપૂર્વક ઉમેરાયો!",
+      "editTitle": "ગ્રાહક અપડેટ કરો",
+      "editSubtitle": "નીચે આપેલ ગ્રાહકની માહિતીમાં ફેરફાર કરો."
+    },
+    "editCustomer": "ગ્રાહક સંપાદિત કરો"
+  },
+  "leads": {
+    "title": "લીડ ડિરેક્ટરી",
+    "subtitle": "રીઅલ-ટાઇમ શોધ અને ફિલ્ટર્સ સાથે ૧,૦૦૦+ લીડ્સને સપોર્ટ કરતી ઉચ્ચ-પ્રદર્શન વર્ચ્યુઅલાઇઝ્ડ ડિરેક્ટરી",
+    "searchPlaceholder": "નામ, ઇમેઇલ અથવા કંપની દ્વારા લીડ શોધો...",
+    "filterAll": "બધી લીડ્સ",
+    "filterActive": "સક્રિય",
+    "filterPending": "બાકી (Pending)",
+    "filterInactive": "નિષ્ક્રિય",
+    "colName": "લીડ નામ અને પ્રોફાઇલ",
+    "colPhone": "મોબાઇલ નંબર",
+    "table": {
+      "lead": "લીડ",
+      "company": "કંપની",
+      "status": "સ્થિતિ",
+      "estimatedBudget": "અંદાજિત મૂલ્ય",
+      "lastActive": "છેલ્લે સક્રિય",
+      "actions": "ક્રિયાઓ"
+    },
+    "kpi": {
+      "totalLeads": "કુલ લીડ્સ",
+      "conversionRate": "લાયકાત દર",
+      "avgValue": "સરેરાશ લીડ મૂલ્ય"
+    },
+    "empty": "તમારા માપદંડ સાથે મેળ ખાતી કોઈ લીડ્સ મળી નથી.",
+    "stage": {
+      "label": "તબક્કો (Stage)",
+      "all": "બધા તબક્કા (All Stages)",
+      "pending": "બાકી (Pending)",
+      "received": "પ્રાપ્ત (Received)",
+      "lost": "ગુમાવેલ (Lost)"
+    },
+    "addLead": "લીડ ઉમેરો",
+    "addLeadDrawer": {
+      "title": "નવી લીડ ઉમેરો",
+      "subtitle": "નવી ઇન્ક્વાયરી બનાવવા માટે નીચે વિગતો દાખલ કરો.",
+      "stage": "તબક્કો",
+      "stagePending": "બાકી (Pending)",
+      "stageReceived": "પ્રાપ્ત (Received)",
+      "stageLost": "ગુમાવેલ (Lost)",
+      "firstName": "પ્રથમ નામ",
+      "firstNamePlaceholder": "દા.ત. અમિત",
+      "lastName": "અટક / છેલ્લું નામ",
+      "lastNamePlaceholder": "દા.ત. પટેલ",
+      "phone": "મોબાઇલ નંબર",
+      "phonePlaceholder": "દા.ત. 9876543210",
+      "mandatoryNotice": "* ત્રણેય ફીલ્ડ્સ ફરજિયાત છે",
+      "errors": {
+        "firstNameRequired": "પ્રથમ નામ ફરજિયાત છે",
+        "lastNameRequired": "અટક / છેલ્લું નામ ફરજિયાત છે",
+        "phoneRequired": "મોબાઇલ નંબર ફરજિયાત છે",
+        "phoneInvalid": "કૃપા કરીને માન્ય ૧૦ અંકનો મોબાઇલ નંબર દાખલ કરો"
+      },
+      "buttons": {
+        "cancel": "રદ કરો",
+        "save": "લીડ ઉમેરો",
+        "update": "લીડ અપડેટ કરો"
+      },
+      "successMessage": "લીડ સફળતાપૂર્વક ઉમેરાઈ!",
+      "editTitle": "લીડ અપડેટ કરો",
+      "editSubtitle": "નીચે આપેલ લીડની માહિતીમાં ફેરફાર કરો."
+    },
+    "editLead": "લીડ સંપાદિત કરો"
+  },
+  "theme": {
+    "activeTheme": "સક્રિય થીમ પૅલેટ:",
+    "dark": {
+      "name": "ડાર્ક ઓબ્સિડિયન",
+      "description": "ઉચ્ચ-વિરોધાભાસી ટેક્સ્ટ સાથે ઊંડી ઓબ્સિડિયન પૃષ્ઠભૂમિ"
+    },
+    "light": {
+      "name": "લાઇટ ક્લીન",
+      "description": "ન્યુટ્રલ સ્લેટ અને તેજસ્વી સપાટીઓ"
+    },
+    "roseRed": {
+      "name": "રોઝ અને રેડ",
+      "description": "ક્રિમસન હૂંફ અને સોફ્ટ બ્લશ ટોન"
+    },
+    "azureBlue": {
+      "name": "એઝ્યુર અને બ્લુ",
+      "description": "ઓસેનિક આકાશ અને કોબાલ્ટ વિશ્વાસપાત્ર ટોન"
+    },
+    "magentaViolet": {
+      "name": "મેજેન્ટા અને વાયોલેટ",
+      "description": "ઇલેક્ટ્રિક વાયોલેટ અને આબેહૂબ મેજેન્ટા ઉચ્ચારો"
+    },
+    "cyanOrange": {
+      "name": "સ્યાન અને ઓરેન્જ (WCAG AA)",
+      "description": "હાઇ-કોન્ટ્રાસ્ટ ટીલ અને ગરમ એમ્બર"
+    }
+  },
+  "common": {
+    "language": "ભાષા",
+    "english": "English",
+    "gujarati": "ગુજરાતી (Gujarati)",
+    "hindi": "हिंदी (Hindi)"
+  },
+  "employees": {
+    "title": "કર્મચારી ડિરેક્ટરી",
+    "subtitle": "સંપર્ક અને પ્રમાણભૂત ભારતીય સરનામા સાથે 1,000+ કર્મચારી રેકોર્ડ્સનું સંચાલન",
+    "searchPlaceholder": "નામ, મોબાઇલ, વિભાગ અથવા રાજ્ય દ્વારા શોધો...",
+    "filterAll": "બધા કર્મચારીઓ",
+    "filterActive": "સક્રિય",
+    "filterOnLeave": "રજા પર",
+    "filterTerminated": "નિષ્ક્રિય",
+    "table": {
+      "employee": "કર્મચારી",
+      "primaryContact": "પ્રાથમિક સંપર્ક",
+      "otherContact": "અન્ય સંપર્ક",
+      "location": "રાજ્ય / સ્થળ",
+      "department": "વિભાગ",
+      "status": "સ્થિતિ",
+      "actions": "ક્રિયાઓ"
+    },
+    "kpi": {
+      "totalEmployees": "કુલ કર્મચારીઓ",
+      "activeStaff": "સક્રિય સ્ટાફ",
+      "departments": "વિભાગો"
+    },
+    "empty": "કોઈ કર્મચારી મળ્યા નથી.",
+    "addEmployee": "કર્મચારી ઉમેરો",
+    "addEmployeeDrawer": {
+      "title": "નવો કર્મચારી ઉમેરો",
+      "subtitle": "કર્મચારી રેકોર્ડ બનાવવા માટે નીચે વિગતો દાખલ કરો.",
+      "editTitle": "કર્મચારી અપડેટ કરો",
+      "editSubtitle": "કર્મચારી માહિતી સુધારો.",
+      "firstName": "પ્રથમ નામ",
+      "firstNamePlaceholder": "દા.ત. રાહુલ",
+      "lastName": "અટક / છેલ્લું નામ",
+      "lastNamePlaceholder": "દા.ત. શર્મા",
+      "primaryContact": "પ્રાથમિક સંપર્ક (મોબાઇલ)",
+      "primaryContactPlaceholder": "દા.ત. 9876543210",
+      "otherContact": "અન્ય સંપર્ક (ફોન અથવા ઈમેઇલ)",
+      "otherContactPlaceholder": "દા.ત. 022-24300000 અથવા rahul@company.com",
+      "department": "વિભાગ",
+      "designation": "હોદ્દો",
+      "status": "સ્થિતિ",
+      "addressSectionTitle": "પ્રમાણભૂત ભારતીય સરનામું",
+      "addressSectionSubtitle": "ભારતીય ટપાલ ધોરણો મુજબ સંરચિત (વૈકલ્પિક)",
+      "addressLine1": "મકાન / ફ્લેટ / બિલ્ડિંગ નં.",
+      "addressLine1Placeholder": "દા.ત. ફ્લેટ 402, બ્લોક બી",
+      "addressLine2": "શેરી / રોડ / વિસ્તાર",
+      "addressLine2Placeholder": "દા.ત. એમ.જી. રોડ",
+      "landmark": "લેન્ડમાર્ક",
+      "landmarkPlaceholder": "દા.ત. સિટી હોસ્પિટલ પાસે",
+      "city": "શહેર / ગામ",
+      "cityPlaceholder": "દા.ત. અમદાવાદ",
+      "district": "જિલ્લો",
+      "districtPlaceholder": "દા.ત. અમદાવાદ",
+      "state": "રાજ્ય / કેન્દ્રશાસિત પ્રદેશ",
+      "statePlaceholder": "રાજ્ય પસંદ કરો",
+      "pincode": "પિન કોડ",
+      "pincodePlaceholder": "દા.ત. 380015",
+      "mandatoryNotice": "* ફક્ત પ્રથમ નામ, છેલ્લું નામ અને પ્રાથમિક સંપર્ક ફરજિયાત છે",
+      "errors": {
+        "firstNameRequired": "પ્રથમ નામ જરૂરી છે",
+        "lastNameRequired": "છેલ્લું નામ જરૂરી છે",
+        "primaryContactRequired": "પ્રાથમિક સંપર્ક જરૂરી છે",
+        "primaryContactInvalid": "કૃપા કરીને માન્ય 10-અંકનો મોબાઇલ નંબર દાખલ કરો",
+        "pincodeInvalid": "કૃપા કરીને માન્ય 6-અંકનો પિન કોડ દાખલ કરો"
+      },
+      "buttons": {
+        "cancel": "રદ કરો",
+        "save": "કર્મચારી ઉમેરો",
+        "update": "અપડેટ કરો"
+      },
+      "successMessage": "કર્મચારી સફળતાપૂર્વક ઉમેરાયા!",
+      "optionalNotice": "અન્ય તમામ સંપર્ક અને સરનામાની વિગતો વૈકલ્પિક છે"
+    },
+    "editEmployee": "કર્મચારી સંપાદિત કરો",
+    "profileSidebar": {
+      "title": "કર્મચારી પ્રોફાઇલ",
+      "contactInfo": "સંપર્ક માહિતી",
+      "primaryContact": "મુખ્ય મોબાઇલ નંબર (ફરજિયાત)",
+      "primaryBadge": "મુખ્ય",
+      "otherContact": "અન્ય સંપર્ક / ઇમેઇલ",
+      "optionalBadge": "વૈકલ્પિક",
+      "notProvided": "આપેલ નથી",
+      "addressSection": "સામાન્ય ટપાલ સરનામું (ભારત)",
+      "indiaStandardBadge": "ભારત પ્રમાણભૂત",
+      "landmark": "લેન્ડમાર્ક / જાણીતી જગ્યા",
+      "district": "જિલ્લો",
+      "country": "ભારત (INDIA)",
+      "noAddress": "સરનામું દાખલ કરેલ નથી",
+      "employmentParticulars": "નોકરી / હોદ્દાની વિગતો",
+      "department": "વિભાગ",
+      "designation": "હોદ્દો",
+      "close": "બંધ કરો",
+      "editDetails": "વિગતો સુધારો",
+      "activeStatus": "સક્રિય",
+      "onLeaveStatus": "રજા પર",
+      "inactiveStatus": "નિષ્ક્રિય"
+    }
+  },
+  "offline": {
+    "title": "ઇન્ટરનેટ કનેક્શન નથી",
+    "subtitle": "નેટવર્ક સાથે કનેક્ટ થઈ શક્યું નથી. કૃપા કરીને તમારું ઇન્ટરનેટ કનેક્શન તપાસો.",
+    "checkTipsTitle": "કનેક્શન ચકાસણી પગલાં:",
+    "tipWifi": "ખાતરી કરો કે તમારું Wi-Fi ચાલુ છે અને કનેક્ટેડ છે.",
+    "tipLan": "તમારી LAN / ઇથરનેટ નેટવર્ક કેબલ બરાબર જોડાયેલ છે કે નહીં તે તપાસો.",
+    "tipRouter": "તમારા રાઉટર અથવા મોડેમમાં સક્રિય ઇન્ટરનેટ તપાસો.",
+    "retryButton": "કનેક્શન ફરીથી તપાસો",
+    "checkingButton": "ચકાસી રહ્યું છે...",
+    "onlineRestored": "ઇન્ટરનેટ કનેક્શન પુનઃસ્થાપિત થયું!",
+    "stillOffline": "ઇન્ટરનેટ હજુ પણ બંધ છે. કૃપા કરીને તમારું નેટવર્ક તપાસો અને ફરી પ્રયાસ કરો."
+  }
+}

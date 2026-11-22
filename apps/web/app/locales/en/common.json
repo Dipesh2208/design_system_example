@@ -1,0 +1,160 @@
+{
+  "meta": {
+    "title": "Remix + Tailwind v4 Container Query Design System - AppButton",
+    "description": "Remix Framework implementation of Universal Atomic AppButton with 13-Breakpoint Container Query Adaptability and 6 Themes"
+  },
+  "a11y": {
+    "skipToContent": "Skip to main content",
+    "languageSelector": "Language selector",
+    "themeSelector": "Theme selector",
+    "viewModeSelector": "View mode selector",
+    "widthSlider": "Container width slider"
+  },
+  "languages": {
+    "gu": "ગુજરાતી",
+    "hi": "हिन्दी",
+    "en": "English"
+  },
+  "banner": {
+    "badge": "Atomic Design Architecture: Pure Stateless Atoms & Molecules",
+    "title": "Production-Ready Atomic Design System Sandbox",
+    "description": "Strict adherence to atomic design principles: Shared Stateless Atoms (AppButton, AppBadge, AppInput, AppSpinner) and Stateless Composite Molecules (ButtonGroup, FormFieldAction, PaymentActionCard) reside in @repo/ui."
+  },
+  "viewModes": {
+    "interactive": "Interactive Slider",
+    "allBreakpoints": "13-Breakpoint Grid",
+    "matrix": "6-Theme Matrix"
+  },
+  "theme": {
+    "activeTheme": "Active Theme:",
+    "light": {
+      "name": "Light Clean",
+      "description": "Neutral slate and luminous surfaces"
+    },
+    "dark": {
+      "name": "Dark Obsidian",
+      "description": "Deep obsidian backdrop with high-contrast text"
+    },
+    "roseRed": {
+      "name": "Rose & Red",
+      "description": "Crimson warmth and soft blush tones"
+    },
+    "azureBlue": {
+      "name": "Azure & Blue",
+      "description": "Oceanic azure and cobalt high-trust tones"
+    },
+    "magentaViolet": {
+      "name": "Magenta & Violet",
+      "description": "Electric violet with vivid magenta accents"
+    },
+    "cyanOrange": {
+      "name": "Cyan & Orange (WCAG AA)",
+      "description": "High-contrast teal and warm amber calibrated for 4.5:1+ contrast"
+    }
+  },
+  "simulator": {
+    "title": "Container Width Simulator",
+    "subtitle": "Resize the parent container to observe how atoms & molecules adapt dynamically via @container.",
+    "jumpTo": "Jump to:",
+    "parentViewport": "Parent Container Viewport",
+    "styleLabel": "style: max-width",
+    "currentLabel": "current:",
+    "parentContainer": "Parent Container:",
+    "breakpoint": "Breakpoint:"
+  },
+  "scenarios": {
+    "actionVariants": "Action Variants (ButtonGroup Molecule)",
+    "primaryAction": "Primary Action",
+    "securePay": "Secure Pay",
+    "secondary": "Secondary",
+    "outlineAction": "Outline Action",
+    "destructive": "Cancel / Remove",
+    "iconButton": "Icon Button",
+    "touchTargetNote": "WCAG 2.5.5 Touch Targets: Min 44x44px expansion on mobile & narrow containers is automatic.",
+    "interactiveCounter": "Interactive State Control",
+    "clickCount": "Click Count:",
+    "times": "times",
+    "increment": "Increment (+1)",
+    "reset": "Reset",
+    "formFieldMolecule": "FormFieldAction (Molecule)",
+    "formPlaceholder": "Enter workspace or seat label...",
+    "formSubmit": "Submit",
+    "formSubmitting": "Submitting...",
+    "formDispatched": "Form payload dispatched securely!",
+    "paymentMolecule": "PaymentActionCard (Integrated Molecule)",
+    "paymentMoleculeTitle": "High-Trust Payment Trigger",
+    "paymentMoleculeDesc": "Protected against double clicking and verified via encrypted TLS gateway.",
+    "paymentBadge": "Encrypted TLS",
+    "planName": "Enterprise Pro Plan",
+    "planPrice": "₹7,999 / month",
+    "planBilled": "Billed annually • 14-day free trial",
+    "processing": "Processing...",
+    "payNow": "Pay Now",
+    "paymentVerified": "Payment verified & authenticated via 256-bit TLS gateway!",
+    "paymentSecurity": "256-Bit SSL Secured with Bank-Grade Encryption",
+    "tailwindDocs": "Tailwind Docs"
+  },
+  "breakpoints": {
+    "@3xs": {
+      "label": "Compact Mini-Card / Sidebar",
+      "description": "w-full, px-2.5, min-h-11 touch target, text-xs, truncate"
+    },
+    "@2xs": {
+      "label": "Small Mobile Container",
+      "description": "w-full, px-3, text-xs"
+    },
+    "@xs": {
+      "label": "Standard Narrow Mobile (320px)",
+      "description": "w-full, px-3.5, text-sm"
+    },
+    "@sm": {
+      "label": "Large Mobile (384px)",
+      "description": "w-full @md:w-auto option, px-4, text-sm"
+    },
+    "@md": {
+      "label": "Phablet / Modal Width",
+      "description": "Transitions cleanly from stacked full-width to inline auto-width (@md:w-auto)"
+    },
+    "@lg": {
+      "label": "Standard Dialog / Card",
+      "description": "Balanced padding (@lg:px-5), text-sm"
+    },
+    "@xl": {
+      "label": "Wide Card / Drawer",
+      "description": "Comfortable spacing (@xl:px-6)"
+    },
+    "@2xl": {
+      "label": "Small Tablet / Split Pane",
+      "description": "Scaled font-size (@2xl:text-base)"
+    },
+    "@3xl": {
+      "label": "Tablet Portrait (768px)",
+      "description": "Crisp inline button group alignment (@3xl:gap-2.5)"
+    },
+    "@4xl": {
+      "label": "Tablet Landscape / Compact Laptop",
+      "description": "Expansive padding (@4xl:px-7)"
+    },
+    "@5xl": {
+      "label": "Standard Desktop / Laptop (1024px)",
+      "description": "Refined hover & focus transitions (@5xl:px-8)"
+    },
+    "@6xl": {
+      "label": "Wide Desktop (1152px)",
+      "description": "Wide desktop scaling (@6xl:text-base)"
+    },
+    "@7xl": {
+      "label": "Ultrawide Container (1280px)",
+      "description": "Generous proportional padding (@7xl:px-9) without awkward stretching"
+    }
+  },
+  "matrix": {
+    "title": "6-Theme Design Tokens Matrix",
+    "subtitle": "Every theme variant validated with WCAG AA color contrast and token mapping.",
+    "viewTheme": "Set Theme"
+  },
+  "grid": {
+    "title": "13-Breakpoint Container Query Grid",
+    "subtitle": "Showcasing responsive scaling and behavior for each container query breakpoint (@3xs to @7xl)."
+  }
+}
