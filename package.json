@@ -17,6 +17,7 @@
     "test:e2e:debug": "playwright test --debug",
     "test:e2e:report": "playwright show-report",
     "prepare": "node scripts/install-git-hooks.js",
+    "branch:delete": "node scripts/safe-branch-delete.js",
     "test:clean": "node scripts/clean-test-artifacts.js"
   },
   "devDependencies": {
