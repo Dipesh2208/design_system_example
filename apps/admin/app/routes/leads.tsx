@@ -6,6 +6,7 @@ import React, {
   useRef,
   useEffect,
   useCallback,
+  useDeferredValue,
 } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { defer, json, redirect } from "@remix-run/node";
@@ -259,6 +260,7 @@ export default function LeadsPage() {
 
   // Search State
   const [searchQuery, setSearchQuery] = useState("");
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
   // Stage Filter State
   const [selectedStage, setSelectedStage] = useState<LeadStage | "all">("all");
@@ -311,28 +313,38 @@ export default function LeadsPage() {
   const parentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let animationFrameId: number | null = null;
     const updateColumns = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setColumns(1);
-      } else if (width < 1024) {
-        setColumns(2);
-      } else if (isContentFullWidth) {
-        if (width < 1440) {
-          setColumns(3);
-        } else if (width < 1800) {
-          setColumns(4);
+      if (animationFrameId !== null) return;
+      animationFrameId = window.requestAnimationFrame(() => {
+        animationFrameId = null;
+        const width = window.innerWidth;
+        if (width < 768) {
+          setColumns(1);
+        } else if (width < 1024) {
+          setColumns(2);
+        } else if (isContentFullWidth) {
+          if (width < 1440) {
+            setColumns(3);
+          } else if (width < 1800) {
+            setColumns(4);
+          } else {
+            setColumns(5);
+          }
         } else {
-          setColumns(5);
+          setColumns(3);
         }
-      } else {
-        setColumns(3);
-      }
+      });
     };
 
     updateColumns();
-    window.addEventListener("resize", updateColumns);
-    return () => window.removeEventListener("resize", updateColumns);
+    window.addEventListener("resize", updateColumns, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateColumns);
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, [isContentFullWidth]);
 
   // Active customer object
@@ -347,12 +359,12 @@ export default function LeadsPage() {
     };
   }, [selectedLeadId, leadFavorites, leadRatings]);
 
-  // Filtered Leads
+  // Filtered Leads with non-blocking deferred query
   const filteredData = useMemo(() => {
     let result = [...customLeads, ...STATIC_LEADS];
 
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
+    if (deferredSearchQuery.trim()) {
+      const q = deferredSearchQuery.toLowerCase();
       result = result.filter(
         (c) =>
           c.name.toLowerCase().includes(q) ||
@@ -367,7 +379,7 @@ export default function LeadsPage() {
     }
 
     return result;
-  }, [searchQuery, selectedStage, customLeads]);
+  }, [deferredSearchQuery, selectedStage, customLeads]);
 
   // Infinite Scroll Slice: Display up to `visibleCount` items
   const paginatedData = useMemo(() => {
@@ -379,12 +391,8 @@ export default function LeadsPage() {
   const handleLoadMore = React.useCallback(() => {
     if (!hasMore || isLoadingMore) return;
     setIsLoadingMore(true);
-    setTimeout(() => {
-      setVisibleCount((prev) =>
-        Math.min(prev + BATCH_SIZE, filteredData.length),
-      );
-      setIsLoadingMore(false);
-    }, 200);
+    setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, filteredData.length));
+    setIsLoadingMore(false);
   }, [hasMore, isLoadingMore, filteredData.length]);
 
   // Virtualizer row count based on paginated items

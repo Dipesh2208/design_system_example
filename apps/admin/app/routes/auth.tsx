@@ -30,8 +30,6 @@ export async function action({ request }: ActionFunctionArgs) {
       id: "usr_admin_google_9823",
       name: "Admin User",
       email: "admin@enterprise.org",
-      avatar:
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
       role: "Super Admin",
     };
 

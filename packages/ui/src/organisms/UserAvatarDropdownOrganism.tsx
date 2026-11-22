@@ -77,17 +77,9 @@ export function UserAvatarDropdownOrganism({
         className="flex items-center gap-2 p-1 rounded-xl hover:bg-muted/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary transition-colors min-h-[44px]"
       >
         <div className="relative">
-          {user.avatar ? (
-            <img
-              src={user.avatar}
-              alt={user.name || user.email}
-              className="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20 shrink-0"
-            />
-          ) : (
-            <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs border border-primary/20 shrink-0">
-              {initials}
-            </div>
-          )}
+          <div className="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs border border-primary/20 shrink-0">
+            {initials}
+          </div>
           <span className="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-card" />
         </div>
 

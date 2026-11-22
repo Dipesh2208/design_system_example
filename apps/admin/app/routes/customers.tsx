@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useDeferredValue,
+} from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { defer, json, redirect } from "@remix-run/node";
 import { useLoaderData, useSubmit, Await } from "@remix-run/react";
@@ -245,8 +251,9 @@ export default function CustomersPage() {
   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
 
-  // Search State
+  // Search State with React Concurrent Deferred Value for near-zero INP latency
   const [searchQuery, setSearchQuery] = useState("");
+  const deferredSearchQuery = useDeferredValue(searchQuery);
 
   // Full-width expand/collapse layout state from central store
   const isContentFullWidth = useAppStore((state) => state.isContentFullWidth);
@@ -261,7 +268,7 @@ export default function CustomersPage() {
   // Reset pagination when search query changes
   useEffect(() => {
     setVisibleCount(BATCH_SIZE);
-  }, [searchQuery]);
+  }, [deferredSearchQuery]);
 
   // Accordion Expand/Collapse State (for Table Rows & Cards)
   const [expandedCustomerIds, setExpandedCustomerIds] = useState<Set<string>>(
@@ -300,48 +307,60 @@ export default function CustomersPage() {
   const parentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let animationFrameId: number | null = null;
     const updateColumns = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setColumns(1);
-      } else if (width < 1024) {
-        setColumns(2);
-      } else if (isContentFullWidth) {
-        if (width < 1440) {
-          setColumns(3);
-        } else if (width < 1800) {
-          setColumns(4);
+      if (animationFrameId !== null) return;
+      animationFrameId = window.requestAnimationFrame(() => {
+        animationFrameId = null;
+        const width = window.innerWidth;
+        if (width < 768) {
+          setColumns(1);
+        } else if (width < 1024) {
+          setColumns(2);
+        } else if (isContentFullWidth) {
+          if (width < 1440) {
+            setColumns(3);
+          } else if (width < 1800) {
+            setColumns(4);
+          } else {
+            setColumns(5);
+          }
         } else {
-          setColumns(5);
+          setColumns(3);
         }
-      } else {
-        setColumns(3);
-      }
+      });
     };
 
     updateColumns();
-    window.addEventListener("resize", updateColumns);
-    return () => window.removeEventListener("resize", updateColumns);
+    window.addEventListener("resize", updateColumns, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateColumns);
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, [isContentFullWidth]);
 
   // Active customer object
   const selectedCustomer = useMemo(() => {
     if (!selectedCustomerId) return null;
-    const base = STATIC_CUSTOMERS.find((c) => c.id === selectedCustomerId);
+    const base =
+      customCustomers.find((c) => c.id === selectedCustomerId) ||
+      STATIC_CUSTOMERS.find((c) => c.id === selectedCustomerId);
     if (!base) return null;
     return {
       ...base,
       isFavorite: customerFavorites[base.id] ?? base.isFavorite ?? false,
       rating: customerRatings[base.id] ?? base.rating ?? 4,
     };
-  }, [selectedCustomerId, customerFavorites, customerRatings]);
+  }, [selectedCustomerId, customCustomers, customerFavorites, customerRatings]);
 
-  // Filtered Customers
+  // Filtered Customers with non-blocking deferred query
   const filteredData = useMemo(() => {
-    let result = STATIC_CUSTOMERS;
+    let result = [...customCustomers, ...STATIC_CUSTOMERS];
 
-    if (searchQuery.trim()) {
-      const q = searchQuery.toLowerCase();
+    if (deferredSearchQuery.trim()) {
+      const q = deferredSearchQuery.toLowerCase();
       result = result.filter(
         (c) =>
           c.name.toLowerCase().includes(q) ||
@@ -352,7 +371,7 @@ export default function CustomersPage() {
     }
 
     return result;
-  }, [searchQuery]);
+  }, [customCustomers, deferredSearchQuery]);
 
   // Infinite Scroll Slice: Display up to `visibleCount` items
   const paginatedData = useMemo(() => {
@@ -364,12 +383,8 @@ export default function CustomersPage() {
   const handleLoadMore = React.useCallback(() => {
     if (!hasMore || isLoadingMore) return;
     setIsLoadingMore(true);
-    setTimeout(() => {
-      setVisibleCount((prev) =>
-        Math.min(prev + BATCH_SIZE, filteredData.length),
-      );
-      setIsLoadingMore(false);
-    }, 200);
+    setVisibleCount((prev) => Math.min(prev + BATCH_SIZE, filteredData.length));
+    setIsLoadingMore(false);
   }, [hasMore, isLoadingMore, filteredData.length]);
 
   // Virtualizer row count based on paginated items

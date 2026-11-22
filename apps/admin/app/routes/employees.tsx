@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useMemo,
+  useRef,
+  useEffect,
+  useDeferredValue,
+} from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { defer, json, redirect } from "@remix-run/node";
 import { useLoaderData, useSubmit, Await } from "@remix-run/react";
@@ -319,6 +325,7 @@ function EmployeesPageContent({
 
   const [employees, setEmployees] = useState<Employee[]>(initialEmployees);
   const [searchQuery, setSearchQuery] = useState("");
+  const deferredSearchQuery = useDeferredValue(searchQuery);
   const [statusFilter, setStatusFilter] = useState<
     "all" | "active" | "on_leave" | "terminated"
   >("all");
@@ -379,34 +386,44 @@ function EmployeesPageContent({
   const parentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    let animationFrameId: number | null = null;
     const updateColumns = () => {
-      const width = window.innerWidth;
-      if (width < 768) {
-        setColumns(1);
-      } else if (width < 1024) {
-        setColumns(2);
-      } else if (isContentFullWidth) {
-        if (width < 1440) {
-          setColumns(3);
-        } else if (width < 1800) {
-          setColumns(4);
+      if (animationFrameId !== null) return;
+      animationFrameId = window.requestAnimationFrame(() => {
+        animationFrameId = null;
+        const width = window.innerWidth;
+        if (width < 768) {
+          setColumns(1);
+        } else if (width < 1024) {
+          setColumns(2);
+        } else if (isContentFullWidth) {
+          if (width < 1440) {
+            setColumns(3);
+          } else if (width < 1800) {
+            setColumns(4);
+          } else {
+            setColumns(5);
+          }
         } else {
-          setColumns(5);
+          setColumns(3);
         }
-      } else {
-        setColumns(3);
-      }
+      });
     };
 
     updateColumns();
-    window.addEventListener("resize", updateColumns);
-    return () => window.removeEventListener("resize", updateColumns);
+    window.addEventListener("resize", updateColumns, { passive: true });
+    return () => {
+      window.removeEventListener("resize", updateColumns);
+      if (animationFrameId !== null) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+    };
   }, [isContentFullWidth]);
 
   // Filter employees
   const filteredEmployees = useMemo(() => {
     return employees.filter((emp) => {
-      const q = searchQuery.toLowerCase().trim();
+      const q = deferredSearchQuery.toLowerCase().trim();
       const matchesSearch =
         !q ||
         emp.name.toLowerCase().includes(q) ||
@@ -420,7 +437,7 @@ function EmployeesPageContent({
         statusFilter === "all" || emp.status === statusFilter;
       return matchesSearch && matchesStatus;
     });
-  }, [employees, searchQuery, statusFilter]);
+  }, [employees, deferredSearchQuery, statusFilter]);
 
   // Infinite Scroll Slice: Display up to `visibleCount` items
   const paginatedData = useMemo(() => {
@@ -432,12 +449,10 @@ function EmployeesPageContent({
   const handleLoadMore = React.useCallback(() => {
     if (!hasMore || isLoadingMore) return;
     setIsLoadingMore(true);
-    setTimeout(() => {
-      setVisibleCount((prev) =>
-        Math.min(prev + BATCH_SIZE, filteredEmployees.length),
-      );
-      setIsLoadingMore(false);
-    }, 200);
+    setVisibleCount((prev) =>
+      Math.min(prev + BATCH_SIZE, filteredEmployees.length),
+    );
+    setIsLoadingMore(false);
   }, [hasMore, isLoadingMore, filteredEmployees.length]);
 
   // Virtualizer row count based on paginated items
