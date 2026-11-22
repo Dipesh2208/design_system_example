@@ -48,7 +48,8 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 
 export const links: LinksFunction = () => [
   { rel: "manifest", href: "/manifest.webmanifest" },
-  { rel: "icon", href: "/favicon.ico" },
+  { rel: "icon", href: "/icons/icon-192.svg", type: "image/svg+xml" },
+  { rel: "alternate icon", href: "/favicon.ico" },
   { rel: "apple-touch-icon", href: "/icons/icon-192.svg" },
 ];
 
