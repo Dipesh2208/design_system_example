@@ -217,9 +217,7 @@ const STATIC_LEADS = generateMockLeads(1200);
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireAdminUser(request);
-  const leadsPromise = new Promise<Lead[]>((resolve) => {
-    setTimeout(() => resolve(STATIC_LEADS), 50);
-  });
+  const leadsPromise = Promise.resolve(STATIC_LEADS);
   return defer({ user, leadsPromise });
 }
 

@@ -260,9 +260,7 @@ const STATIC_EMPLOYEES = generateMockEmployees(1000);
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireAdminUser(request);
-  const employeesPromise = new Promise<Employee[]>((resolve) => {
-    setTimeout(() => resolve(STATIC_EMPLOYEES), 50);
-  });
+  const employeesPromise = Promise.resolve(STATIC_EMPLOYEES);
 
   return defer({
     user,

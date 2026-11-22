@@ -29,6 +29,14 @@ async function hydrate() {
       </I18nextProvider>,
     );
   });
+
+  if ("serviceWorker" in navigator && process.env.NODE_ENV === "production") {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch((error) => {
+        console.warn("ServiceWorker registration failed:", error);
+      });
+    });
+  }
 }
 
 if (typeof window !== "undefined") {

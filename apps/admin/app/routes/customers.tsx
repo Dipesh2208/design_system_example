@@ -205,9 +205,7 @@ const STATIC_CUSTOMERS = generateMockCustomers(1200);
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await requireAdminUser(request);
-  const customersPromise = new Promise<Customer[]>((resolve) => {
-    setTimeout(() => resolve(STATIC_CUSTOMERS), 50);
-  });
+  const customersPromise = Promise.resolve(STATIC_CUSTOMERS);
   return defer({ user, customersPromise });
 }
 

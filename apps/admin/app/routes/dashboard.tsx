@@ -48,21 +48,17 @@ interface AnalyticsData {
   healthNote: string;
 }
 
-// Simulated asynchronous metrics data streaming via Remix defer()
+// Asynchronous metrics data streaming via Remix defer() without artificial delays
 function getDeferredAnalytics(): Promise<AnalyticsData> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        totalUsers: "12,482",
-        userGrowth: "+14.2% this month",
-        activeSessions: "1,894",
-        uptime: "99.98% uptime",
-        monthlyRevenue: "$84,230",
-        revenueVsTarget: "+8.4% vs target",
-        systemHealth: "100%",
-        healthNote: "Zero critical incidents",
-      });
-    }, 50);
+  return Promise.resolve({
+    totalUsers: "12,482",
+    userGrowth: "+14.2% this month",
+    activeSessions: "1,894",
+    uptime: "99.98% uptime",
+    monthlyRevenue: "$84,230",
+    revenueVsTarget: "+8.4% vs target",
+    systemHealth: "100%",
+    healthNote: "Zero critical incidents",
   });
 }
 
@@ -225,11 +221,11 @@ export default function DashboardPage() {
           </h2>
           <Suspense
             fallback={
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 min-h-[7rem]">
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="bg-card border border-border p-4 sm:p-5 rounded-2xl shadow-xs h-28 flex items-center justify-center animate-pulse"
+                    className="bg-card border border-border p-4 sm:p-5 rounded-2xl shadow-xs min-h-[7rem] flex items-center justify-center animate-pulse"
                   >
                     <AppSpinner size="md" className="text-primary" />
                   </div>
@@ -239,8 +235,8 @@ export default function DashboardPage() {
           >
             <Await resolve={analyticsPromise}>
               {(analytics) => (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-                  <div className="bg-card border border-border p-4 sm:p-5 rounded-2xl shadow-xs flex items-center gap-4 transition-all">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 min-h-[7rem]">
+                  <div className="bg-card border border-border p-4 sm:p-5 rounded-2xl shadow-xs min-h-[7rem] flex items-center gap-4 transition-all">
                     <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center text-primary shrink-0">
                       <Users className="w-6 h-6" />
                     </div>

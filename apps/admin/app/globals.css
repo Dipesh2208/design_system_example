@@ -45,6 +45,34 @@
   --container-7xl: 80rem;
 }
 
+/* Base Theme Variables - Calibrated for WCAG 2.1 Level AAA (7:1 normal text, 4.5:1 large/graphic) */
+@layer base {
+  html {
+    font-family:
+      "Inter",
+      "Noto Sans Gujarati",
+      "Noto Sans Devanagari",
+      system-ui,
+      -apple-system,
+      sans-serif;
+    font-display: swap;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Performance optimizations for virtualized lists & layout stability */
+.virtual-item-contain {
+  contain: layout paint;
+  contain-intrinsic-size: auto 68px;
+}
+
+.kpi-card-contain {
+  contain: layout paint;
+  min-height: 7rem; /* 112px */
+}
+
 /* 1. Default: Dark Obsidian */
 :root,
 [data-theme="dark"] {

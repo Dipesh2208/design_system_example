@@ -38,10 +38,18 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
       name: "description",
       content: descriptions[locale] || descriptions.gu,
     },
+    { name: "google", content: "notranslate" },
+    { name: "theme-color", content: "#2563eb" },
+    { name: "apple-mobile-web-app-capable", content: "yes" },
+    { name: "apple-mobile-web-app-status-bar-style", content: "default" },
+    { name: "apple-mobile-web-app-title", content: "DesignSystem" },
   ];
 };
 
 export const links: LinksFunction = () => [
+  { rel: "manifest", href: "/manifest.webmanifest" },
+  { rel: "icon", href: "/favicon.ico" },
+  { rel: "apple-touch-icon", href: "/icons/icon-192.svg" },
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
     rel: "preconnect",
@@ -49,8 +57,15 @@ export const links: LinksFunction = () => [
     crossOrigin: "anonymous",
   },
   {
+    rel: "preload",
+    as: "style",
+    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap",
+  },
+  {
     rel: "stylesheet",
     href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans+Gujarati:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&display=swap",
+    media: "print",
+    onLoad: "this.media='all'",
   },
 ];
 
@@ -79,7 +94,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
   }, [i18n.language, t]);
 
   return (
-    <html lang={clientLocale} dir={i18n.dir()} suppressHydrationWarning>
+    <html
+      lang={clientLocale}
+      dir={i18n.dir()}
+      translate="no"
+      className="notranslate"
+      suppressHydrationWarning
+    >
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

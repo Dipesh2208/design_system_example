@@ -72,7 +72,7 @@ export function AppVirtualTable<T>({
 
   return (
     <div
-      className={`w-full rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs shadow-xs flex flex-col overflow-hidden transition-all ${className}`}
+      className={`w-full min-h-[300px] rounded-2xl border border-border/80 bg-card/90 backdrop-blur-xs shadow-xs flex flex-col overflow-hidden transition-all ${className}`}
     >
       {/* Sticky Table Header (Glassmorphic Frosted Header) */}
       <div className="bg-muted/80 backdrop-blur-md border-b border-border/80 select-none z-10 sticky top-0 shadow-[0_1px_3px_rgba(0,0,0,0.02)]">
@@ -162,14 +162,16 @@ export function AppVirtualTable<T>({
               return (
                 <div
                   key={rowId}
-                  ref={rowVirtualizer.measureElement}
                   data-index={virtualRow.index}
                   style={{
                     position: "absolute",
                     top: 0,
                     left: 0,
                     width: "100%",
+                    height: `${rowHeight}px`,
                     transform: `translateY(${virtualRow.start}px)`,
+                    willChange: "transform",
+                    contain: "layout paint",
                   }}
                   className="flex flex-col border-b border-border/40 select-none transition-colors"
                 >
