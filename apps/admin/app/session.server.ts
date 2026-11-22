@@ -8,16 +8,24 @@ export interface AdminUser {
   role: string;
 }
 
-const sessionSecret =
-  process.env.SESSION_SECRET ||
-  "admin-portal-session-secret-key-change-in-production";
+const isProduction = process.env.NODE_ENV === "production";
+const sessionSecret = process.env.SESSION_SECRET;
+
+if (isProduction && !sessionSecret) {
+  throw new Error(
+    "CRITICAL SECURITY CONFIGURATION: SESSION_SECRET must be defined in production environment.",
+  );
+}
+
+const secretKey =
+  sessionSecret || "admin-portal-session-secret-key-change-in-production";
 
 export const sessionCookie = createCookie("admin_session", {
   path: "/",
   sameSite: "lax",
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production",
-  secrets: [sessionSecret],
+  secure: isProduction,
+  secrets: [secretKey],
   maxAge: 7 * 24 * 60 * 60, // 7 days
 });
 

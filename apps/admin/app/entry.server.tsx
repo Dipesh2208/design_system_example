@@ -43,9 +43,11 @@ export default async function handleRequest(
       responseHeaders.set("X-Content-Type-Options", "nosniff");
       responseHeaders.set("X-Frame-Options", "DENY");
       responseHeaders.set("Referrer-Policy", "strict-origin-when-cross-origin");
+      responseHeaders.set("Cross-Origin-Opener-Policy", "same-origin");
+      responseHeaders.set("X-XSS-Protection", "1; mode=block");
       responseHeaders.set(
         "Permissions-Policy",
-        "camera=(), microphone=(), geolocation=()",
+        "camera=(), microphone=(), geolocation=(), payment=()",
       );
       responseHeaders.set(
         "Content-Security-Policy",
