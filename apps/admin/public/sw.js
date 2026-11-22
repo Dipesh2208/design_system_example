@@ -1,6 +1,7 @@
-const CACHE_NAME = "admin-cache-v1";
+const CACHE_NAME = "admin-cache-v2";
 const PRECACHE_ASSETS = [
   "/",
+  "/offline.html",
   "/manifest.webmanifest",
   "/icons/icon-192.svg",
   "/icons/icon-512.svg",
@@ -63,7 +64,18 @@ self.addEventListener("fetch", (event) => {
           if (cachedResponse) {
             return cachedResponse;
           }
-          return caches.match("/");
+          const rootCached = await caches.match("/");
+          if (rootCached) {
+            return rootCached;
+          }
+          const offlinePage = await caches.match("/offline.html");
+          if (offlinePage) {
+            return offlinePage;
+          }
+          return new Response("Offline", {
+            status: 503,
+            headers: { "Content-Type": "text/html" },
+          });
         }),
     );
     return;

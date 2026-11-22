@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="gu" translate="no" class="notranslate">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Offline - ઇન્ટરનેટ કનેક્શન નથી</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+      padding: 1rem;
+    }
+    .card {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 1.5rem;
+      padding: 2rem;
+      text-align: center;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .icon-box {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 1rem;
+      background: #fee2e2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.25rem;
+    }
+    .title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 0.875rem;
+      color: #64748b;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+    }
+    .tips {
+      background: #f1f5f9;
+      border: 1px solid #e2e8f0;
+      border-radius: 1rem;
+      padding: 1rem;
+      text-align: left;
+      font-size: 0.75rem;
+      color: #334155;
+      margin-bottom: 1.5rem;
+    }
+    .tips-title {
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+      color: #d97706;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .tips ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .tips li {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn {
+      width: 100%;
+      padding: 0.75rem 1.25rem;
+      background: #2563eb;
+      color: #ffffff;
+      border: none;
+      border-radius: 0.75rem;
+      font-weight: 600;
+      font-size: 0.875rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background-color 0.2s;
+    }
+    .btn:hover { background: #1d4ed8; }
+    .status-toast {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .status-toast.error {
+      background: #fee2e2;
+      border: 1px solid #fecaca;
+      color: #dc2626;
+    }
+    .status-toast.success {
+      background: #d1fae5;
+      border: 1px solid #a7f3d0;
+      color: #059669;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="icon-box">
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+        <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+        <line x1="12" y1="20" x2="12.01" y2="20"></line>
+      </svg>
+    </div>
+    <h1 class="title">ઇન્ટરનેટ કનેક્શન નથી</h1>
+    <p class="subtitle">તમારું ઇન્ટરનેટ અથવા નેટવર્ક કનેક્શન ડિસ્કનેક્ટ થયેલ છે. કૃપા કરીને તમારું કનેક્શન તપાસો.</p>
+    
+    <div class="tips">
+      <div class="tips-title">
+        <span>⚠</span> સમસ્યા નિવારણ પગલાં:
+      </div>
+      <ul>
+        <li>📶 Wi-Fi અથવા મોબાઇલ ડેટા ચાલુ છે કે નહીં તે ચકાસો</li>
+        <li>🔌 LAN / ઇથરનેટ કેબલ વ્યવસ્થિત રીતે જોડાયેલ છે કે નહીં તે તપાસો</li>
+        <li>🔄 તમારા રાઉટર અથવા મોડેમને રીસ્ટાર્ટ કરો</li>
+      </ul>
+    </div>
+
+    <button id="retry-btn" class="btn" onclick="checkConnection()">
+      🔄 ફરી તપાસો (Check Connection)
+    </button>
+    <div id="toast" class="status-toast"></div>
+  </div>
+
+  <script>
+    function checkConnection() {
+      const btn = document.getElementById('retry-btn');
+      const toast = document.getElementById('toast');
+      btn.innerText = 'તપાસી રહ્યું છે... (Checking...)';
+      btn.disabled = true;
+
+      if (navigator.onLine) {
+        toast.className = 'status-toast success';
+        toast.innerText = 'ઇન્ટરનેટ પુનઃસ્થાપિત થયું! પેજ રીલોડ થઈ રહ્યું છે...';
+        toast.style.display = 'block';
+        setTimeout(() => window.location.reload(), 1000);
+      } else {
+        setTimeout(() => {
+          btn.innerText = '🔄 ફરી તપાસો (Check Connection)';
+          btn.disabled = false;
+          toast.className = 'status-toast error';
+          toast.innerText = 'હજુ પણ ઇન્ટરનેટ કનેક્શન નથી. કૃપા કરીને તમારું નેટવર્ક તપાસો.';
+          toast.style.display = 'block';
+        }, 800);
+      }
+    }
+
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>

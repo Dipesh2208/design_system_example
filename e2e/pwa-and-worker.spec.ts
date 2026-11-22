@@ -61,7 +61,7 @@ test.describe("PWA, Service Worker & Browser Translation Tests", () => {
     const swResponse = await request.get("/sw.js");
     expect(swResponse.ok()).toBeTruthy();
     const swContent = await swResponse.text();
-    expect(swContent).toContain("admin-cache-v1");
+    expect(swContent).toContain("admin-cache-");
     expect(swContent).toContain("addEventListener");
 
     // 2. Check serviceWorker API existence in browser context
