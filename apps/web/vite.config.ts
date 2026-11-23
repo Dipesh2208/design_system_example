@@ -1,9 +1,11 @@
 import { vitePlugin as remix } from "@remix-run/dev";
 import { defineConfig } from "vite";
 import tailwindcss from "@tailwindcss/vite";
-import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+  resolve: {
+    tsconfigPaths: true,
+  },
   plugins: [
     remix({
       future: {
@@ -15,6 +17,5 @@ export default defineConfig({
       },
     }),
     tailwindcss(),
-    tsconfigPaths(),
   ],
 });
