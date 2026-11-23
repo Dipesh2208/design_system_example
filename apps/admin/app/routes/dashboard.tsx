@@ -3,7 +3,7 @@
 import React, { useState, useRef, useEffect, Suspense } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { defer, redirect } from "@remix-run/node";
-import { useLoaderData, useSubmit, Await } from "@remix-run/react";
+import { useLoaderData, useSubmit, Await, Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 
 // Shared Atoms, Molecules & Organisms from @repo/ui
@@ -23,6 +23,9 @@ import {
   Sparkles,
   Send,
   Trash2,
+  LayoutDashboard,
+  UserCheck,
+  Briefcase,
 } from "lucide-react";
 
 // Lazy-loaded molecules (subpath imports for clean code splitting)
@@ -157,6 +160,33 @@ export default function DashboardPage() {
     <AppAdminLayout
       currentPath="/dashboard"
       user={user}
+      linkComponent={Link}
+      navItems={[
+        {
+          id: "dashboard",
+          label: t("nav.dashboard", "Dashboard"),
+          href: "/dashboard",
+          icon: <LayoutDashboard className="w-5 h-5" />,
+        },
+        {
+          id: "customers",
+          label: t("nav.customers", "Customers"),
+          href: "/customers",
+          icon: <Users className="w-5 h-5" />,
+        },
+        {
+          id: "leads",
+          label: t("nav.leads", "Leads"),
+          href: "/leads",
+          icon: <UserCheck className="w-5 h-5" />,
+        },
+        {
+          id: "employees",
+          label: t("nav.employees", "Employees"),
+          href: "/employees",
+          icon: <Briefcase className="w-5 h-5" />,
+        },
+      ]}
       headerRightContent={
         <div className="flex items-center gap-2 sm:gap-3">
           <UserAvatarDropdownOrganism

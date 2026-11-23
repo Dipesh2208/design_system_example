@@ -10,7 +10,7 @@ import React, {
 } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { defer, json, redirect } from "@remix-run/node";
-import { useLoaderData, useSubmit, Await } from "@remix-run/react";
+import { useLoaderData, useSubmit, Await, Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import {
@@ -769,6 +769,7 @@ export default function LeadsPage() {
 
   return (
     <AppAdminLayout
+      linkComponent={Link}
       navItems={[
         {
           id: "dashboard",

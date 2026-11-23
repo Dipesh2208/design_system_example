@@ -1,7 +1,7 @@
 import * as React from "react";
 import { describe, it, expect, beforeEach } from "vitest";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { AppAdminLayout } from "../AppAdminLayout";
+import { AppAdminLayout, type NavigationLinkProps } from "../AppAdminLayout";
 import { useAppStore } from "../../stores/useAppStore";
 
 describe("AppAdminLayout (Organism)", () => {
@@ -63,5 +63,45 @@ describe("AppAdminLayout (Organism)", () => {
       name: /close navigation/i,
     });
     expect(closeDrawerBtn).toBeInTheDocument();
+  });
+
+  it("supports custom linkComponent and onNavigate callback for SPA routing", () => {
+    let navigatedTo = "";
+    const CustomLink: React.FC<NavigationLinkProps> = ({
+      to,
+      href,
+      className,
+      children,
+      onClick,
+    }) => (
+      <a
+        href={to || href}
+        className={className}
+        onClick={(e) => {
+          e.preventDefault();
+          navigatedTo = to || href || "";
+          if (onClick) onClick(e);
+        }}
+      >
+        {children}
+      </a>
+    );
+
+    render(
+      <AppAdminLayout
+        brandName="Enterprise Cloud"
+        linkComponent={CustomLink}
+        navItems={[
+          { id: "dash", label: "Dashboard", href: "/dashboard" },
+          { id: "emp", label: "Employees", href: "/employees" },
+        ]}
+      >
+        <div>Content</div>
+      </AppAdminLayout>,
+    );
+
+    const empLink = screen.getByText("Employees");
+    fireEvent.click(empLink);
+    expect(navigatedTo).toBe("/employees");
   });
 });

@@ -20,6 +20,15 @@ export interface NavItem {
   badge?: string | number;
 }
 
+export interface NavigationLinkProps {
+  to: string;
+  href?: string;
+  className?: string;
+  title?: string;
+  onClick?: (e: React.MouseEvent) => void;
+  children?: React.ReactNode;
+}
+
 export interface AppAdminLayoutProps {
   children: React.ReactNode;
   navItems?: NavItem[];
@@ -39,6 +48,10 @@ export interface AppAdminLayoutProps {
   isSidebarHidden?: boolean;
   mainClassName?: string;
   className?: string;
+  /** Custom link component (e.g. Remix/React Router Link) for SPA navigation */
+  linkComponent?: React.ComponentType<NavigationLinkProps>;
+  /** Navigation callback invoked when clicking a nav item */
+  onNavigate?: (href: string, e: React.MouseEvent) => void;
 }
 
 export function AppAdminLayout({
@@ -80,12 +93,62 @@ export function AppAdminLayout({
   isSidebarHidden = false,
   mainClassName = "",
   className = "",
+  linkComponent: LinkComp,
+  onNavigate,
 }: AppAdminLayoutProps) {
   // Subscribe cleanly to centralized Zustand store (Zero tab switch reflection)
   const isSidebarCollapsed = useAppStore((state) => state.isSidebarCollapsed);
   const toggleSidebar = useAppStore((state) => state.toggleSidebar);
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const handleLinkClick = (href: string, e: React.MouseEvent) => {
+    if (onNavigate) {
+      onNavigate(href, e);
+    }
+  };
+
+  const renderLink = (
+    href: string,
+    className: string,
+    title: string | undefined,
+    children: React.ReactNode,
+    key?: string,
+    onClickExtra?: (e: React.MouseEvent) => void,
+  ) => {
+    if (LinkComp) {
+      return (
+        <LinkComp
+          key={key}
+          to={href}
+          href={href}
+          className={className}
+          title={title}
+          onClick={(e: React.MouseEvent) => {
+            handleLinkClick(href, e);
+            if (onClickExtra) onClickExtra(e);
+          }}
+        >
+          {children}
+        </LinkComp>
+      );
+    }
+
+    return (
+      <a
+        key={key}
+        href={href}
+        className={className}
+        title={title}
+        onClick={(e: React.MouseEvent) => {
+          handleLinkClick(href, e);
+          if (onClickExtra) onClickExtra(e);
+        }}
+      >
+        {children}
+      </a>
+    );
+  };
 
   return (
     <div
@@ -105,17 +168,19 @@ export function AppAdminLayout({
               <Menu className="w-5 h-5" />
             </button>
 
-            <a
-              href="/dashboard"
-              className="flex items-center gap-2.5 font-bold tracking-tight text-base sm:text-lg text-foreground hover:opacity-90 transition-opacity"
-            >
-              {brandLogo || (
-                <div className="w-8 h-8 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-black shadow-xs shrink-0">
-                  <Layers className="w-4 h-4" />
-                </div>
-              )}
-              <span className="truncate">{brandName}</span>
-            </a>
+            {renderLink(
+              "/dashboard",
+              "flex items-center gap-2.5 font-bold tracking-tight text-base sm:text-lg text-foreground hover:opacity-90 transition-opacity",
+              undefined,
+              <>
+                {brandLogo || (
+                  <div className="w-8 h-8 rounded-xl bg-primary text-primary-foreground flex items-center justify-center font-black shadow-xs shrink-0">
+                    <Layers className="w-4 h-4" />
+                  </div>
+                )}
+                <span className="truncate">{brandName}</span>
+              </>,
+            )}
           </div>
 
           {/* Right Header Controls (Language dropdown, Theme dropdown, User avatar dropdown) */}
@@ -147,21 +212,19 @@ export function AppAdminLayout({
                   currentPath === item.href ||
                   currentPath.startsWith(item.href + "/");
 
-                return (
-                  <a
-                    key={item.id}
-                    href={item.href}
-                    title={item.label}
-                    className={`flex items-center rounded-xl text-sm font-medium transition-colors group ${
-                      isSidebarCollapsed
-                        ? "justify-center p-3"
-                        : "gap-3 px-3.5 py-2.5"
-                    } ${
-                      isActive
-                        ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
-                    }`}
-                  >
+                return renderLink(
+                  item.href,
+                  `flex items-center rounded-xl text-sm font-medium transition-colors group ${
+                    isSidebarCollapsed
+                      ? "justify-center p-3"
+                      : "gap-3 px-3.5 py-2.5"
+                  } ${
+                    isActive
+                      ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/60"
+                  }`,
+                  item.label,
+                  <>
                     <span
                       className={`${
                         isActive
@@ -181,7 +244,8 @@ export function AppAdminLayout({
                         {item.badge}
                       </span>
                     )}
-                  </a>
+                  </>,
+                  item.id,
                 );
               })}
             </nav>
@@ -252,17 +316,15 @@ export function AppAdminLayout({
                   const isActive =
                     currentPath === item.href ||
                     currentPath.startsWith(item.href + "/");
-                  return (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all ${
-                        isActive
-                          ? "bg-primary text-primary-foreground font-semibold shadow-xs"
-                          : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
-                      }`}
-                    >
+                  return renderLink(
+                    item.href,
+                    `flex items-center gap-3 px-3.5 py-3 rounded-xl text-sm font-medium transition-all ${
+                      isActive
+                        ? "bg-primary text-primary-foreground font-semibold shadow-xs"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
+                    }`,
+                    item.label,
+                    <>
                       <span
                         className={
                           isActive
@@ -278,7 +340,9 @@ export function AppAdminLayout({
                           {item.badge}
                         </span>
                       )}
-                    </a>
+                    </>,
+                    item.id,
+                    () => setIsMobileMenuOpen(false),
                   );
                 })}
               </nav>

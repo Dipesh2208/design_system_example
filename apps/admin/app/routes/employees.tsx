@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { defer, json, redirect } from "@remix-run/node";
-import { useLoaderData, useSubmit, Await } from "@remix-run/react";
+import { useLoaderData, useSubmit, Await, Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import {
@@ -799,6 +799,7 @@ function EmployeesPageContent({
 
   return (
     <AppAdminLayout
+      linkComponent={Link}
       currentPath="/employees"
       user={user}
       contentScrollable={false}
