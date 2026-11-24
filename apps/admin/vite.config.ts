@@ -1,8 +1,33 @@
 import { vitePlugin as remix } from "@remix-run/dev";
-import { defineConfig } from "vite";
+import { defineConfig, createLogger } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 
+const originalConsoleWarn = console.warn;
+console.warn = (...args: Array<string | number | boolean | object | null | undefined>) => {
+  const msg = args.map((a) => (typeof a === "string" ? a : String(a))).join(" ");
+  if (
+    msg.includes("`envFile` option is deprecated") ||
+    msg.includes('`esbuild` option was specified by "remix" plugin')
+  ) {
+    return;
+  }
+  originalConsoleWarn(...args);
+};
+
+const customLogger = createLogger();
+const originalWarn = customLogger.warn;
+customLogger.warn = (msg, options) => {
+  if (
+    msg.includes("`envFile` option is deprecated") ||
+    msg.includes('`esbuild` option was specified by "remix" plugin')
+  ) {
+    return;
+  }
+  originalWarn(msg, options);
+};
+
 export default defineConfig({
+  customLogger,
   resolve: {
     tsconfigPaths: true,
   },
@@ -19,3 +44,4 @@ export default defineConfig({
     tailwindcss(),
   ],
 });
+
