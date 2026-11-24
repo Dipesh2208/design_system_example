@@ -3,6 +3,7 @@ export * from "./LanguageDropdownOrganism";
 export * from "./AppAdminLayout";
 export * from "./UserAvatarDropdownOrganism";
 export * from "./OfflineStatusModal";
+export * from "./auth-stepper";
 
 // Re-export types only for heavy / lazy-loaded organisms so barrel imports
 // do not statically bundle their implementations or trigger INEFFECTIVE_DYNAMIC_IMPORT

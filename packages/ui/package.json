@@ -7,6 +7,7 @@
     "./molecules/*": "./src/molecules/*.tsx",
     "./organisms/*": "./src/organisms/*.tsx",
     "./stores/*": "./src/stores/*.ts",
+    "./lib/*": "./src/lib/*.ts",
     "./atoms": "./src/atoms/index.ts",
     "./molecules": "./src/molecules/index.ts",
     "./organisms": "./src/organisms/index.ts",
