@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
 import { defer, json, redirect } from "@remix-run/node";
-import { useLoaderData, useSubmit, Await } from "@remix-run/react";
+import { useLoaderData, useSubmit, Await, Link } from "@remix-run/react";
 import { useTranslation } from "react-i18next";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import {
@@ -291,39 +291,11 @@ export async function action({ request }: ActionFunctionArgs) {
 }
 
 export default function EmployeesPage() {
-  const { user, employeesPromise } = useLoaderData<typeof loader>();
-
-  return (
-    <React.Suspense
-      fallback={
-        <div className="flex h-screen w-full items-center justify-center bg-background">
-          <AppSpinner size="lg" />
-        </div>
-      }
-    >
-      <Await resolve={employeesPromise}>
-        {(initialEmployees) => (
-          <EmployeesPageContent
-            user={user}
-            initialEmployees={initialEmployees}
-          />
-        )}
-      </Await>
-    </React.Suspense>
-  );
-}
-
-function EmployeesPageContent({
-  user,
-  initialEmployees,
-}: {
-  user: AdminUser;
-  initialEmployees: Employee[];
-}) {
+  const { user } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
   const submit = useSubmit();
 
-  const [employees, setEmployees] = useState<Employee[]>(initialEmployees);
+  const [employees, setEmployees] = useState<Employee[]>(STATIC_EMPLOYEES);
   const [searchQuery, setSearchQuery] = useState("");
   const deferredSearchQuery = useDeferredValue(searchQuery);
   const [statusFilter, setStatusFilter] = useState<
@@ -799,6 +771,7 @@ function EmployeesPageContent({
 
   return (
     <AppAdminLayout
+      linkComponent={Link}
       currentPath="/employees"
       user={user}
       contentScrollable={false}
