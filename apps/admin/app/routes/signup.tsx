@@ -1,19 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from '@remix-run/react';
-import { Smartphone, Lock, Eye, EyeOff, ShieldAlert, CheckCircle2, UserPlus } from 'lucide-react';
-import { AppInput, AppButton } from '@repo/ui/atoms';
-import { CloudflareTurnstile, OtpInput, PasswordStrengthIndicator } from '@repo/ui/molecules';
-import { AuthStepper } from '@repo/ui/organisms';
-import { ThemeDropdownOrganism } from '@repo/ui/organisms/ThemeDropdownOrganism';
-import { LanguageSelector } from '../components/LanguageSelector';
-import { useTheme, THEME_OPTIONS, type ThemeType } from '../components/ThemeProvider';
-import { mockAuthService } from '../lib/auth/mock-auth-store';
-import { validateOwaspPassword } from '@repo/ui/lib/owasp-password';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "@remix-run/react";
+import {
+  Smartphone,
+  Lock,
+  Eye,
+  EyeOff,
+  ShieldAlert,
+  CheckCircle2,
+  UserPlus,
+} from "lucide-react";
+import { AppInput, AppButton } from "@repo/ui/atoms";
+import {
+  CloudflareTurnstile,
+  OtpInput,
+  PasswordStrengthIndicator,
+} from "@repo/ui/molecules";
+import { AuthStepper } from "@repo/ui/organisms";
+import { ThemeDropdownOrganism } from "@repo/ui/organisms/ThemeDropdownOrganism";
+import { LanguageSelector } from "../components/LanguageSelector";
+import {
+  useTheme,
+  THEME_OPTIONS,
+  type ThemeType,
+} from "../components/ThemeProvider";
+import { mockAuthService } from "../lib/auth/mock-auth-store";
+import { validateOwaspPassword } from "@repo/ui/lib/owasp-password";
 
 const SIGNUP_STEPS = [
-  { id: 1, title: 'Mobile Verification' },
-  { id: 2, title: 'Enter OTP' },
-  { id: 3, title: 'Set Password' },
+  { id: 1, title: "Mobile Verification" },
+  { id: 2, title: "Enter OTP" },
+  { id: 3, title: "Set Password" },
 ];
 
 export default function SignupPage() {
@@ -24,28 +40,32 @@ export default function SignupPage() {
   const [currentStep, setCurrentStep] = useState(1);
 
   // Form Fields
-  const [mobile, setMobile] = useState('');
-  const [turnstileToken, setTurnstileToken] = useState('');
-  const [otp, setOtp] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [mobile, setMobile] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   // Security & Failure tracking
   const [clientIp] = useState(() => mockAuthService.getClientIp());
-  const [isBlocked, setIsBlocked] = useState(() => mockAuthService.isIpBlocked(mockAuthService.getClientIp()));
+  const [isBlocked, setIsBlocked] = useState(() =>
+    mockAuthService.isIpBlocked(mockAuthService.getClientIp()),
+  );
   const [error, setError] = useState<string | null>(() => {
     const ip = mockAuthService.getClientIp();
     if (mockAuthService.isIpBlocked(ip)) {
-      return 'Access Blocked: Your IP address is suspended.';
+      return "Access Blocked: Your IP address is suspended.";
     }
-    if (typeof window !== 'undefined') {
-      const savedAbandonMobile = sessionStorage.getItem('admin_pending_signup_mobile');
+    if (typeof window !== "undefined") {
+      const savedAbandonMobile = sessionStorage.getItem(
+        "admin_pending_signup_mobile",
+      );
       if (savedAbandonMobile) {
-        sessionStorage.removeItem('admin_pending_signup_mobile');
+        sessionStorage.removeItem("admin_pending_signup_mobile");
         const check = mockAuthService.registerAbandonCheck(savedAbandonMobile);
         if (check.blocked) {
-          return 'Security Block: You abandoned registration more than 3 times. Mobile number blocked.';
+          return "Security Block: You abandoned registration more than 3 times. Mobile number blocked.";
         }
         return `Previous signup was incomplete. You have abandoned ${check.count} of 3 permitted times.`;
       }
@@ -70,7 +90,7 @@ export default function SignupPage() {
         if (prev <= 1) {
           clearInterval(interval);
           setRequireResend(true);
-          setError('OTP expired after 15 minutes. Please request a new OTP.');
+          setError("OTP expired after 15 minutes. Please request a new OTP.");
           return 0;
         }
         return prev - 1;
@@ -83,11 +103,11 @@ export default function SignupPage() {
   useEffect(() => {
     const handleBeforeUnload = () => {
       if (isOtpVerified && currentStep === 3) {
-        sessionStorage.setItem('admin_pending_signup_mobile', mobile);
+        sessionStorage.setItem("admin_pending_signup_mobile", mobile);
       }
     };
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    return () => window.removeEventListener("beforeunload", handleBeforeUnload);
   }, [isOtpVerified, currentStep, mobile]);
 
   // STEP 1: MOBILE & CLOUDFLARE SITEVERIFY
@@ -98,26 +118,28 @@ export default function SignupPage() {
     if (isBlocked) return;
 
     if (!mobile || mobile.length < 10) {
-      setError('Please enter a valid 10-digit mobile number.');
+      setError("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     // Cloudflare Siteverify Check:
     // If not approved, user stays on signup page
     if (!turnstileToken) {
-      setError('Cloudflare Siteverify is not approved. Please verify that you are human.');
+      setError(
+        "Cloudflare Siteverify is not approved. Please verify that you are human.",
+      );
       return;
     }
 
     if (mockAuthService.isMobileBlocked(mobile)) {
       setIsBlocked(true);
-      setError('This mobile number is blocked from registering.');
+      setError("This mobile number is blocked from registering.");
       return;
     }
 
     const sendRes = mockAuthService.sendOtp(mobile, clientIp);
     if (!sendRes.success) {
-      setError(sendRes.error || 'Failed to send OTP.');
+      setError(sendRes.error || "Failed to send OTP.");
       return;
     }
 
@@ -133,14 +155,14 @@ export default function SignupPage() {
     setError(null);
 
     if (otp.length < 4) {
-      setError('Please enter all 4 digits of the OTP.');
+      setError("Please enter all 4 digits of the OTP.");
       return;
     }
 
     const res = mockAuthService.verifyOtp(mobile, otp, clientIp);
 
     if (!res.success) {
-      setError(res.error || 'Invalid OTP.');
+      setError(res.error || "Invalid OTP.");
       if (res.isBlocked) {
         setIsBlocked(true);
       }
@@ -152,7 +174,7 @@ export default function SignupPage() {
     }
 
     setIsOtpVerified(true);
-    sessionStorage.setItem('admin_pending_signup_mobile', mobile);
+    sessionStorage.setItem("admin_pending_signup_mobile", mobile);
     setCurrentStep(3);
   };
 
@@ -160,14 +182,14 @@ export default function SignupPage() {
     setError(null);
     const res = mockAuthService.resendOtp(mobile, clientIp);
     if (!res.success) {
-      setError(res.error || 'Could not resend OTP.');
+      setError(res.error || "Could not resend OTP.");
       return;
     }
     setTimeLeft(15 * 60);
-    setOtp('');
+    setOtp("");
     setFailedCount(0);
     setRequireResend(false);
-    setSuccessMessage('New OTP sent successfully! (Mock code: 1234)');
+    setSuccessMessage("New OTP sent successfully! (Mock code: 1234)");
     setTimeout(() => setSuccessMessage(null), 3000);
   };
 
@@ -179,25 +201,29 @@ export default function SignupPage() {
     setError(null);
 
     if (!owaspCheck.valid) {
-      setError(owaspCheck.errors[0] || 'Password does not meet OWASP standards.');
+      setError(
+        owaspCheck.errors[0] || "Password does not meet OWASP standards.",
+      );
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError("Passwords do not match.");
       return;
     }
 
     const regRes = mockAuthService.completeSignup(mobile, password);
     if (!regRes.success) {
-      setError(regRes.error || 'Registration failed.');
+      setError(regRes.error || "Registration failed.");
       return;
     }
 
-    sessionStorage.removeItem('admin_pending_signup_mobile');
-    setSuccessMessage('Admin account created successfully! Redirecting to sign in...');
+    sessionStorage.removeItem("admin_pending_signup_mobile");
+    setSuccessMessage(
+      "Admin account created successfully! Redirecting to sign in...",
+    );
     setTimeout(() => {
-      navigate('/auth');
+      navigate("/auth");
     }, 1500);
   };
 
@@ -237,7 +263,9 @@ export default function SignupPage() {
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-xs">
               3-Step secure registration with OTP & OWASP compliance
             </p>
-            <div className="text-[11px] font-mono text-muted-foreground/80 mt-1">Client IP: {clientIp}</div>
+            <div className="text-[11px] font-mono text-muted-foreground/80 mt-1">
+              Client IP: {clientIp}
+            </div>
           </div>
 
           {/* Stepper Header */}
@@ -275,7 +303,9 @@ export default function SignupPage() {
                   <AppInput
                     type="tel"
                     value={mobile}
-                    onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    onChange={(e) =>
+                      setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))
+                    }
                     placeholder="Enter 10-digit mobile number"
                     disabled={isBlocked}
                     className="pl-10"
@@ -313,8 +343,10 @@ export default function SignupPage() {
             <form onSubmit={handleStep2VerifyOtp} className="space-y-6">
               <div className="text-center">
                 <p className="text-xs text-muted-foreground">
-                  Enter the 4-digit code sent to{' '}
-                  <span className="font-semibold text-foreground">+91 {mobile}</span>
+                  Enter the 4-digit code sent to{" "}
+                  <span className="font-semibold text-foreground">
+                    +91 {mobile}
+                  </span>
                 </p>
                 <div className="text-[11px] text-primary font-mono mt-1">
                   (Mock OTP code: 1234)
@@ -360,7 +392,7 @@ export default function SignupPage() {
                     <Lock className="w-4 h-4" />
                   </div>
                   <AppInput
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Create secure password"
@@ -371,7 +403,11 @@ export default function SignupPage() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-muted-foreground hover:text-foreground z-10"
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -387,7 +423,7 @@ export default function SignupPage() {
                     <Lock className="w-4 h-4" />
                   </div>
                   <AppInput
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Re-type your password"
@@ -395,7 +431,9 @@ export default function SignupPage() {
                   />
                 </div>
                 {confirmPassword && password !== confirmPassword && (
-                  <p className="text-[11px] text-rose-500 mt-1">Passwords do not match</p>
+                  <p className="text-[11px] text-rose-500 mt-1">
+                    Passwords do not match
+                  </p>
                 )}
               </div>
 
@@ -403,7 +441,9 @@ export default function SignupPage() {
                 type="submit"
                 variant="primary"
                 size="md"
-                disabled={isBlocked || !owaspCheck.valid || password !== confirmPassword}
+                disabled={
+                  isBlocked || !owaspCheck.valid || password !== confirmPassword
+                }
                 className="w-full"
               >
                 Complete Registration
@@ -412,8 +452,11 @@ export default function SignupPage() {
           )}
 
           <div className="pt-2 text-center text-xs text-muted-foreground border-t border-border">
-            Already registered?{' '}
-            <Link to="/auth" className="text-primary hover:underline font-semibold">
+            Already registered?{" "}
+            <Link
+              to="/auth"
+              className="text-primary hover:underline font-semibold"
+            >
               Sign In
             </Link>
           </div>
@@ -421,7 +464,8 @@ export default function SignupPage() {
       </div>
 
       <footer className="w-full max-w-5xl py-4 text-center text-xs text-muted-foreground">
-        © 2026 Enterprise Admin Design System. Built with OWASP ASVS 4.0 Security Standards.
+        © 2026 Enterprise Admin Design System. Built with OWASP ASVS 4.0
+        Security Standards.
       </footer>
     </main>
   );

@@ -46,6 +46,7 @@ pnpm run test:e2e
 ## 🌿 Git Branching & Environment Workflow
 
 This project follows an environment-based 3-tier branch architecture:
+
 - **`dev`** (`Local Testing & Development`): Where developers test locally and feature branches merge.
 - **`beta`** (`Blue Environment`): Staging & pre-production validation.
 - **`production`** (`Green Environment`): Live production release.
@@ -53,6 +54,7 @@ This project follows an environment-based 3-tier branch architecture:
 Direct pushes to `dev`, `beta`, and `production` branches are **strictly forbidden** and automatically blocked by git pre-push hooks.
 
 ### Promotion Pipeline:
+
 ```mermaid
 flowchart LR
     feature["feature/* / fix/*"] -->|PR / MR| dev["dev (Local Testing)"]
@@ -61,6 +63,7 @@ flowchart LR
 ```
 
 ### Standard Developer Workflow:
+
 1. Ensure your local `dev` branch is up to date:
    ```bash
    git checkout dev
@@ -84,7 +87,9 @@ flowchart LR
 6. After approval and local/CI validation on `dev`, merge to **`beta` (Blue)** for staging, and finally to **`production` (Green)**.
 
 ### 🛡️ Server-Side & Multi-Tool Protection
+
 All interfaces (Terminal, VS Code, GitHub Desktop, GitKraken, and GitHub.com) are governed by multi-tier protection:
+
 - **Local Pre-Push Hook**: Automatically blocks direct code pushes and branch deletion attempts across all local GUI and CLI tools.
 - **VS Code Configuration (`.vscode/settings.json`)**: Prevents forced pushes and enforces synchronization confirmations.
 - **GitHub Server-Side Rules**: Configured in GitHub Repository Settings (`Settings -> Branches -> Branch protection rules`) for `dev`, `beta`, and `production`:
@@ -92,6 +97,3 @@ All interfaces (Terminal, VS Code, GitHub Desktop, GitKraken, and GitHub.com) ar
   - `Allow deletions` unchecked (blocks deletion on GitHub web and API)
   - `Allow force pushes` unchecked
   - `Do not allow bypassing the above settings` enabled
-
-
-

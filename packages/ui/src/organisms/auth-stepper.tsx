@@ -1,5 +1,5 @@
-import React from 'react';
-import { Check } from 'lucide-react';
+import React from "react";
+import { Check } from "lucide-react";
 
 export interface StepItem {
   id: number;
@@ -16,7 +16,7 @@ interface AuthStepperProps {
 export const AuthStepper: React.FC<AuthStepperProps> = ({
   steps,
   currentStep,
-  className = '',
+  className = "",
 }) => {
   return (
     <div className={`w-full ${className}`}>
@@ -33,21 +33,25 @@ export const AuthStepper: React.FC<AuthStepperProps> = ({
                 <div
                   className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center font-bold text-xs transition-all duration-200 z-10 ${
                     isDone
-                      ? 'bg-emerald-600 text-white shadow-sm ring-4 ring-emerald-500/20'
+                      ? "bg-emerald-600 text-white shadow-sm ring-4 ring-emerald-500/20"
                       : isActive
-                      ? 'bg-primary text-primary-foreground shadow-md ring-4 ring-primary/20'
-                      : 'bg-card border-2 border-border text-muted-foreground shadow-sm'
+                        ? "bg-primary text-primary-foreground shadow-md ring-4 ring-primary/20"
+                        : "bg-card border-2 border-border text-muted-foreground shadow-sm"
                   }`}
                 >
-                  {isDone ? <Check className="w-4 h-4 stroke-[2.5]" /> : step.id}
+                  {isDone ? (
+                    <Check className="w-4 h-4 stroke-[2.5]" />
+                  ) : (
+                    step.id
+                  )}
                 </div>
                 <span
                   className={`text-[10px] sm:text-xs font-medium mt-2 text-center leading-tight transition-colors ${
                     isActive
-                      ? 'text-primary font-bold'
+                      ? "text-primary font-bold"
                       : isDone
-                      ? 'text-foreground font-medium'
-                      : 'text-muted-foreground'
+                        ? "text-foreground font-medium"
+                        : "text-muted-foreground"
                   }`}
                 >
                   {step.title}
@@ -60,7 +64,7 @@ export const AuthStepper: React.FC<AuthStepperProps> = ({
                   <div
                     className="h-full bg-primary transition-all duration-300"
                     style={{
-                      width: currentStep > step.id ? '100%' : '0%',
+                      width: currentStep > step.id ? "100%" : "0%",
                     }}
                   />
                 </div>

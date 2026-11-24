@@ -1,41 +1,61 @@
-import React, { useState } from 'react';
-import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/node';
-import { json, redirect } from '@remix-run/node';
-import { Form, Link, useLoaderData, useNavigate, useSubmit, useNavigation } from '@remix-run/react';
-import { useTranslation } from 'react-i18next';
-import { Smartphone, Lock, Eye, EyeOff, ShieldAlert, CheckCircle2, ShieldCheck, Key } from 'lucide-react';
-import { AppInput, AppButton } from '@repo/ui/atoms';
-import { CloudflareTurnstile } from '@repo/ui/molecules';
-import { ThemeDropdownOrganism } from '@repo/ui/organisms/ThemeDropdownOrganism';
-import { getAdminUser, sessionCookie } from '../session.server';
-import { LanguageSelector } from '../components/LanguageSelector';
-import { useTheme, THEME_OPTIONS, type ThemeType } from '../components/ThemeProvider';
-import { mockAuthService } from '../lib/auth/mock-auth-store';
+import React, { useState } from "react";
+import type { ActionFunctionArgs, LoaderFunctionArgs } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import {
+  Form,
+  Link,
+  useLoaderData,
+  useNavigate,
+  useSubmit,
+  useNavigation,
+} from "@remix-run/react";
+import { useTranslation } from "react-i18next";
+import {
+  Smartphone,
+  Lock,
+  Eye,
+  EyeOff,
+  ShieldAlert,
+  CheckCircle2,
+  ShieldCheck,
+  Key,
+} from "lucide-react";
+import { AppInput, AppButton } from "@repo/ui/atoms";
+import { CloudflareTurnstile } from "@repo/ui/molecules";
+import { ThemeDropdownOrganism } from "@repo/ui/organisms/ThemeDropdownOrganism";
+import { getAdminUser, sessionCookie } from "../session.server";
+import { LanguageSelector } from "../components/LanguageSelector";
+import {
+  useTheme,
+  THEME_OPTIONS,
+  type ThemeType,
+} from "../components/ThemeProvider";
+import { mockAuthService } from "../lib/auth/mock-auth-store";
 
 export async function loader({ request }: LoaderFunctionArgs) {
   const user = await getAdminUser(request);
   if (user) {
-    return redirect('/dashboard');
+    return redirect("/dashboard");
   }
   return json({});
 }
 
 export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData();
-  const mobile = formData.get('mobile')?.toString() || '';
-  const password = formData.get('password')?.toString() || '';
+  const mobile = formData.get("mobile")?.toString() || "";
+  const password = formData.get("password")?.toString() || "";
 
   // Ensure user session is created and serialized into the admin_session cookie
   const adminUser = {
-    id: `usr_admin_${mobile || '9876543210'}`,
-    name: 'Super Admin',
-    email: 'admin@enterprise.org',
-    role: 'Super Admin',
+    id: `usr_admin_${mobile || "9876543210"}`,
+    name: "Super Admin",
+    email: "admin@enterprise.org",
+    role: "Super Admin",
   };
 
-  return redirect('/dashboard', {
+  return redirect("/dashboard", {
     headers: {
-      'Set-Cookie': await sessionCookie.serialize({ user: adminUser }),
+      "Set-Cookie": await sessionCookie.serialize({ user: adminUser }),
     },
   });
 }
@@ -47,20 +67,22 @@ export default function AuthPage() {
   const submit = useSubmit();
   const navigation = useNavigation();
 
-  const [mobile, setMobile] = useState('9876543210');
-  const [password, setPassword] = useState('Admin@2026!Secure');
+  const [mobile, setMobile] = useState("9876543210");
+  const [password, setPassword] = useState("Admin@2026!Secure");
   const [showPassword, setShowPassword] = useState(false);
-  const [turnstileToken, setTurnstileToken] = useState('');
+  const [turnstileToken, setTurnstileToken] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
 
   // Security state
   const [clientIp] = useState(() => mockAuthService.getClientIp());
-  const [isBlocked, setIsBlocked] = useState(() => mockAuthService.isIpBlocked(mockAuthService.getClientIp()));
+  const [isBlocked, setIsBlocked] = useState(() =>
+    mockAuthService.isIpBlocked(mockAuthService.getClientIp()),
+  );
   const [error, setError] = useState<string | null>(() =>
     mockAuthService.isIpBlocked(mockAuthService.getClientIp())
-      ? 'Your IP address is blocked due to excessive authentication failures.'
-      : null
+      ? "Your IP address is blocked due to excessive authentication failures."
+      : null,
   );
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -70,27 +92,32 @@ export default function AuthPage() {
     if (isBlocked) return;
 
     if (!mobile || mobile.length < 10) {
-      setError('Please enter a valid 10-digit mobile number.');
+      setError("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     if (!password) {
-      setError('Please enter your password.');
+      setError("Please enter your password.");
       return;
     }
 
     if (!turnstileToken) {
-      setError('Please complete the Cloudflare Turnstile human verification.');
+      setError("Please complete the Cloudflare Turnstile human verification.");
       return;
     }
 
     setLoading(true);
     setTimeout(() => {
-      const res = mockAuthService.login(mobile, password, Boolean(turnstileToken), clientIp);
+      const res = mockAuthService.login(
+        mobile,
+        password,
+        Boolean(turnstileToken),
+        clientIp,
+      );
       setLoading(false);
 
       if (!res.success) {
-        setError(res.error || 'Authentication failed.');
+        setError(res.error || "Authentication failed.");
         if (res.isBlocked) {
           setIsBlocked(true);
         }
@@ -98,16 +125,16 @@ export default function AuthPage() {
         setSuccess(true);
         // Post credentials to Remix action to set the session cookie and navigate to /dashboard
         const form = new FormData();
-        form.set('mobile', mobile);
-        form.set('password', password);
-        submit(form, { method: 'post' });
+        form.set("mobile", mobile);
+        form.set("password", password);
+        submit(form, { method: "post" });
       }
     }, 400);
   };
 
   const fillDemoCredentials = () => {
-    setMobile('9876543210');
-    setPassword('Admin@2026!Secure');
+    setMobile("9876543210");
+    setPassword("Admin@2026!Secure");
     setError(null);
   };
 
@@ -147,9 +174,12 @@ export default function AuthPage() {
             </h1>
 
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Secure enterprise login with mobile number, OWASP password rules & Cloudflare verification
+              Secure enterprise login with mobile number, OWASP password rules &
+              Cloudflare verification
             </p>
-            <div className="text-[11px] font-mono text-muted-foreground/80 mt-1">Client IP: {clientIp}</div>
+            <div className="text-[11px] font-mono text-muted-foreground/80 mt-1">
+              Client IP: {clientIp}
+            </div>
           </div>
 
           {/* Quick Demo Credentials Banner */}
@@ -159,9 +189,13 @@ export default function AuthPage() {
                 <Key className="w-3.5 h-3.5" /> Demo Credentials:
               </div>
               <div className="text-muted-foreground font-mono text-[11px]">
-                Mobile: <span className="text-foreground font-medium">9876543210</span>
+                Mobile:{" "}
+                <span className="text-foreground font-medium">9876543210</span>
                 <br />
-                Password: <span className="text-foreground font-medium">Admin@2026!Secure</span>
+                Password:{" "}
+                <span className="text-foreground font-medium">
+                  Admin@2026!Secure
+                </span>
               </div>
             </div>
             <AppButton
@@ -202,9 +236,13 @@ export default function AuthPage() {
                 <AppInput
                   type="tel"
                   value={mobile}
-                  onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                  onChange={(e) =>
+                    setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))
+                  }
                   placeholder="Enter 10-digit mobile number"
-                  disabled={isBlocked || loading || navigation.state === 'submitting'}
+                  disabled={
+                    isBlocked || loading || navigation.state === "submitting"
+                  }
                   className="pl-10"
                 />
               </div>
@@ -228,11 +266,13 @@ export default function AuthPage() {
                   <Lock className="w-4 h-4" />
                 </div>
                 <AppInput
-                  type={showPassword ? 'text' : 'password'}
+                  type={showPassword ? "text" : "password"}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
-                  disabled={isBlocked || loading || navigation.state === 'submitting'}
+                  disabled={
+                    isBlocked || loading || navigation.state === "submitting"
+                  }
                   className="pl-10 pr-10"
                 />
                 <button
@@ -240,7 +280,11 @@ export default function AuthPage() {
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-muted-foreground hover:text-foreground z-10"
                 >
-                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  {showPassword ? (
+                    <EyeOff className="w-4 h-4" />
+                  ) : (
+                    <Eye className="w-4 h-4" />
+                  )}
                 </button>
               </div>
             </div>
@@ -262,16 +306,21 @@ export default function AuthPage() {
               variant="primary"
               size="md"
               className="w-full"
-              disabled={isBlocked || loading || navigation.state === 'submitting'}
-              isLoading={loading || navigation.state === 'submitting'}
+              disabled={
+                isBlocked || loading || navigation.state === "submitting"
+              }
+              isLoading={loading || navigation.state === "submitting"}
             >
               Sign In
             </AppButton>
           </form>
 
           <div className="pt-2 text-center text-xs text-muted-foreground border-t border-border">
-            Don't have an admin account?{' '}
-            <Link to="/signup" className="text-primary hover:underline font-semibold">
+            Don't have an admin account?{" "}
+            <Link
+              to="/signup"
+              className="text-primary hover:underline font-semibold"
+            >
               Create an account
             </Link>
           </div>
@@ -279,9 +328,9 @@ export default function AuthPage() {
       </div>
 
       <footer className="w-full max-w-5xl py-4 text-center text-xs text-muted-foreground">
-        © 2026 Enterprise Admin Design System. Built with OWASP ASVS 4.0 Security Standards.
+        © 2026 Enterprise Admin Design System. Built with OWASP ASVS 4.0
+        Security Standards.
       </footer>
     </main>
   );
 }
-

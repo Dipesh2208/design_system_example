@@ -17,16 +17,16 @@ export interface PasswordRuleResult {
 }
 
 const COMMON_PASSWORDS = [
-  'password',
-  'password123',
-  '123456',
-  '12345678',
-  '123456789',
-  'qwerty',
-  'admin123',
-  'welcome1',
-  'letmein',
-  'pass1234',
+  "password",
+  "password123",
+  "123456",
+  "12345678",
+  "123456789",
+  "qwerty",
+  "admin123",
+  "welcome1",
+  "letmein",
+  "pass1234",
 ];
 
 export function validateOwaspPassword(password: string): PasswordRuleResult {
@@ -35,9 +35,11 @@ export function validateOwaspPassword(password: string): PasswordRuleResult {
   const hasLowercase = /[a-z]/.test(password);
   const hasNumber = /[0-9]/.test(password);
   const hasSpecialChar = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]/.test(password);
-  
+
   const lowerPwd = password.toLowerCase();
-  const notCommon = !COMMON_PASSWORDS.some((common) => lowerPwd === common || lowerPwd.includes(common));
+  const notCommon = !COMMON_PASSWORDS.some(
+    (common) => lowerPwd === common || lowerPwd.includes(common),
+  );
 
   const rules = {
     minLength,
@@ -49,12 +51,19 @@ export function validateOwaspPassword(password: string): PasswordRuleResult {
   };
 
   const errors: string[] = [];
-  if (!minLength) errors.push('Password must be between 10 and 128 characters.');
-  if (!hasUppercase) errors.push('Must include at least one uppercase letter (A-Z).');
-  if (!hasLowercase) errors.push('Must include at least one lowercase letter (a-z).');
-  if (!hasNumber) errors.push('Must include at least one digit (0-9).');
-  if (!hasSpecialChar) errors.push('Must include at least one special character (!@#$%^&*...).');
-  if (!notCommon) errors.push('Password contains easily guessable words or repetitive patterns.');
+  if (!minLength)
+    errors.push("Password must be between 10 and 128 characters.");
+  if (!hasUppercase)
+    errors.push("Must include at least one uppercase letter (A-Z).");
+  if (!hasLowercase)
+    errors.push("Must include at least one lowercase letter (a-z).");
+  if (!hasNumber) errors.push("Must include at least one digit (0-9).");
+  if (!hasSpecialChar)
+    errors.push("Must include at least one special character (!@#$%^&*...).");
+  if (!notCommon)
+    errors.push(
+      "Password contains easily guessable words or repetitive patterns.",
+    );
 
   let score = 0;
   if (password.length >= 10) score += 1;

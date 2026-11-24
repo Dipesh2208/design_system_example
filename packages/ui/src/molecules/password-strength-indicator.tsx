@@ -1,6 +1,6 @@
-import React from 'react';
-import { Check, X, Shield } from 'lucide-react';
-import { PasswordRuleResult } from '../lib/owasp-password';
+import React from "react";
+import { Check, X, Shield } from "lucide-react";
+import { PasswordRuleResult } from "../lib/owasp-password";
 
 interface PasswordStrengthIndicatorProps {
   result: PasswordRuleResult;
@@ -8,20 +8,24 @@ interface PasswordStrengthIndicatorProps {
   className?: string;
 }
 
-export const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps> = ({
-  result,
-  showRules = true,
-  className = '',
-}) => {
+export const PasswordStrengthIndicator: React.FC<
+  PasswordStrengthIndicatorProps
+> = ({ result, showRules = true, className = "" }) => {
   const { score, rules } = result;
 
-  const strengthLabels = ['Very Weak', 'Weak', 'Moderate', 'Strong', 'Very Strong'];
+  const strengthLabels = [
+    "Very Weak",
+    "Weak",
+    "Moderate",
+    "Strong",
+    "Very Strong",
+  ];
   const strengthColors = [
-    'bg-rose-500',
-    'bg-orange-500',
-    'bg-amber-500',
-    'bg-emerald-500',
-    'bg-teal-500',
+    "bg-rose-500",
+    "bg-orange-500",
+    "bg-amber-500",
+    "bg-emerald-500",
+    "bg-teal-500",
   ];
 
   return (
@@ -32,7 +36,9 @@ export const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps>
           <span className="text-muted-foreground flex items-center gap-1">
             <Shield className="w-3.5 h-3.5" /> OWASP Standard Strength:
           </span>
-          <span className={`font-semibold ${score >= 3 ? 'text-emerald-500' : 'text-muted-foreground'}`}>
+          <span
+            className={`font-semibold ${score >= 3 ? "text-emerald-500" : "text-muted-foreground"}`}
+          >
             {strengthLabels[score]}
           </span>
         </div>
@@ -41,7 +47,7 @@ export const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps>
             <div
               key={step}
               className={`h-full transition-all duration-300 ${
-                score > step ? strengthColors[score] : 'bg-transparent'
+                score > step ? strengthColors[score] : "bg-transparent"
               }`}
             />
           ))}
@@ -57,11 +63,23 @@ export const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-1.5">
             <RuleItem label="Minimum 10 characters" passed={rules.minLength} />
-            <RuleItem label="Uppercase letter (A-Z)" passed={rules.hasUppercase} />
-            <RuleItem label="Lowercase letter (a-z)" passed={rules.hasLowercase} />
+            <RuleItem
+              label="Uppercase letter (A-Z)"
+              passed={rules.hasUppercase}
+            />
+            <RuleItem
+              label="Lowercase letter (a-z)"
+              passed={rules.hasLowercase}
+            />
             <RuleItem label="Numeric digit (0-9)" passed={rules.hasNumber} />
-            <RuleItem label="Special symbol (!@#$%...)" passed={rules.hasSpecialChar} />
-            <RuleItem label="No predictable patterns" passed={rules.notCommon} />
+            <RuleItem
+              label="Special symbol (!@#$%...)"
+              passed={rules.hasSpecialChar}
+            />
+            <RuleItem
+              label="No predictable patterns"
+              passed={rules.notCommon}
+            />
           </div>
         </div>
       )}
@@ -69,14 +87,21 @@ export const PasswordStrengthIndicator: React.FC<PasswordStrengthIndicatorProps>
   );
 };
 
-const RuleItem: React.FC<{ label: string; passed: boolean }> = ({ label, passed }) => (
+const RuleItem: React.FC<{ label: string; passed: boolean }> = ({
+  label,
+  passed,
+}) => (
   <div className="flex items-center gap-1.5">
     {passed ? (
       <Check className="w-3.5 h-3.5 text-emerald-500 shrink-0 stroke-[2.5]" />
     ) : (
       <X className="w-3.5 h-3.5 text-muted-foreground/60 shrink-0" />
     )}
-    <span className={passed ? 'text-foreground font-medium' : 'text-muted-foreground'}>
+    <span
+      className={
+        passed ? "text-foreground font-medium" : "text-muted-foreground"
+      }
+    >
       {label}
     </span>
   </div>

@@ -36,17 +36,17 @@ export interface SecurityState {
 }
 
 const STORAGE_KEYS = {
-  USERS: 'admin_auth_mock_users',
-  SECURITY: 'admin_auth_mock_security',
-  ACTIVE_OTP: 'admin_auth_mock_active_otp',
+  USERS: "admin_auth_mock_users",
+  SECURITY: "admin_auth_mock_security",
+  ACTIVE_OTP: "admin_auth_mock_active_otp",
 };
 
 // Default Simulated Client IP
-const DEFAULT_CLIENT_IP = '152.58.12.94';
+const DEFAULT_CLIENT_IP = "152.58.12.94";
 
 class MockAuthService {
   private getStorage<T>(key: string, fallback: T): T {
-    if (typeof window === 'undefined') return fallback;
+    if (typeof window === "undefined") return fallback;
     try {
       const data = sessionStorage.getItem(key);
       return data ? JSON.parse(data) : fallback;
@@ -56,11 +56,11 @@ class MockAuthService {
   }
 
   private setStorage<T>(key: string, value: T): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     try {
       sessionStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
-      console.error('Failed to save to sessionStorage', e);
+      console.error("Failed to save to sessionStorage", e);
     }
   }
 
@@ -101,13 +101,15 @@ class MockAuthService {
   public blockIpAndMobile(ip: string, mobile: string): void {
     const state = this.getSecurityState();
     if (!state.blockedIps.includes(ip)) state.blockedIps.push(ip);
-    if (!state.blockedMobiles.includes(mobile)) state.blockedMobiles.push(mobile);
+    if (!state.blockedMobiles.includes(mobile))
+      state.blockedMobiles.push(mobile);
     this.saveSecurityState(state);
   }
 
   public blockMobile(mobile: string): void {
     const state = this.getSecurityState();
-    if (!state.blockedMobiles.includes(mobile)) state.blockedMobiles.push(mobile);
+    if (!state.blockedMobiles.includes(mobile))
+      state.blockedMobiles.push(mobile);
     this.saveSecurityState(state);
   }
 
@@ -116,7 +118,10 @@ class MockAuthService {
    * If a user verified OTP in signup, but navigated away/reloaded without password setting,
    * call this when they re-initiate signup. If > 3 times, block mobile.
    */
-  public registerAbandonCheck(mobile: string): { blocked: boolean; count: number } {
+  public registerAbandonCheck(mobile: string): {
+    blocked: boolean;
+    count: number;
+  } {
     const state = this.getSecurityState();
     const count = (state.abandonedSignups[mobile] || 0) + 1;
     state.abandonedSignups[mobile] = count;
@@ -137,12 +142,18 @@ class MockAuthService {
   }
 
   public getActiveOtp(mobile: string): OtpSession | null {
-    const all = this.getStorage<Record<string, OtpSession>>(STORAGE_KEYS.ACTIVE_OTP, {});
+    const all = this.getStorage<Record<string, OtpSession>>(
+      STORAGE_KEYS.ACTIVE_OTP,
+      {},
+    );
     return all[mobile] || null;
   }
 
   private saveActiveOtp(otp: OtpSession): void {
-    const all = this.getStorage<Record<string, OtpSession>>(STORAGE_KEYS.ACTIVE_OTP, {});
+    const all = this.getStorage<Record<string, OtpSession>>(
+      STORAGE_KEYS.ACTIVE_OTP,
+      {},
+    );
     all[otp.mobile] = otp;
     this.setStorage(STORAGE_KEYS.ACTIVE_OTP, all);
   }
@@ -152,18 +163,28 @@ class MockAuthService {
    * Generates a 4-digit code (default '1234' for predictable mock testing)
    * 15-minute timer (15 * 60 * 1000 ms)
    */
-  public sendOtp(mobile: string, ip: string, isResend = false): { success: boolean; error?: string; otpPreview?: string } {
+  public sendOtp(
+    mobile: string,
+    ip: string,
+    isResend = false,
+  ): { success: boolean; error?: string; otpPreview?: string } {
     if (this.isIpBlocked(ip)) {
-      return { success: false, error: 'Your IP address has been blocked due to security violations.' };
+      return {
+        success: false,
+        error: "Your IP address has been blocked due to security violations.",
+      };
     }
     if (this.isMobileBlocked(mobile)) {
-      return { success: false, error: 'This mobile number is blocked. Please contact support.' };
+      return {
+        success: false,
+        error: "This mobile number is blocked. Please contact support.",
+      };
     }
 
     const existing = this.getActiveOtp(mobile);
     const totalFailed = existing ? existing.totalFailedAttempts : 0;
 
-    const code = '1234';
+    const code = "1234";
     const now = Date.now();
     const expiresAt = now + 15 * 60 * 1000; // 15 minutes
 
@@ -188,7 +209,7 @@ class MockAuthService {
   public verifyOtp(
     mobile: string,
     otpCode: string,
-    ip: string
+    ip: string,
   ): {
     success: boolean;
     error?: string;
@@ -197,25 +218,42 @@ class MockAuthService {
     isBlocked?: boolean;
   } {
     if (this.isIpBlocked(ip)) {
-      return { success: false, error: 'Your IP is blocked.', isBlocked: true };
+      return { success: false, error: "Your IP is blocked.", isBlocked: true };
     }
     if (this.isMobileBlocked(mobile)) {
-      return { success: false, error: 'This mobile number is blocked.', isBlocked: true };
+      return {
+        success: false,
+        error: "This mobile number is blocked.",
+        isBlocked: true,
+      };
     }
 
     const session = this.getActiveOtp(mobile);
     if (!session) {
-      return { success: false, error: 'No active OTP request found. Please request a new OTP.' };
+      return {
+        success: false,
+        error: "No active OTP request found. Please request a new OTP.",
+      };
     }
 
     // Check 15-minute expiration
     if (Date.now() > session.expiresAt) {
-      return { success: false, error: 'OTP has expired (15-minute limit exceeded). Please request a new OTP.', requireResend: true };
+      return {
+        success: false,
+        error:
+          "OTP has expired (15-minute limit exceeded). Please request a new OTP.",
+        requireResend: true,
+      };
     }
 
     // Check if resend is currently required
     if (session.resendRequired) {
-      return { success: false, error: '5 incorrect attempts reached. You must resend the OTP to continue.', requireResend: true };
+      return {
+        success: false,
+        error:
+          "5 incorrect attempts reached. You must resend the OTP to continue.",
+        requireResend: true,
+      };
     }
 
     // Check correctness
@@ -235,7 +273,8 @@ class MockAuthService {
       this.saveActiveOtp(session);
       return {
         success: false,
-        error: 'Too many failed attempts. Your IP and mobile number have been blocked.',
+        error:
+          "Too many failed attempts. Your IP and mobile number have been blocked.",
         isBlocked: true,
       };
     }
@@ -246,7 +285,7 @@ class MockAuthService {
       this.saveActiveOtp(session);
       return {
         success: false,
-        error: '5 incorrect OTP attempts entered. You must resend the OTP.',
+        error: "5 incorrect OTP attempts entered. You must resend the OTP.",
         requireResend: true,
         remainingCycleAttempts: 0,
       };
@@ -256,7 +295,7 @@ class MockAuthService {
     this.saveActiveOtp(session);
     return {
       success: false,
-      error: `Invalid OTP. You have ${remaining} attempt${remaining > 1 ? 's' : ''} left before resend is required.`,
+      error: `Invalid OTP. You have ${remaining} attempt${remaining > 1 ? "s" : ""} left before resend is required.`,
       remainingCycleAttempts: remaining,
     };
   }
@@ -264,7 +303,10 @@ class MockAuthService {
   /**
    * Resend OTP trigger (resets the 5-attempt cycle, preserves total failed count towards 10)
    */
-  public resendOtp(mobile: string, ip: string): { success: boolean; error?: string; otpPreview?: string } {
+  public resendOtp(
+    mobile: string,
+    ip: string,
+  ): { success: boolean; error?: string; otpPreview?: string } {
     return this.sendOtp(mobile, ip, true);
   }
 
@@ -273,22 +315,31 @@ class MockAuthService {
    */
   public completeSignup(
     mobile: string,
-    password: string
+    password: string,
   ): { success: boolean; error?: string } {
     const session = this.getActiveOtp(mobile);
     if (!session || !session.verified) {
-      return { success: false, error: 'Mobile number not verified by OTP. Please restart signup.' };
+      return {
+        success: false,
+        error: "Mobile number not verified by OTP. Please restart signup.",
+      };
     }
 
-    const users = this.getStorage<Record<string, UserAccount>>(STORAGE_KEYS.USERS, {});
+    const users = this.getStorage<Record<string, UserAccount>>(
+      STORAGE_KEYS.USERS,
+      {},
+    );
     if (users[mobile]) {
-      return { success: false, error: 'An account with this mobile number already exists.' };
+      return {
+        success: false,
+        error: "An account with this mobile number already exists.",
+      };
     }
 
     users[mobile] = {
       mobile,
       passwordHash: password,
-      role: 'Admin',
+      role: "Admin",
       registeredAt: Date.now(),
     };
     this.setStorage(STORAGE_KEYS.USERS, users);
@@ -303,16 +354,27 @@ class MockAuthService {
    */
   public resetPassword(
     mobile: string,
-    newPassword: string
+    newPassword: string,
   ): { success: boolean; error?: string } {
     const session = this.getActiveOtp(mobile);
     if (!session || !session.verified) {
-      return { success: false, error: 'OTP verification required before resetting password.' };
+      return {
+        success: false,
+        error: "OTP verification required before resetting password.",
+      };
     }
 
-    const users = this.getStorage<Record<string, UserAccount>>(STORAGE_KEYS.USERS, {});
+    const users = this.getStorage<Record<string, UserAccount>>(
+      STORAGE_KEYS.USERS,
+      {},
+    );
     if (!users[mobile]) {
-      users[mobile] = { mobile, passwordHash: newPassword, role: 'Admin', registeredAt: Date.now() };
+      users[mobile] = {
+        mobile,
+        passwordHash: newPassword,
+        role: "Admin",
+        registeredAt: Date.now(),
+      };
     } else {
       users[mobile].passwordHash = newPassword;
     }
@@ -327,37 +389,56 @@ class MockAuthService {
     mobile: string,
     password: string,
     turnstileVerified: boolean,
-    ip: string
-  ): { success: boolean; error?: string; isBlocked?: boolean; user?: UserAccount } {
+    ip: string,
+  ): {
+    success: boolean;
+    error?: string;
+    isBlocked?: boolean;
+    user?: UserAccount;
+  } {
     if (this.isIpBlocked(ip)) {
-      return { success: false, error: 'Access blocked: Your IP address is on the security blocklist.', isBlocked: true };
+      return {
+        success: false,
+        error: "Access blocked: Your IP address is on the security blocklist.",
+        isBlocked: true,
+      };
     }
     if (this.isMobileBlocked(mobile)) {
-      return { success: false, error: 'Access blocked: This mobile account is suspended.', isBlocked: true };
+      return {
+        success: false,
+        error: "Access blocked: This mobile account is suspended.",
+        isBlocked: true,
+      };
     }
     if (!turnstileVerified) {
-      return { success: false, error: 'Cloudflare Turnstile verification is required.' };
+      return {
+        success: false,
+        error: "Cloudflare Turnstile verification is required.",
+      };
     }
 
-    const users = this.getStorage<Record<string, UserAccount>>(STORAGE_KEYS.USERS, {});
+    const users = this.getStorage<Record<string, UserAccount>>(
+      STORAGE_KEYS.USERS,
+      {},
+    );
     const user = users[mobile];
 
     // For ease of demo, if user isn't in mock storage yet, allow standard demo passwords
     if (!user) {
-      if (password === 'Admin@2026!Secure' || password === 'Secret@12345') {
+      if (password === "Admin@2026!Secure" || password === "Secret@12345") {
         const demoUser: UserAccount = {
           mobile,
           passwordHash: password,
-          role: 'Super Admin',
+          role: "Super Admin",
           registeredAt: Date.now(),
         };
         return { success: true, user: demoUser };
       }
-      return { success: false, error: 'Mobile number or password incorrect.' };
+      return { success: false, error: "Mobile number or password incorrect." };
     }
 
     if (user.passwordHash !== password) {
-      return { success: false, error: 'Mobile number or password incorrect.' };
+      return { success: false, error: "Mobile number or password incorrect." };
     }
 
     return { success: true, user };
@@ -367,7 +448,7 @@ class MockAuthService {
    * Reset all mock data
    */
   public clearAll(): void {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
     sessionStorage.removeItem(STORAGE_KEYS.USERS);
     sessionStorage.removeItem(STORAGE_KEYS.SECURITY);
     sessionStorage.removeItem(STORAGE_KEYS.ACTIVE_OTP);

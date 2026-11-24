@@ -21,7 +21,9 @@ export async function loginAsAdmin(page: Page) {
       await mobileInput.fill("9876543210");
     }
 
-    const passwordInput = page.locator("input[placeholder*='password' i]").first();
+    const passwordInput = page
+      .locator("input[placeholder*='password' i]")
+      .first();
     const currentPassword = await passwordInput.inputValue();
     if (!currentPassword) {
       await passwordInput.click();

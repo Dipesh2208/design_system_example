@@ -1,19 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from '@remix-run/react';
-import { Smartphone, Lock, Eye, EyeOff, ShieldAlert, CheckCircle2, KeyRound } from 'lucide-react';
-import { AppInput, AppButton } from '@repo/ui/atoms';
-import { CloudflareTurnstile, OtpInput, PasswordStrengthIndicator } from '@repo/ui/molecules';
-import { AuthStepper } from '@repo/ui/organisms';
-import { ThemeDropdownOrganism } from '@repo/ui/organisms/ThemeDropdownOrganism';
-import { LanguageSelector } from '../components/LanguageSelector';
-import { useTheme, THEME_OPTIONS, type ThemeType } from '../components/ThemeProvider';
-import { mockAuthService } from '../lib/auth/mock-auth-store';
-import { validateOwaspPassword } from '@repo/ui/lib/owasp-password';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "@remix-run/react";
+import {
+  Smartphone,
+  Lock,
+  Eye,
+  EyeOff,
+  ShieldAlert,
+  CheckCircle2,
+  KeyRound,
+} from "lucide-react";
+import { AppInput, AppButton } from "@repo/ui/atoms";
+import {
+  CloudflareTurnstile,
+  OtpInput,
+  PasswordStrengthIndicator,
+} from "@repo/ui/molecules";
+import { AuthStepper } from "@repo/ui/organisms";
+import { ThemeDropdownOrganism } from "@repo/ui/organisms/ThemeDropdownOrganism";
+import { LanguageSelector } from "../components/LanguageSelector";
+import {
+  useTheme,
+  THEME_OPTIONS,
+  type ThemeType,
+} from "../components/ThemeProvider";
+import { mockAuthService } from "../lib/auth/mock-auth-store";
+import { validateOwaspPassword } from "@repo/ui/lib/owasp-password";
 
 const FORGOT_STEPS = [
-  { id: 1, title: 'Verification' },
-  { id: 2, title: 'Enter OTP' },
-  { id: 3, title: 'Reset Password' },
+  { id: 1, title: "Verification" },
+  { id: 2, title: "Enter OTP" },
+  { id: 3, title: "Reset Password" },
 ];
 
 export default function ForgotPasswordPage() {
@@ -21,20 +37,22 @@ export default function ForgotPasswordPage() {
   const { theme, setTheme } = useTheme();
 
   const [currentStep, setCurrentStep] = useState(1);
-  const [mobile, setMobile] = useState('');
-  const [turnstileToken, setTurnstileToken] = useState('');
-  const [otp, setOtp] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [mobile, setMobile] = useState("");
+  const [turnstileToken, setTurnstileToken] = useState("");
+  const [otp, setOtp] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
   // Security state
   const [clientIp] = useState(() => mockAuthService.getClientIp());
-  const [isBlocked, setIsBlocked] = useState(() => mockAuthService.isIpBlocked(mockAuthService.getClientIp()));
+  const [isBlocked, setIsBlocked] = useState(() =>
+    mockAuthService.isIpBlocked(mockAuthService.getClientIp()),
+  );
   const [error, setError] = useState<string | null>(() =>
     mockAuthService.isIpBlocked(mockAuthService.getClientIp())
-      ? 'Access Blocked: Your IP address is suspended.'
-      : null
+      ? "Access Blocked: Your IP address is suspended."
+      : null,
   );
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -49,7 +67,7 @@ export default function ForgotPasswordPage() {
         if (prev <= 1) {
           clearInterval(interval);
           setRequireResend(true);
-          setError('OTP expired after 15 minutes. Please request a new OTP.');
+          setError("OTP expired after 15 minutes. Please request a new OTP.");
           return 0;
         }
         return prev - 1;
@@ -66,24 +84,24 @@ export default function ForgotPasswordPage() {
     if (isBlocked) return;
 
     if (!mobile || mobile.length < 10) {
-      setError('Please enter a valid 10-digit mobile number.');
+      setError("Please enter a valid 10-digit mobile number.");
       return;
     }
 
     if (!turnstileToken) {
-      setError('Cloudflare Turnstile verification is required to proceed.');
+      setError("Cloudflare Turnstile verification is required to proceed.");
       return;
     }
 
     if (mockAuthService.isMobileBlocked(mobile)) {
       setIsBlocked(true);
-      setError('This mobile number is blocked from password recovery.');
+      setError("This mobile number is blocked from password recovery.");
       return;
     }
 
     const sendRes = mockAuthService.sendOtp(mobile, clientIp);
     if (!sendRes.success) {
-      setError(sendRes.error || 'Failed to send OTP.');
+      setError(sendRes.error || "Failed to send OTP.");
       return;
     }
 
@@ -99,13 +117,13 @@ export default function ForgotPasswordPage() {
     setError(null);
 
     if (otp.length < 4) {
-      setError('Please enter all 4 digits of the OTP.');
+      setError("Please enter all 4 digits of the OTP.");
       return;
     }
 
     const res = mockAuthService.verifyOtp(mobile, otp, clientIp);
     if (!res.success) {
-      setError(res.error || 'Invalid OTP.');
+      setError(res.error || "Invalid OTP.");
       if (res.isBlocked) {
         setIsBlocked(true);
       }
@@ -123,14 +141,14 @@ export default function ForgotPasswordPage() {
     setError(null);
     const res = mockAuthService.resendOtp(mobile, clientIp);
     if (!res.success) {
-      setError(res.error || 'Could not resend OTP.');
+      setError(res.error || "Could not resend OTP.");
       return;
     }
     setTimeLeft(15 * 60);
-    setOtp('');
+    setOtp("");
     setFailedCount(0);
     setRequireResend(false);
-    setSuccessMessage('New OTP sent successfully! (Mock code: 1234)');
+    setSuccessMessage("New OTP sent successfully! (Mock code: 1234)");
     setTimeout(() => setSuccessMessage(null), 3000);
   };
 
@@ -142,24 +160,28 @@ export default function ForgotPasswordPage() {
     setError(null);
 
     if (!owaspCheck.valid) {
-      setError(owaspCheck.errors[0] || 'Password does not meet OWASP standards.');
+      setError(
+        owaspCheck.errors[0] || "Password does not meet OWASP standards.",
+      );
       return;
     }
 
     if (password !== confirmPassword) {
-      setError('Passwords do not match.');
+      setError("Passwords do not match.");
       return;
     }
 
     const resetRes = mockAuthService.resetPassword(mobile, password);
     if (!resetRes.success) {
-      setError(resetRes.error || 'Failed to reset password.');
+      setError(resetRes.error || "Failed to reset password.");
       return;
     }
 
-    setSuccessMessage('Password regenerated successfully! Redirecting to sign in...');
+    setSuccessMessage(
+      "Password regenerated successfully! Redirecting to sign in...",
+    );
     setTimeout(() => {
-      navigate('/auth');
+      navigate("/auth");
     }, 1500);
   };
 
@@ -197,9 +219,12 @@ export default function ForgotPasswordPage() {
             </h1>
 
             <p className="text-xs sm:text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Verify identity with OTP and regenerate an OWASP-compliant password
+              Verify identity with OTP and regenerate an OWASP-compliant
+              password
             </p>
-            <div className="text-[11px] font-mono text-muted-foreground/80 mt-1">Client IP: {clientIp}</div>
+            <div className="text-[11px] font-mono text-muted-foreground/80 mt-1">
+              Client IP: {clientIp}
+            </div>
           </div>
 
           {/* Stepper Header */}
@@ -237,7 +262,9 @@ export default function ForgotPasswordPage() {
                   <AppInput
                     type="tel"
                     value={mobile}
-                    onChange={(e) => setMobile(e.target.value.replace(/\D/g, '').slice(0, 10))}
+                    onChange={(e) =>
+                      setMobile(e.target.value.replace(/\D/g, "").slice(0, 10))
+                    }
                     placeholder="Enter 10-digit mobile number"
                     disabled={isBlocked}
                     className="pl-10"
@@ -272,8 +299,10 @@ export default function ForgotPasswordPage() {
             <form onSubmit={handleStep2Verify} className="space-y-6">
               <div className="text-center">
                 <p className="text-xs text-muted-foreground">
-                  Enter the 4-digit code sent to{' '}
-                  <span className="font-semibold text-foreground">+91 {mobile}</span>
+                  Enter the 4-digit code sent to{" "}
+                  <span className="font-semibold text-foreground">
+                    +91 {mobile}
+                  </span>
                 </p>
                 <div className="text-[11px] text-primary font-mono mt-1">
                   (Mock OTP code: 1234)
@@ -319,7 +348,7 @@ export default function ForgotPasswordPage() {
                     <Lock className="w-4 h-4" />
                   </div>
                   <AppInput
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Create new OWASP password"
@@ -330,7 +359,11 @@ export default function ForgotPasswordPage() {
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-muted-foreground hover:text-foreground z-10"
                   >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                    {showPassword ? (
+                      <EyeOff className="w-4 h-4" />
+                    ) : (
+                      <Eye className="w-4 h-4" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -346,7 +379,7 @@ export default function ForgotPasswordPage() {
                     <Lock className="w-4 h-4" />
                   </div>
                   <AppInput
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Re-type new password"
@@ -354,7 +387,9 @@ export default function ForgotPasswordPage() {
                   />
                 </div>
                 {confirmPassword && password !== confirmPassword && (
-                  <p className="text-[11px] text-rose-500 mt-1">Passwords do not match</p>
+                  <p className="text-[11px] text-rose-500 mt-1">
+                    Passwords do not match
+                  </p>
                 )}
               </div>
 
@@ -362,7 +397,9 @@ export default function ForgotPasswordPage() {
                 type="submit"
                 variant="primary"
                 size="md"
-                disabled={isBlocked || !owaspCheck.valid || password !== confirmPassword}
+                disabled={
+                  isBlocked || !owaspCheck.valid || password !== confirmPassword
+                }
                 className="w-full"
               >
                 Regenerate Password
@@ -371,8 +408,11 @@ export default function ForgotPasswordPage() {
           )}
 
           <div className="pt-2 text-center text-xs text-muted-foreground border-t border-border">
-            Remembered your password?{' '}
-            <Link to="/auth" className="text-primary hover:underline font-semibold">
+            Remembered your password?{" "}
+            <Link
+              to="/auth"
+              className="text-primary hover:underline font-semibold"
+            >
               Back to Sign In
             </Link>
           </div>
@@ -380,7 +420,8 @@ export default function ForgotPasswordPage() {
       </div>
 
       <footer className="w-full max-w-5xl py-4 text-center text-xs text-muted-foreground">
-        © 2026 Enterprise Admin Design System. Built with OWASP ASVS 4.0 Security Standards.
+        © 2026 Enterprise Admin Design System. Built with OWASP ASVS 4.0
+        Security Standards.
       </footer>
     </main>
   );

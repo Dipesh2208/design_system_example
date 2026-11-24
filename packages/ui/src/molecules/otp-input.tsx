@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { AlertCircle, Clock, RefreshCw } from 'lucide-react';
+import React, { useRef } from "react";
+import { AlertCircle, Clock, RefreshCw } from "lucide-react";
 
 interface OtpInputProps {
   value: string;
@@ -26,7 +26,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
   failedCount = 0,
   maxAttemptsCycle = 5,
   errorMessage,
-  className = '',
+  className = "",
 }) => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -34,17 +34,17 @@ export const OtpInput: React.FC<OtpInputProps> = ({
   const formatTime = (secs: number) => {
     const mins = Math.floor(secs / 60);
     const remainder = secs % 60;
-    return `${mins.toString().padStart(2, '0')}:${remainder.toString().padStart(2, '0')}`;
+    return `${mins.toString().padStart(2, "0")}:${remainder.toString().padStart(2, "0")}`;
   };
 
   const isExpired = timeLeftSeconds <= 0;
 
   const handleDigitChange = (index: number, digit: string) => {
     if (disabled || requireResend) return;
-    const cleanDigit = digit.replace(/\D/g, '').slice(-1);
-    const chars = value.split('');
+    const cleanDigit = digit.replace(/\D/g, "").slice(-1);
+    const chars = value.split("");
     chars[index] = cleanDigit;
-    const newVal = chars.join('').slice(0, length);
+    const newVal = chars.join("").slice(0, length);
     onChange(newVal);
 
     if (cleanDigit && index < length - 1) {
@@ -52,8 +52,11 @@ export const OtpInput: React.FC<OtpInputProps> = ({
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Backspace' && !value[index] && index > 0) {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>,
+  ) => {
+    if (e.key === "Backspace" && !value[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
     }
   };
@@ -61,7 +64,10 @@ export const OtpInput: React.FC<OtpInputProps> = ({
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (disabled || requireResend) return;
-    const pasted = e.clipboardData.getData('text/plain').replace(/\D/g, '').slice(0, length);
+    const pasted = e.clipboardData
+      .getData("text/plain")
+      .replace(/\D/g, "")
+      .slice(0, length);
     if (pasted) {
       onChange(pasted);
       const nextIndex = Math.min(pasted.length, length - 1);
@@ -74,7 +80,7 @@ export const OtpInput: React.FC<OtpInputProps> = ({
       {/* 4 Digit Boxes - Fully Responsive & Dark Mode Calibrated */}
       <div className="flex justify-center gap-2.5 sm:gap-3.5">
         {Array.from({ length }).map((_, index) => {
-          const char = value[index] || '';
+          const char = value[index] || "";
           return (
             <input
               key={index}
@@ -91,10 +97,10 @@ export const OtpInput: React.FC<OtpInputProps> = ({
               onPaste={handlePaste}
               className={`w-12 h-14 sm:w-14 sm:h-16 text-center text-xl sm:text-2xl font-bold rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary ${
                 requireResend
-                  ? 'bg-destructive/10 border-destructive/40 text-destructive cursor-not-allowed'
+                  ? "bg-destructive/10 border-destructive/40 text-destructive cursor-not-allowed"
                   : char
-                  ? 'bg-card text-foreground border-primary ring-2 ring-primary/20 shadow-sm'
-                  : 'bg-muted/40 text-foreground border-input hover:border-primary/50'
+                    ? "bg-card text-foreground border-primary ring-2 ring-primary/20 shadow-sm"
+                    : "bg-muted/40 text-foreground border-input hover:border-primary/50"
               }`}
             />
           );
@@ -120,8 +126,14 @@ export const OtpInput: React.FC<OtpInputProps> = ({
       <div className="flex items-center justify-between text-xs text-muted-foreground pt-2 border-t border-border">
         <div className="flex items-center gap-1.5 font-mono">
           <Clock className="w-3.5 h-3.5 text-muted-foreground" />
-          <span className={timeLeftSeconds < 120 ? 'text-destructive font-semibold' : ''}>
-            {isExpired ? 'OTP Expired' : `Valid for: ${formatTime(timeLeftSeconds)}`}
+          <span
+            className={
+              timeLeftSeconds < 120 ? "text-destructive font-semibold" : ""
+            }
+          >
+            {isExpired
+              ? "OTP Expired"
+              : `Valid for: ${formatTime(timeLeftSeconds)}`}
           </span>
         </div>
 
