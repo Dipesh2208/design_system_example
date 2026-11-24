@@ -24,9 +24,11 @@ export const CloudflareTurnstile: React.FC<CloudflareTurnstileProps> = ({
   const handleVerifyClick = () => {
     if (verified || checking) return;
     setChecking(true);
-    // Instant simulation in test environments, realistic roundtrip in live browser
-    const isPlaywright = typeof window !== 'undefined' && 'playwright' in window;
-    const delay = isPlaywright ? 50 : 250;
+    // Instant simulation in test environments (Playwright sets navigator.webdriver = true)
+    const isTestEnv =
+      typeof window !== 'undefined' &&
+      (Boolean(navigator.webdriver) || 'playwright' in window);
+    const delay = isTestEnv ? 50 : 250;
     setTimeout(() => {
       setChecking(false);
       setVerified(true);
