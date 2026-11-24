@@ -3,8 +3,12 @@ import { defineConfig, createLogger } from "vite";
 import tailwindcss from "@tailwindcss/vite";
 
 const originalConsoleWarn = console.warn;
-console.warn = (...args: Array<string | number | boolean | object | null | undefined>) => {
-  const msg = args.map((a) => (typeof a === "string" ? a : String(a))).join(" ");
+console.warn = (
+  ...args: Array<string | number | boolean | object | null | undefined>
+) => {
+  const msg = args
+    .map((a) => (typeof a === "string" ? a : String(a)))
+    .join(" ");
   if (
     msg.includes("`envFile` option is deprecated") ||
     msg.includes('`esbuild` option was specified by "remix" plugin')
@@ -44,4 +48,3 @@ export default defineConfig({
     tailwindcss(),
   ],
 });
-

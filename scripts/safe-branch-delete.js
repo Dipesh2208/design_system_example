@@ -1,13 +1,16 @@
 import { execSync } from "node:child_process";
 
 const args = process.argv.slice(2);
-const force = args.includes("-D") || args.includes("-f") || args.includes("--force");
+const force =
+  args.includes("-D") || args.includes("-f") || args.includes("--force");
 const branches = args.filter((arg) => !arg.startsWith("-"));
 
 const PROTECTED_BRANCHES = new Set(["dev", "beta", "production"]);
 
 if (branches.length === 0) {
-  console.log("Usage: node scripts/safe-branch-delete.js [-d|-D] <branch-name>");
+  console.log(
+    "Usage: node scripts/safe-branch-delete.js [-d|-D] <branch-name>",
+  );
   console.log("Or via git alias: git del-branch <branch-name>");
   process.exit(1);
 }
@@ -31,7 +34,9 @@ for (const branch of branches) {
     });
     console.log(output.trim());
   } catch (err) {
-    console.error(`\x1b[31m❌ Failed to delete branch '${branch}':\x1b[0m\n${err.stderr || err.message}`);
+    console.error(
+      `\x1b[31m❌ Failed to delete branch '${branch}':\x1b[0m\n${err.stderr || err.message}`,
+    );
     hasError = true;
   }
 }

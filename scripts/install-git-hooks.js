@@ -113,11 +113,16 @@ try {
 
     // Configure safe branch delete git alias
     try {
-      execSync('git config alias.del-branch "!node scripts/safe-branch-delete.js"', {
-        cwd: rootDir,
-        stdio: "ignore",
-      });
-      console.log("✅ Git alias 'git del-branch' configured for safe branch deletion.");
+      execSync(
+        'git config alias.del-branch "!node scripts/safe-branch-delete.js"',
+        {
+          cwd: rootDir,
+          stdio: "ignore",
+        },
+      );
+      console.log(
+        "✅ Git alias 'git del-branch' configured for safe branch deletion.",
+      );
     } catch {
       // ignore alias configuration errors if git is unavailable
     }
