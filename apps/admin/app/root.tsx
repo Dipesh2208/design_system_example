@@ -15,7 +15,7 @@ import type {
 import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
-import { OfflineStatusModal } from "@repo/ui/organisms";
+import { OfflineStatusModal, VpnSecurityModal } from "@repo/ui/organisms";
 import { ClientOnly } from "./components/ClientOnly";
 import { i18next } from "./i18next.server";
 import { MultiThemeProvider } from "./components/ThemeProvider";
@@ -94,44 +94,66 @@ export function Layout({ children }: { children: React.ReactNode }) {
           {children}
           <ClientOnly>
             {() => (
-              <OfflineStatusModal
-                translations={{
-                  title: t("offline.title", "No Internet Connection"),
-                  subtitle: t(
-                    "offline.subtitle",
-                    "We can't reach the server right now. Please check your network connection.",
-                  ),
-                  checkTipsTitle: t(
-                    "offline.checkTipsTitle",
-                    "Troubleshooting steps:",
-                  ),
-                  tipWifi: t(
-                    "offline.tipWifi",
-                    "Check Wi-Fi or router connection",
-                  ),
-                  tipLan: t(
-                    "offline.tipLan",
-                    "Ensure LAN / Ethernet cable is firmly plugged in",
-                  ),
-                  tipRouter: t(
-                    "offline.tipRouter",
-                    "Verify your modem / ISP is providing active data",
-                  ),
-                  retryButton: t("offline.retryButton", "Check Connection"),
-                  checkingButton: t(
-                    "offline.checkingButton",
-                    "Checking connection...",
-                  ),
-                  onlineRestoredMessage: t(
-                    "offline.onlineRestored",
-                    "Internet connection restored. Syncing data...",
-                  ),
-                  stillOfflineMessage: t(
-                    "offline.stillOffline",
-                    "Internet is still disconnected. Please check your connection and try again.",
-                  ),
-                }}
-              />
+              <>
+                <OfflineStatusModal
+                  translations={{
+                    title: t("offline.title", "No Internet Connection"),
+                    subtitle: t(
+                      "offline.subtitle",
+                      "We can't reach the server right now. Please check your network connection.",
+                    ),
+                    checkTipsTitle: t(
+                      "offline.checkTipsTitle",
+                      "Troubleshooting steps:",
+                    ),
+                    tipWifi: t(
+                      "offline.tipWifi",
+                      "Check Wi-Fi or router connection",
+                    ),
+                    tipLan: t(
+                      "offline.tipLan",
+                      "Ensure LAN / Ethernet cable is firmly plugged in",
+                    ),
+                    tipRouter: t(
+                      "offline.tipRouter",
+                      "Verify your modem / ISP is providing active data",
+                    ),
+                    retryButton: t("offline.retryButton", "Check Connection"),
+                    checkingButton: t(
+                      "offline.checkingButton",
+                      "Checking connection...",
+                    ),
+                    onlineRestoredMessage: t(
+                      "offline.onlineRestored",
+                      "Internet connection restored. Syncing data...",
+                    ),
+                    stillOfflineMessage: t(
+                      "offline.stillOffline",
+                      "Internet is still disconnected. Please check your connection and try again.",
+                    ),
+                  }}
+                />
+                <VpnSecurityModal
+                  translations={{
+                    title: t("vpnSecurity.title"),
+                    subtitle: t("vpnSecurity.subtitle"),
+                    instructionTitle: t("vpnSecurity.instructionTitle"),
+                    stepDisableVpn: t("vpnSecurity.stepDisableVpn"),
+                    stepDisableProxy: t("vpnSecurity.stepDisableProxy"),
+                    stepReverify: t("vpnSecurity.stepReverify"),
+                    reverifyButton: t("vpnSecurity.reverifyButton"),
+                    reverifyingButton: t("vpnSecurity.reverifyingButton"),
+                    stillDetectedMessage: t("vpnSecurity.stillDetected"),
+                    accessRestoredMessage: t("vpnSecurity.accessRestored"),
+                    deviceLabel: t("vpnSecurity.deviceLabel"),
+                    ipLabel: t("vpnSecurity.ipLabel"),
+                    networkLabel: t("vpnSecurity.networkLabel"),
+                    laptopDeviceName: t("vpnSecurity.laptopDevice"),
+                    mobileDeviceName: t("vpnSecurity.mobileDevice"),
+                    tabletDeviceName: t("vpnSecurity.tabletDevice"),
+                  }}
+                />
+              </>
             )}
           </ClientOnly>
         </MultiThemeProvider>

@@ -16,6 +16,8 @@ import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
 import { useChangeLanguage } from "remix-i18next/react";
 import { i18next } from "./i18next.server";
+import { VpnSecurityModal } from "@repo/ui/organisms";
+import { ClientOnly } from "./components/ClientOnly";
 import { MultiThemeProvider } from "@/components/theme/MultiThemeProvider";
 import "./globals.css";
 
@@ -98,7 +100,33 @@ export function Layout({ children }: { children: React.ReactNode }) {
         >
           {t("a11y.skipToContent", "Skip to main content")}
         </a>
-        <MultiThemeProvider defaultTheme="light">{children}</MultiThemeProvider>
+        <MultiThemeProvider defaultTheme="light">
+          {children}
+          <ClientOnly>
+            {() => (
+              <VpnSecurityModal
+                translations={{
+                  title: t("vpnSecurity.title"),
+                  subtitle: t("vpnSecurity.subtitle"),
+                  instructionTitle: t("vpnSecurity.instructionTitle"),
+                  stepDisableVpn: t("vpnSecurity.stepDisableVpn"),
+                  stepDisableProxy: t("vpnSecurity.stepDisableProxy"),
+                  stepReverify: t("vpnSecurity.stepReverify"),
+                  reverifyButton: t("vpnSecurity.reverifyButton"),
+                  reverifyingButton: t("vpnSecurity.reverifyingButton"),
+                  stillDetectedMessage: t("vpnSecurity.stillDetected"),
+                  accessRestoredMessage: t("vpnSecurity.accessRestored"),
+                  deviceLabel: t("vpnSecurity.deviceLabel"),
+                  ipLabel: t("vpnSecurity.ipLabel"),
+                  networkLabel: t("vpnSecurity.networkLabel"),
+                  laptopDeviceName: t("vpnSecurity.laptopDevice"),
+                  mobileDeviceName: t("vpnSecurity.mobileDevice"),
+                  tabletDeviceName: t("vpnSecurity.tabletDevice"),
+                }}
+              />
+            )}
+          </ClientOnly>
+        </MultiThemeProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
