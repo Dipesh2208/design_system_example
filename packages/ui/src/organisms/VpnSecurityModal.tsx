@@ -63,9 +63,12 @@ export function VpnSecurityModal({
     return false;
   });
 
-  const isEffectiveVpnActive = typeof isForceVpn === "boolean" ? isForceVpn : isVpnActive;
+  const isEffectiveVpnActive =
+    typeof isForceVpn === "boolean" ? isForceVpn : isVpnActive;
 
-  const [statusDetails, setStatusDetails] = useState<VpnSecurityStatus | null>(null);
+  const [statusDetails, setStatusDetails] = useState<VpnSecurityStatus | null>(
+    null,
+  );
   const [isVerifying, setIsVerifying] = useState(false);
   const [showStillDetected, setShowStillDetected] = useState(false);
   const [showRestored, setShowRestored] = useState(false);
@@ -132,7 +135,7 @@ export function VpnSecurityModal({
         return false;
       }
     },
-    [endpoint, isForceVpn, isVpnActive, onVpnStatusChange]
+    [endpoint, isForceVpn, isVpnActive, onVpnStatusChange],
   );
 
   // Initial and reactive event listeners for live detection on laptop/mobile
@@ -183,7 +186,10 @@ export function VpnSecurityModal({
 
       return () => {
         isMounted = false;
-        document.removeEventListener("visibilitychange", handleVisibilityChange);
+        document.removeEventListener(
+          "visibilitychange",
+          handleVisibilityChange,
+        );
         window.removeEventListener("online", handleNetworkChange);
         window.removeEventListener("focus", handleVisibilityChange);
         clearInterval(intervalId);
@@ -273,21 +279,30 @@ export function VpnSecurityModal({
         {/* Context metadata (device, IP info) */}
         <div className="w-full mt-4 p-3 rounded-2xl bg-muted/30 border border-border/70 text-xs text-muted-foreground flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-1.5 font-medium text-foreground">
-            {device === "mobile" && <Smartphone className="w-4 h-4 text-primary" />}
-            {device === "tablet" && <Smartphone className="w-4 h-4 text-primary" />}
-            {device === "desktop" && <Laptop className="w-4 h-4 text-primary" />}
+            {device === "mobile" && (
+              <Smartphone className="w-4 h-4 text-primary" />
+            )}
+            {device === "tablet" && (
+              <Smartphone className="w-4 h-4 text-primary" />
+            )}
+            {device === "desktop" && (
+              <Laptop className="w-4 h-4 text-primary" />
+            )}
             <span>
               {t.deviceLabel}{" "}
               {device === "mobile"
                 ? t.mobileDeviceName
                 : device === "tablet"
-                ? t.tabletDeviceName
-                : t.laptopDeviceName}
+                  ? t.tabletDeviceName
+                  : t.laptopDeviceName}
             </span>
           </div>
           {statusDetails?.ip && (
             <div className="text-[11px] font-mono text-muted-foreground">
-              {t.ipLabel} <span className="font-semibold text-rose-500">{statusDetails.ip}</span>
+              {t.ipLabel}{" "}
+              <span className="font-semibold text-rose-500">
+                {statusDetails.ip}
+              </span>
             </div>
           )}
         </div>
@@ -301,7 +316,9 @@ export function VpnSecurityModal({
           <ul className="text-xs text-muted-foreground space-y-2 pl-1">
             <li className="flex items-start gap-2">
               <Radio className="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5" />
-              <span className="font-medium text-foreground">{t.stepDisableVpn}</span>
+              <span className="font-medium text-foreground">
+                {t.stepDisableVpn}
+              </span>
             </li>
             <li className="flex items-start gap-2">
               <GlobeLock className="w-3.5 h-3.5 text-primary shrink-0 mt-0.5" />

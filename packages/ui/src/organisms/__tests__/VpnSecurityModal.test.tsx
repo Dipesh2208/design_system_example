@@ -18,14 +18,16 @@ describe("VpnSecurityModal (Organism)", () => {
     render(<VpnSecurityModal isForceVpn={true} />);
 
     expect(
-      screen.getByText(/VPN અથવા પ્રોક્સી કનેક્શન મળ્યું છે/i)
+      screen.getByText(/VPN અથવા પ્રોક્સી કનેક્શન મળ્યું છે/i),
     ).toBeInTheDocument();
     expect(screen.getByText(/VPN Block Active/i)).toBeInTheDocument();
     expect(
-      screen.getByText(/તમારા લેપટોપ, પીસી કે મોબાઈલ ડિવાઇસમાંથી VPN તરત બંધ કરો/i)
+      screen.getByText(
+        /તમારા લેપટોપ, પીસી કે મોબાઈલ ડિવાઇસમાંથી VPN તરત બંધ કરો/i,
+      ),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /કનેક્શન ફરીથી તપાસો/i })
+      screen.getByRole("button", { name: /કનેક્શન ફરીથી તપાસો/i }),
     ).toBeInTheDocument();
   });
 
@@ -39,20 +41,22 @@ describe("VpnSecurityModal (Organism)", () => {
           reverifyButton: "Re-verify Connection",
           stepDisableVpn: "Turn off your VPN software or app.",
         }}
-      />
+      />,
     );
 
     expect(
-      screen.getByText("VPN / Proxy Connection Detected")
+      screen.getByText("VPN / Proxy Connection Detected"),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Please disable your VPN on laptop or mobile to continue.")
+      screen.getByText(
+        "Please disable your VPN on laptop or mobile to continue.",
+      ),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Turn off your VPN software or app.")
+      screen.getByText("Turn off your VPN software or app."),
     ).toBeInTheDocument();
     expect(
-      screen.getByRole("button", { name: /Re-verify Connection/i })
+      screen.getByRole("button", { name: /Re-verify Connection/i }),
     ).toBeInTheDocument();
   });
 
@@ -70,29 +74,31 @@ describe("VpnSecurityModal (Organism)", () => {
           stillDetectedMessage: "VPN is still active! Please disconnect it.",
           reverifyButton: "Re-verify Connection",
         }}
-      />
+      />,
     );
 
     // Initial check runs and detects VPN
     await waitFor(
       () => {
         expect(
-          screen.getByRole("button", { name: /Re-verify Connection/i })
+          screen.getByRole("button", { name: /Re-verify Connection/i }),
         ).toBeInTheDocument();
       },
-      { timeout: 3000 }
+      { timeout: 3000 },
     );
 
-    const reverifyBtn = screen.getByRole("button", { name: /Re-verify Connection/i });
+    const reverifyBtn = screen.getByRole("button", {
+      name: /Re-verify Connection/i,
+    });
     fireEvent.click(reverifyBtn);
 
     await waitFor(
       () => {
         expect(
-          screen.getByText("VPN is still active! Please disconnect it.")
+          screen.getByText("VPN is still active! Please disconnect it."),
         ).toBeInTheDocument();
       },
-      { timeout: 3000 }
+      { timeout: 3000 },
     );
   });
 
@@ -117,28 +123,30 @@ describe("VpnSecurityModal (Organism)", () => {
           accessRestoredMessage: "Secure access restored! VPN is off.",
           reverifyButton: "Re-verify Connection",
         }}
-      />
+      />,
     );
 
     await waitFor(
       () => {
         expect(
-          screen.getByRole("button", { name: /Re-verify Connection/i })
+          screen.getByRole("button", { name: /Re-verify Connection/i }),
         ).toBeInTheDocument();
       },
-      { timeout: 3000 }
+      { timeout: 3000 },
     );
 
-    const reverifyBtn = screen.getByRole("button", { name: /Re-verify Connection/i });
+    const reverifyBtn = screen.getByRole("button", {
+      name: /Re-verify Connection/i,
+    });
     fireEvent.click(reverifyBtn);
 
     await waitFor(
       () => {
         expect(
-          screen.getByText("Secure access restored! VPN is off.")
+          screen.getByText("Secure access restored! VPN is off."),
         ).toBeInTheDocument();
       },
-      { timeout: 3000 }
+      { timeout: 3000 },
     );
   });
 });

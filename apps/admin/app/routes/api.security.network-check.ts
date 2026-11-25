@@ -18,7 +18,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
     "127.0.0.1";
 
   // Check test switches for QA & automated testing
-  const testParam = url.searchParams.get("vpn_test") || url.searchParams.get("vpn");
+  const testParam =
+    url.searchParams.get("vpn_test") || url.searchParams.get("vpn");
   const headerTest = request.headers.get("x-test-vpn");
 
   if (testParam === "true" || testParam === "1" || headerTest === "true") {
@@ -40,7 +41,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
         headers: {
           "Cache-Control": "no-store, no-cache, must-revalidate",
         },
-      }
+      },
     );
   }
 
@@ -62,7 +63,7 @@ export async function loader({ request }: LoaderFunctionArgs) {
         headers: {
           "Cache-Control": "no-store, no-cache, must-revalidate",
         },
-      }
+      },
     );
   }
 
@@ -73,7 +74,9 @@ export async function loader({ request }: LoaderFunctionArgs) {
   // Known datacenter or proxy headers
   const viaHeader = request.headers.get("via");
   const proxyConnection = request.headers.get("proxy-connection");
-  const isProxyHeader = Boolean(proxyConnection || (viaHeader && viaHeader.toLowerCase().includes("squid")));
+  const isProxyHeader = Boolean(
+    proxyConnection || (viaHeader && viaHeader.toLowerCase().includes("squid")),
+  );
 
   // Detect datacenter IP indicators (e.g. AWS, GCP, Azure, DigitalOcean CIDR indicators)
   const isDatacenter =
@@ -101,6 +104,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
       headers: {
         "Cache-Control": "no-store, no-cache, must-revalidate",
       },
-    }
+    },
   );
 }

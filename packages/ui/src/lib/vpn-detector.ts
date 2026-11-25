@@ -30,7 +30,8 @@ export function detectDeviceType(): "mobile" | "tablet" | "desktop" {
   }
 
   const ua = navigator.userAgent || "";
-  const isMobile = /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
+  const isMobile =
+    /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua);
   const isTablet = /(iPad|Tablet|(Android(?!.*Mobile)))/i.test(ua);
 
   if (isTablet) return "tablet";
@@ -84,7 +85,10 @@ export function setMockVpnOverride(enabled: boolean | null): void {
     if (enabled === null) {
       window.localStorage.removeItem(MOCK_VPN_STORAGE_KEY);
     } else {
-      window.localStorage.setItem(MOCK_VPN_STORAGE_KEY, enabled ? "true" : "false");
+      window.localStorage.setItem(
+        MOCK_VPN_STORAGE_KEY,
+        enabled ? "true" : "false",
+      );
     }
   } catch {
     // Ignore
@@ -95,7 +99,7 @@ export function setMockVpnOverride(enabled: boolean | null): void {
  * Verifies network status against the server-side API or mock testing environment.
  */
 export async function checkNetworkSecurityStatus(
-  apiEndpoint = "/api/security/network-check"
+  apiEndpoint = "/api/security/network-check",
 ): Promise<VpnSecurityStatus> {
   const device = detectDeviceType();
   const clientTz = getClientTimezone();
