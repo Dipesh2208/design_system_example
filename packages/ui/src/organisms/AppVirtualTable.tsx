@@ -57,6 +57,14 @@ export function AppVirtualTable<T>({
     getScrollElement: () => parentRef.current,
     estimateSize: () => rowHeight,
     overscan: 8,
+    initialRect: {
+      width: 1000,
+      height: typeof maxHeight === "number" ? maxHeight : 600,
+    },
+    getItemKey: (index: number) => {
+      const item = data[index];
+      return item && getRowId ? getRowId(item, index) : index;
+    },
   });
 
   const virtualItems = rowVirtualizer.getVirtualItems();
@@ -162,23 +170,24 @@ export function AppVirtualTable<T>({
               return (
                 <div
                   key={rowId}
+                  ref={rowVirtualizer.measureElement}
                   data-index={virtualRow.index}
                   style={{
                     position: "absolute",
                     top: 0,
                     left: 0,
                     width: "100%",
-                    height: `${rowHeight}px`,
                     transform: `translateY(${virtualRow.start}px)`,
-                    willChange: "transform",
-                    contain: "layout paint",
                   }}
-                  className="flex flex-col border-b border-border/40 select-none transition-colors"
+                  className={`flex flex-col border-b border-border/40 select-none transition-colors ${
+                    expanded ? "bg-muted/10 shadow-xs z-1" : ""
+                  }`}
                 >
                   {/* Primary Row Content */}
                   <div
                     onClick={() => onRowClick?.(row, virtualRow.index)}
-                    className={`flex items-center px-4 sm:px-6 min-h-[64px] hover:bg-primary/[0.04] transition-all duration-150 ${
+                    style={{ minHeight: `${rowHeight}px` }}
+                    className={`flex items-center px-4 sm:px-6 hover:bg-primary/[0.04] transition-all duration-150 ${
                       onRowClick ? "cursor-pointer group" : ""
                     } ${expanded ? "bg-muted/30" : ""}`}
                   >

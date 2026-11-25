@@ -133,6 +133,70 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
         screen.getByText("No customers found in ledger."),
       ).toBeInTheDocument();
     });
+
+    it("renders expanded accordion row details when isRowExpanded returns true", () => {
+      vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(600);
+      vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockReturnValue(600);
+      vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
+        width: 1000,
+        height: 600,
+        top: 0,
+        left: 0,
+        bottom: 600,
+        right: 1000,
+      } as DOMRect);
+
+      render(
+        <AppVirtualTable
+          data={sampleData}
+          columns={columns}
+          getRowId={(row) => row.id}
+          isRowExpanded={(row) => row.id === "1"}
+          renderExpandedRow={(row) => (
+            <div data-testid={`expanded-details-${row.id}`}>
+              Accordion Details for {row.name}
+            </div>
+          )}
+        />,
+      );
+
+      expect(
+        screen.getByTestId("expanded-details-1"),
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText("Accordion Details for Alice"),
+      ).toBeInTheDocument();
+      expect(
+        screen.queryByTestId("expanded-details-2"),
+      ).not.toBeInTheDocument();
+    });
+
+    it("fires onRowClick when a table row is clicked to toggle accordion", () => {
+      vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(600);
+      vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockReturnValue(600);
+      vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
+        width: 1000,
+        height: 600,
+        top: 0,
+        left: 0,
+        bottom: 600,
+        right: 1000,
+      } as DOMRect);
+
+      const handleRowClick = vi.fn();
+      render(
+        <AppVirtualTable
+          data={sampleData}
+          columns={columns}
+          getRowId={(row) => row.id}
+          onRowClick={handleRowClick}
+        />,
+      );
+
+      const aliceRow = screen.getByText("Alice");
+      fireEvent.click(aliceRow);
+      expect(handleRowClick).toHaveBeenCalledWith(sampleData[0], 0);
+    });
   });
 
   describe("AppVirtualCardList", () => {

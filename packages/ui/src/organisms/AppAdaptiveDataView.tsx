@@ -19,6 +19,8 @@ export interface AppAdaptiveDataViewProps<T> {
   breakpoint?: number; // default: 1024 (Tailwind lg)
   allowViewSwitch?: boolean;
   className?: string;
+  isRowExpanded?: (row: T, index: number) => boolean;
+  renderExpandedRow?: (row: T, index: number) => React.ReactNode;
 }
 
 export function AppAdaptiveDataView<T>({
@@ -37,6 +39,8 @@ export function AppAdaptiveDataView<T>({
   breakpoint = 1024,
   allowViewSwitch = true,
   className = "",
+  isRowExpanded,
+  renderExpandedRow,
 }: AppAdaptiveDataViewProps<T>) {
   const [isMobileScreen, setIsMobileScreen] = useState(false);
   const [userModeOverride, setUserModeOverride] = useState<
@@ -112,6 +116,8 @@ export function AppAdaptiveDataView<T>({
           onRowClick={onRowClick}
           getRowId={getId}
           emptyState={emptyState}
+          isRowExpanded={isRowExpanded}
+          renderExpandedRow={renderExpandedRow}
         />
       ) : (
         <AppVirtualCardList

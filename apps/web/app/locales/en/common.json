@@ -156,5 +156,23 @@
   "grid": {
     "title": "13-Breakpoint Container Query Grid",
     "subtitle": "Showcasing responsive scaling and behavior for each container query breakpoint (@3xs to @7xl)."
+  },
+  "vpnSecurity": {
+    "title": "VPN / Proxy Connection Detected",
+    "subtitle": "For security and compliance reasons, access is strictly prohibited while using a VPN, proxy, or anonymous relay. Please turn off your VPN on this device to continue.",
+    "instructionTitle": "Steps to restore access:",
+    "stepDisableVpn": "Disconnect or switch off VPN on your laptop, PC, or mobile device.",
+    "stepDisableProxy": "Disable any active proxy tunnel or privacy browser extensions.",
+    "stepReverify": "Once disabled, click the 'Re-verify Connection' button below.",
+    "reverifyButton": "Re-verify Connection",
+    "reverifyingButton": "Checking security...",
+    "stillDetected": "VPN or Proxy is still active! Please disconnect it completely to proceed.",
+    "accessRestored": "VPN disconnected. Secure access restored!",
+    "deviceLabel": "Device:",
+    "ipLabel": "Detected IP:",
+    "networkLabel": "Network:",
+    "laptopDevice": "Laptop / PC Browser",
+    "mobileDevice": "Mobile Browser",
+    "tabletDevice": "Tablet Browser"
   }
 }

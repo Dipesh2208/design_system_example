@@ -3,6 +3,7 @@ export * from "./LanguageDropdownOrganism";
 export * from "./AppAdminLayout";
 export * from "./UserAvatarDropdownOrganism";
 export * from "./OfflineStatusModal";
+export * from "./VpnSecurityModal";
 export * from "./auth-stepper";
 
 // Re-export types only for heavy / lazy-loaded organisms so barrel imports
