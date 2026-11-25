@@ -63,6 +63,8 @@ export function VpnSecurityModal({
     return false;
   });
 
+  const isEffectiveVpnActive = typeof isForceVpn === "boolean" ? isForceVpn : isVpnActive;
+
   const [statusDetails, setStatusDetails] = useState<VpnSecurityStatus | null>(null);
   const [isVerifying, setIsVerifying] = useState(false);
   const [showStillDetected, setShowStillDetected] = useState(false);
@@ -105,7 +107,6 @@ export function VpnSecurityModal({
   const verifyStatus = useCallback(
     async (isManualRetry = false): Promise<boolean> => {
       if (typeof isForceVpn === "boolean") {
-        setIsVpnActive(isForceVpn);
         if (onVpnStatusChange) onVpnStatusChange(isForceVpn);
         return isForceVpn;
       }
@@ -137,12 +138,26 @@ export function VpnSecurityModal({
   // Initial and reactive event listeners for live detection on laptop/mobile
   useEffect(() => {
     if (typeof isForceVpn === "boolean") {
-      setIsVpnActive(isForceVpn);
       return;
     }
 
-    // Run initial check
-    verifyStatus();
+    let isMounted = true;
+
+    const performCheck = async () => {
+      try {
+        const status = await checkNetworkSecurityStatus(endpoint);
+        if (isMounted) {
+          setStatusDetails(status);
+          const active = Boolean(status.isVpn);
+          setIsVpnActive(active);
+          if (onVpnStatusChange) onVpnStatusChange(active, status);
+        }
+      } catch {
+        // Ignore network errors
+      }
+    };
+
+    performCheck();
 
     // Re-check whenever tab becomes visible (user returns from switching VPN in settings)
     const handleVisibilityChange = () => {
@@ -167,13 +182,18 @@ export function VpnSecurityModal({
       }, checkIntervalMs);
 
       return () => {
+        isMounted = false;
         document.removeEventListener("visibilitychange", handleVisibilityChange);
         window.removeEventListener("online", handleNetworkChange);
         window.removeEventListener("focus", handleVisibilityChange);
         clearInterval(intervalId);
       };
     }
-  }, [checkIntervalMs, isForceVpn, verifyStatus]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [checkIntervalMs, endpoint, isForceVpn, onVpnStatusChange, verifyStatus]);
 
   const handleManualReverify = async () => {
     setIsVerifying(true);
@@ -194,7 +214,7 @@ export function VpnSecurityModal({
   const device = statusDetails?.deviceType || detectDeviceType();
 
   // Render restored confirmation toast
-  if (showRestored && !isVpnActive) {
+  if (showRestored && !isEffectiveVpnActive) {
     return (
       <div className="fixed bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-5 duration-300">
         <div className="flex items-center gap-2.5 px-4 py-3 rounded-2xl bg-emerald-600 text-white shadow-2xl text-sm font-semibold border border-emerald-400/40">
@@ -205,7 +225,7 @@ export function VpnSecurityModal({
     );
   }
 
-  if (!isVpnActive) return null;
+  if (!isEffectiveVpnActive) return null;
 
   return (
     <div

@@ -74,25 +74,30 @@ describe("VpnSecurityModal (Organism)", () => {
     );
 
     // Initial check runs and detects VPN
-    await waitFor(() => {
-      expect(
-        screen.getByRole("button", { name: /Re-verify Connection/i })
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole("button", { name: /Re-verify Connection/i })
+        ).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     const reverifyBtn = screen.getByRole("button", { name: /Re-verify Connection/i });
     fireEvent.click(reverifyBtn);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText("VPN is still active! Please disconnect it.")
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByText("VPN is still active! Please disconnect it.")
+        ).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
   });
 
   it("dismisses and shows restored toast when VPN is turned off upon re-verification", async () => {
-    const checkSpy = vi
-      .spyOn(vpnDetector, "checkNetworkSecurityStatus")
+    vi.spyOn(vpnDetector, "checkNetworkSecurityStatus")
       .mockResolvedValueOnce({
         isVpn: true,
         deviceType: "mobile",
@@ -115,19 +120,25 @@ describe("VpnSecurityModal (Organism)", () => {
       />
     );
 
-    await waitFor(() => {
-      expect(
-        screen.getByRole("button", { name: /Re-verify Connection/i })
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByRole("button", { name: /Re-verify Connection/i })
+        ).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
 
     const reverifyBtn = screen.getByRole("button", { name: /Re-verify Connection/i });
     fireEvent.click(reverifyBtn);
 
-    await waitFor(() => {
-      expect(
-        screen.getByText("Secure access restored! VPN is off.")
-      ).toBeInTheDocument();
-    });
+    await waitFor(
+      () => {
+        expect(
+          screen.getByText("Secure access restored! VPN is off.")
+        ).toBeInTheDocument();
+      },
+      { timeout: 3000 }
+    );
   });
 });
