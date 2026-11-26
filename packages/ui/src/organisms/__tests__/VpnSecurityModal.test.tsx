@@ -22,9 +22,7 @@ describe("VpnSecurityModal (Organism)", () => {
     ).toBeInTheDocument();
     expect(screen.getByText(/VPN Block Active/i)).toBeInTheDocument();
     expect(
-      screen.getByText(
-        /તમારા લેપટોપ, પીસી કે મોબાઈલ ડિવાઇસમાંથી VPN તરત બંધ કરો/i,
-      ),
+      screen.getByText(/તમારા લેપટોપ, પીસી કે મોબાઈલ ડિવાઇસમાંથી VPN તરત બંધ કરો/i),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /કનેક્શન ફરીથી તપાસો/i }),

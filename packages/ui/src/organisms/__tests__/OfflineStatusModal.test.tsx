@@ -50,9 +50,7 @@ describe("OfflineStatusModal (Organism)", () => {
     );
 
     expect(screen.getByText("ઇન્ટરનેટ કનેક્શન નથી")).toBeInTheDocument();
-    expect(
-      screen.getByText("નેટવર્ક સાથે કનેક્ટ થઈ શક્યું નથી."),
-    ).toBeInTheDocument();
+    expect(screen.getByText("નેટવર્ક સાથે કનેક્ટ થઈ શક્યું નથી.")).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /કનેક્શન ફરીથી તપાસો/i }),
     ).toBeInTheDocument();

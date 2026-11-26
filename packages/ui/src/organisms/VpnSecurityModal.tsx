@@ -63,6 +63,11 @@ export function VpnSecurityModal({
     return false;
   });
 
+  const isVpnActiveRef = React.useRef(isVpnActive);
+  useEffect(() => {
+    isVpnActiveRef.current = isVpnActive;
+  }, [isVpnActive]);
+
   const isEffectiveVpnActive =
     typeof isForceVpn === "boolean" ? isForceVpn : isVpnActive;
 
@@ -119,10 +124,11 @@ export function VpnSecurityModal({
         setStatusDetails(status);
         const active = Boolean(status.isVpn);
 
+        const wasActive = isVpnActiveRef.current;
         setIsVpnActive(active);
         if (onVpnStatusChange) onVpnStatusChange(active, status);
 
-        if (!active && isVpnActive && isManualRetry) {
+        if (!active && wasActive && isManualRetry) {
           setShowRestored(true);
           setShowStillDetected(false);
           setTimeout(() => setShowRestored(false), 3500);
@@ -135,7 +141,7 @@ export function VpnSecurityModal({
         return false;
       }
     },
-    [endpoint, isForceVpn, isVpnActive, onVpnStatusChange],
+    [endpoint, isForceVpn, onVpnStatusChange],
   );
 
   // Initial and reactive event listeners for live detection on laptop/mobile
