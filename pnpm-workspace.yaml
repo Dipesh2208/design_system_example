@@ -7,9 +7,7 @@ auditConfig:
   ignoreGhsas:
     - GHSA-wrjc-x8rr-h8h6
     - GHSA-337j-9hxr-rhxg
-    - GHSA-g3hv-75wg-m249
 overrides:
-  "@remix-run/dev>minimatch": 9.0.9
   "@vanilla-extract/integration>esbuild": ^0.25.0
   esbuild@<=0.24.2: ^0.25.0
   estree-util-value-to-estree@<3.3.3: ^3.3.3
@@ -35,3 +33,5 @@ overrides:
   vite@<=6.4.1: ^6.4.2
   vite@<=6.4.2: ^6.4.3
   vite@<=6.4.3: ^6.4.4
+patchedDependencies:
+  minimatch@11.0.9: patches/minimatch@11.0.9.patch
