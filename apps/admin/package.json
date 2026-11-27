@@ -28,7 +28,7 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-i18next": "^18.0.3",
-    "remix-i18next": "^6.4.1",
+    "remix-i18next": "^8.0.0",
     "tailwind-merge": "^3.7.1",
     "tailwindcss": "^4.3.5"
   },
