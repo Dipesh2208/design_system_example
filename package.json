@@ -11,8 +11,8 @@
     "check-types": "turbo run check-types",
     "check-strict-types": "node scripts/check-no-any-unknown.js",
     "test": "turbo run test",
-    "test:e2e": "playwright test && node scripts/clean-test-artifacts.js",
-    "test:e2e:headed": "playwright test --headed && node scripts/clean-test-artifacts.js",
+    "test:e2e": "node scripts/ensure-port-free.js 3002 && playwright test && node scripts/clean-test-artifacts.js",
+    "test:e2e:headed": "node scripts/ensure-port-free.js 3002 && playwright test --headed && node scripts/clean-test-artifacts.js",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:debug": "playwright test --debug",
     "test:e2e:report": "playwright show-report",
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@playwright/test": "^1.65.1",
-    "@types/node": "26.6.10",
+    "@types/node": "26.6.11",
     "prettier": "3.10.1",
     "turbo": "^2.11.13",
     "typescript": "7.0.2"
