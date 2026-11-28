@@ -12,18 +12,18 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react": "19.3.1",
+    "react-dom": "19.3.1"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "@types/node": "26.4.1",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.5",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "10.9.1",
+    "@types/node": "26.6.11",
+    "@types/react": "19.3.3",
+    "@types/react-dom": "19.3.0",
+    "@vitejs/plugin-react": "^6.3.0",
+    "eslint": "10.16.0",
     "typescript": "7.0.2",
-    "vite": "^8.3.7"
+    "vite": "^8.4.0"
   }
 }

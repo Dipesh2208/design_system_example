@@ -1,0 +1,33 @@
+diff --git a/dist/commonjs/index.js b/dist/commonjs/index.js
+index 2d2a2f8107271873ba516f5be64c7eb30002feeb..056e1c679b56fdb0776e4c609b75f7225e187cb3 100644
+--- a/dist/commonjs/index.js
++++ b/dist/commonjs/index.js
+@@ -1881,4 +1881,11 @@ Object.defineProperty(exports, "unescape", { enumerable: true, get: function ()
+ exports.minimatch.Minimatch = Minimatch;
+ exports.minimatch.escape = escape_js_1.escape;
+ exports.minimatch.unescape = unescape_js_1.unescape;
++const makeRe = (pattern, options) => {
++    return {
++        test: (str) => (0, exports.minimatch)(str, pattern, options)
++    };
++};
++exports.makeRe = makeRe;
++exports.minimatch.makeRe = makeRe;
+ //# sourceMappingURL=index.js.map
+\ No newline at end of file
+diff --git a/dist/esm/index.js b/dist/esm/index.js
+index f8d6270b7bb3fc5530ea961ddf108fbf9a02dce9..9afded7855a55943b3678ac98e57d0c8dd2710c8 100644
+--- a/dist/esm/index.js
++++ b/dist/esm/index.js
+@@ -1870,4 +1870,11 @@ export { unescape } from './unescape.js';
+ minimatch.Minimatch = Minimatch;
+ minimatch.escape = escape;
+ minimatch.unescape = unescape;
++const makeRe = (pattern, options) => {
++    return {
++        test: (str) => minimatch(str, pattern, options)
++    };
++};
++export { makeRe };
++minimatch.makeRe = makeRe;
+ //# sourceMappingURL=index.js.map

@@ -50,7 +50,7 @@ export default defineConfig({
   webServer: {
     command: "pnpm --filter admin dev --port 3002",
     port: 3002,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 60 * 1000,
   },
 });

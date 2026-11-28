@@ -2,12 +2,8 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Multi-Device Authentication Flow (Mobile, Tablet, Desktop)", () => {
   test.beforeEach(async ({ page }) => {
-    // Clear storage before each test for clean test isolation
-    await page.goto("/auth");
-    await page.evaluate(() => {
-      sessionStorage.clear();
-      localStorage.clear();
-    });
+    // Clear cookies before each test for clean test isolation
+    await page.context().clearCookies();
   });
 
   test("Login: Rejects submission when Cloudflare Turnstile is missing", async ({

@@ -3,3 +3,33 @@ packages:
   - "packages/*"
 allowBuilds:
   esbuild: true
+auditConfig:
+  ignoreGhsas:
+    - GHSA-wrjc-x8rr-h8h6
+    - GHSA-337j-9hxr-rhxg
+minimumReleaseAgeExclude:
+  - "@babel/core@8.1.4"
+  - "@babel/generator@8.1.4"
+  - "@babel/helpers@8.1.4"
+  - "@babel/traverse@8.1.4"
+  - eslint-config-prettier@10.1.9
+  - lucide-react@1.82.0
+  - "@eslint/config-array@0.23.7"
+  - eslint@10.16.0
+  - i18next@27.2.10
+  - postcss@8.5.34
+overrides:
+  "@vanilla-extract/integration>esbuild": ^0.25.0
+  esbuild@<=0.24.2: ^0.25.0
+  estree-util-value-to-estree@<3.3.3: ^3.3.3
+  glob@>=9.0.0 <=14.0.1: ^14.0.2
+  minimatch@>=7.0.0 <11.0.1: ^11.0.1
+  react-router-dom: 6.30.6
+  react-router: 6.30.6
+  tar@<=7.5.20: ^7.5.21
+  toml: ^5.0.1
+  turbo-stream@<3.0.0: ^3.2.1
+  vite@<=6.4.3: ^6.4.4
+patchedDependencies:
+  "@remix-run/react@2.17.5": patches/@remix-run__react@2.17.5.patch
+  minimatch@11.0.9: patches/minimatch@11.0.9.patch

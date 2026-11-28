@@ -14,7 +14,7 @@ import type {
 } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useTranslation } from "react-i18next";
-import { useChangeLanguage } from "remix-i18next/react";
+import { useChangeLanguage } from "./hooks/useChangeLanguage";
 import { OfflineStatusModal, VpnSecurityModal } from "@repo/ui/organisms";
 import { ClientOnly } from "./components/ClientOnly";
 import { i18next } from "./i18next.server";

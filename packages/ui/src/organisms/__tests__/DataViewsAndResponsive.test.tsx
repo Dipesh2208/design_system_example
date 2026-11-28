@@ -135,8 +135,12 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
     });
 
     it("renders expanded accordion row details when isRowExpanded returns true", () => {
-      vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(600);
-      vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockReturnValue(600);
+      vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(
+        600,
+      );
+      vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockReturnValue(
+        600,
+      );
       vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
         width: 1000,
         height: 600,
@@ -160,9 +164,7 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
         />,
       );
 
-      expect(
-        screen.getByTestId("expanded-details-1"),
-      ).toBeInTheDocument();
+      expect(screen.getByTestId("expanded-details-1")).toBeInTheDocument();
       expect(
         screen.getByText("Accordion Details for Alice"),
       ).toBeInTheDocument();
@@ -172,8 +174,12 @@ describe("Data View & Responsive / Non-Responsive Suite", () => {
     });
 
     it("fires onRowClick when a table row is clicked to toggle accordion", () => {
-      vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(600);
-      vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockReturnValue(600);
+      vi.spyOn(HTMLElement.prototype, "offsetHeight", "get").mockReturnValue(
+        600,
+      );
+      vi.spyOn(HTMLElement.prototype, "clientHeight", "get").mockReturnValue(
+        600,
+      );
       vi.spyOn(HTMLElement.prototype, "getBoundingClientRect").mockReturnValue({
         width: 1000,
         height: 600,
