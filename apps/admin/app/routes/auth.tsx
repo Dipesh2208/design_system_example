@@ -223,7 +223,11 @@ export default function AuthPage() {
             </div>
           )}
 
-          <form onSubmit={handleLoginSubmit} action="javascript:void(0);" className="space-y-4">
+          <form
+            onSubmit={handleLoginSubmit}
+            action="javascript:void(0);"
+            className="space-y-4"
+          >
             {/* Mobile Number */}
             <div>
               <label className="block text-xs font-semibold text-foreground mb-1.5 uppercase tracking-wide">
